@@ -16,6 +16,69 @@
 {% endblock %}
 
 {% block content %}
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Products</h6>
+                        <h3>{{ total_products }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-boxes fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">In Stock</h6>
+                        <h3>{{ in_stock }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-check-circle fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Low Stock</h6>
+                        <h3>{{ low_stock }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-exclamation-triangle fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Out of Stock</h6>
+                        <h3>{{ out_of_stock }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-x-circle fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -49,9 +112,20 @@
                                 </td>
                                 <td>{{ stock.warehouse.name }}</td>
                                 <td>
-                                    <span class="badge {% if stock.quantity <= stock.product.min_stock_level %}bg-danger{% else %}bg-success{% endif %}">
-                                        {{ stock.quantity }} {{ stock.product.unit_name }}
-                                    </span>
+                                    {% if stock.quantity <= 0 %}
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle"></i> Out of Stock
+                                        </span>
+                                    {% elif stock.quantity <= stock.product.min_stock_level %}
+                                        <span class="badge bg-warning">
+                                            <i class="bi bi-exclamation-triangle"></i> {{ stock.quantity }} {{ stock.product.unit_name }} (Low)
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle"></i> {{ stock.quantity }} {{ stock.product.unit_name }}
+                                        </span>
+                                    {% endif %}
+                                    <br><small class="text-muted">Min: {{ stock.product.min_stock_level }} {{ stock.product.unit_name }}</small>
                                 </td>
                                 <td>৳{{ stock.unit_cost|floatformat:2 }}</td>
                                 <td>৳{{ stock.total_value|floatformat:2 }}</td>

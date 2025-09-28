@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.db import models
 from .models import Warehouse, Product, Stock, StockMovement, StockAlert
 
 
@@ -72,6 +73,25 @@ class StockListView(ListView):
     model = Stock
     template_name = 'stock/stock_list.html'
     context_object_name = 'stocks'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stocks = self.get_queryset()
+        
+        # Calculate summary statistics
+        total_products = stocks.count()
+        in_stock = stocks.filter(quantity__gt=0).count()
+        low_stock = stocks.filter(quantity__gt=0, quantity__lte=models.F('product__min_stock_level')).count()
+        out_of_stock = stocks.filter(quantity__lte=0).count()
+        
+        context.update({
+            'total_products': total_products,
+            'in_stock': in_stock,
+            'low_stock': low_stock,
+            'out_of_stock': out_of_stock,
+        })
+        
+        return context
 
 
 class StockDetailView(DetailView):

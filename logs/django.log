@@ -3801,3 +3801,537 @@ Watching for file changes with StatReloader
 "GET /accounting/reports/bank/ HTTP/1.1" 200 9476
 /home/giasudin/PycharmProjects/djangoerp/building_materials_full/suppliers/views.py changed, reloading.
 Watching for file changes with StatReloader
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /sales/orders/ HTTP/1.1" 200 25236
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /sales/orders/ HTTP/1.1" 200 25236
+"GET /stock/products/ HTTP/1.1" 200 28379
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4564
+"GET /stock/warehouses/ HTTP/1.1" 200 12537
+"GET /stock/warehouses/create/ HTTP/1.1" 200 9863
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /stock/products/create/ HTTP/1.1" 200 12943
+"GET /stock/stock/ HTTP/1.1" 200 69283
+"GET /stock/movements/ HTTP/1.1" 200 102463
+"GET /stock/alerts/ HTTP/1.1" 200 8017
+"GET /stock/reports/stock/ HTTP/1.1" 200 10371
+"GET /stock/reports/valuation/ HTTP/1.1" 200 10371
+"GET /customers/ HTTP/1.1" 200 19997
+"GET /customers/create/ HTTP/1.1" 200 11834
+"GET /customers/ledger/ HTTP/1.1" 200 8007
+"GET /customers/commission/ HTTP/1.1" 200 10853
+"GET /customers/commitment/ HTTP/1.1" 200 8019
+"GET /suppliers/ HTTP/1.1" 200 16783
+"GET /suppliers/create/ HTTP/1.1" 200 11573
+"GET /suppliers/ledger/ HTTP/1.1" 200 8007
+"GET /suppliers/commission/ HTTP/1.1" 200 8019
+"GET /sales/orders/ HTTP/1.1" 200 25236
+Internal Server Error: /sales/orders/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 178, in get
+    return super().get(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 142, in get
+    return self.render_to_response(self.get_context_data())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py", line 34, in get_context_data
+    context = super().get_context_data(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 72, in get_context_data
+    kwargs["form"] = self.get_form()
+                     ^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 36, in get_form
+    form_class = self.get_form_class()
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 108, in get_form_class
+    return model_forms.modelform_factory(model, fields=self.fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/forms/models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/forms/models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (labor_charges) specified for SalesOrder
+"GET /sales/orders/create/ HTTP/1.1" 500 117075
+"GET /sales/invoices/ HTTP/1.1" 200 7991
+"GET /sales/invoices/create/ HTTP/1.1" 200 8667
+"GET /sales/returns/ HTTP/1.1" 200 7985
+"GET /sales/payments/ HTTP/1.1" 200 7991
+"GET /sales/reports/daily/ HTTP/1.1" 200 7694
+"GET /sales/reports/monthly/ HTTP/1.1" 200 13530
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/create/ HTTP/1.1" 200 21497
+"GET /purchases/receipts/ HTTP/1.1" 200 7999
+"GET /purchases/receipts/create/ HTTP/1.1" 200 8675
+"GET /purchases/invoices/ HTTP/1.1" 200 8005
+"GET /purchases/returns/ HTTP/1.1" 200 7999
+"GET /purchases/payments/ HTTP/1.1" 200 8005
+"GET /purchases/reports/daily/ HTTP/1.1" 200 7703
+"GET /purchases/reports/monthly/ HTTP/1.1" 200 12447
+"GET /accounting/banks/ HTTP/1.1" 200 8029
+"GET /accounting/banks/create/ HTTP/1.1" 200 11715
+"GET /accounting/loans/ HTTP/1.1" 200 7971
+"GET /accounting/loans/create/ HTTP/1.1" 200 11159
+"GET /accounting/trial-balance/ HTTP/1.1" 200 9275
+"GET /accounting/trial-balance/create/ HTTP/1.1" 200 9788
+"GET /accounting/reports/daily/ HTTP/1.1" 200 7682
+"GET /accounting/reports/monthly/ HTTP/1.1" 200 15825
+"GET /accounting/reports/bank/ HTTP/1.1" 200 9476
+Internal Server Error: /sales/orders/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 178, in get
+    return super().get(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 142, in get
+    return self.render_to_response(self.get_context_data())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py", line 34, in get_context_data
+    context = super().get_context_data(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 72, in get_context_data
+    kwargs["form"] = self.get_form()
+                     ^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 36, in get_form
+    form_class = self.get_form_class()
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 108, in get_form_class
+    return model_forms.modelform_factory(model, fields=self.fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/forms/models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/forms/models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (labor_charges) specified for SalesOrder
+"GET /sales/orders/create/ HTTP/1.1" 500 116924
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4564
+"GET /stock/warehouses/ HTTP/1.1" 200 12537
+"GET /stock/warehouses/create/ HTTP/1.1" 200 9863
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /stock/products/create/ HTTP/1.1" 200 12943
+"GET /stock/stock/ HTTP/1.1" 200 69283
+"GET /stock/movements/ HTTP/1.1" 200 102463
+"GET /stock/alerts/ HTTP/1.1" 200 8017
+"GET /stock/reports/stock/ HTTP/1.1" 200 10371
+"GET /stock/reports/valuation/ HTTP/1.1" 200 10371
+"GET /customers/ HTTP/1.1" 200 19997
+"GET /customers/create/ HTTP/1.1" 200 11834
+"GET /customers/ledger/ HTTP/1.1" 200 8007
+"GET /customers/commission/ HTTP/1.1" 200 10853
+"GET /customers/commitment/ HTTP/1.1" 200 8019
+"GET /suppliers/ HTTP/1.1" 200 16783
+"GET /suppliers/create/ HTTP/1.1" 200 11573
+"GET /suppliers/ledger/ HTTP/1.1" 200 8007
+"GET /suppliers/commission/ HTTP/1.1" 200 8019
+"GET /sales/orders/ HTTP/1.1" 200 25236
+"GET /sales/orders/create/ HTTP/1.1" 200 21779
+"GET /sales/invoices/ HTTP/1.1" 200 7991
+"GET /sales/invoices/create/ HTTP/1.1" 200 8667
+"GET /sales/returns/ HTTP/1.1" 200 7985
+"GET /sales/payments/ HTTP/1.1" 200 7991
+"GET /sales/reports/daily/ HTTP/1.1" 200 7694
+"GET /sales/reports/monthly/ HTTP/1.1" 200 13530
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/create/ HTTP/1.1" 200 21497
+"GET /purchases/receipts/ HTTP/1.1" 200 7999
+"GET /purchases/receipts/create/ HTTP/1.1" 200 8675
+"GET /purchases/invoices/ HTTP/1.1" 200 8005
+"GET /purchases/returns/ HTTP/1.1" 200 7999
+"GET /purchases/payments/ HTTP/1.1" 200 8005
+"GET /purchases/reports/daily/ HTTP/1.1" 200 7703
+"GET /purchases/reports/monthly/ HTTP/1.1" 200 12447
+"GET /accounting/banks/ HTTP/1.1" 200 8029
+"GET /accounting/banks/create/ HTTP/1.1" 200 11715
+"GET /accounting/loans/ HTTP/1.1" 200 7971
+"GET /accounting/loans/create/ HTTP/1.1" 200 11159
+"GET /accounting/trial-balance/ HTTP/1.1" 200 9275
+"GET /accounting/trial-balance/create/ HTTP/1.1" 200 9788
+"GET /accounting/reports/daily/ HTTP/1.1" 200 7682
+"GET /accounting/reports/monthly/ HTTP/1.1" 200 15825
+"GET /accounting/reports/bank/ HTTP/1.1" 200 9476
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/create/ HTTP/1.1" 200 21497
+"POST /purchases/orders/create/ HTTP/1.1" 200 21497
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/create/ HTTP/1.1" 200 21497
+"POST /purchases/orders/create/ HTTP/1.1" 200 21497
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /sales/orders/ HTTP/1.1" 200 25236
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /suppliers/ HTTP/1.1" 200 16783
+"GET /stock/products/ HTTP/1.1" 200 28379
+Not Found: /stock
+"GET /stock HTTP/1.1" 404 3765
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /dashboard/ HTTP/1.1" 200 16389
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4564
+"GET /stock/warehouses/ HTTP/1.1" 200 12537
+"GET /stock/warehouses/create/ HTTP/1.1" 200 9863
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /stock/products/create/ HTTP/1.1" 200 12943
+"GET /stock/stock/ HTTP/1.1" 200 69283
+"GET /stock/movements/ HTTP/1.1" 200 102463
+"GET /stock/alerts/ HTTP/1.1" 200 8017
+"GET /stock/reports/stock/ HTTP/1.1" 200 10371
+"GET /stock/reports/valuation/ HTTP/1.1" 200 10371
+"GET /customers/ HTTP/1.1" 200 19997
+"GET /customers/create/ HTTP/1.1" 200 11834
+"GET /customers/ledger/ HTTP/1.1" 200 8007
+"GET /customers/commission/ HTTP/1.1" 200 10853
+"GET /customers/commitment/ HTTP/1.1" 200 8019
+"GET /suppliers/ HTTP/1.1" 200 16783
+"GET /suppliers/create/ HTTP/1.1" 200 11573
+"GET /suppliers/ledger/ HTTP/1.1" 200 8007
+"GET /suppliers/commission/ HTTP/1.1" 200 8019
+"GET /sales/orders/ HTTP/1.1" 200 25236
+"GET /sales/orders/create/ HTTP/1.1" 200 21743
+"GET /sales/invoices/ HTTP/1.1" 200 7991
+"GET /sales/invoices/create/ HTTP/1.1" 200 8667
+"GET /sales/returns/ HTTP/1.1" 200 7985
+"GET /sales/payments/ HTTP/1.1" 200 7991
+"GET /sales/reports/daily/ HTTP/1.1" 200 7694
+"GET /sales/reports/monthly/ HTTP/1.1" 200 13530
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/create/ HTTP/1.1" 200 21461
+"GET /purchases/receipts/ HTTP/1.1" 200 7999
+"GET /purchases/receipts/create/ HTTP/1.1" 200 8675
+"GET /purchases/invoices/ HTTP/1.1" 200 8005
+"GET /purchases/returns/ HTTP/1.1" 200 7999
+"GET /purchases/payments/ HTTP/1.1" 200 8005
+"GET /purchases/reports/daily/ HTTP/1.1" 200 7703
+"GET /purchases/reports/monthly/ HTTP/1.1" 200 12447
+"GET /accounting/banks/ HTTP/1.1" 200 8029
+"GET /accounting/banks/create/ HTTP/1.1" 200 11715
+"GET /accounting/loans/ HTTP/1.1" 200 7971
+"GET /accounting/loans/create/ HTTP/1.1" 200 11159
+"GET /accounting/trial-balance/ HTTP/1.1" 200 9275
+"GET /accounting/trial-balance/create/ HTTP/1.1" 200 9788
+"GET /accounting/reports/daily/ HTTP/1.1" 200 7682
+"GET /accounting/reports/monthly/ HTTP/1.1" 200 15825
+"GET /accounting/reports/bank/ HTTP/1.1" 200 9476
+"GET /dashboard/ HTTP/1.1" 200 16389
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 21952
+"GET /purchases/orders/8/delete/ HTTP/1.1" 200 9058
+"POST /purchases/orders/8/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 20240
+"GET /purchases/orders/7/delete/ HTTP/1.1" 200 9059
+"POST /purchases/orders/7/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 18527
+"GET /purchases/orders/6/delete/ HTTP/1.1" 200 9066
+"POST /purchases/orders/6/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 16807
+"GET /purchases/orders/5/delete/ HTTP/1.1" 200 9060
+"POST /purchases/orders/5/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 15093
+"GET /purchases/orders/create/ HTTP/1.1" 200 21461
+"POST /purchases/orders/create/ HTTP/1.1" 200 21461
+"GET /purchases/orders/ HTTP/1.1" 200 15093
+"GET /purchases/orders/ HTTP/1.1" 200 15093
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Invalid HTTP_HOST header: '0.0.0.0:8080'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/http/request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '0.0.0.0:8080'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+"GET / HTTP/1.1" 400 75195
+Invalid HTTP_HOST header: '0.0.0.0:8080'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/http/request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '0.0.0.0:8080'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+"GET /favicon.ico HTTP/1.1" 400 75137
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3781
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 16389
+"GET /purchases/orders/ HTTP/1.1" 200 15093
+"GET /purchases/orders/create/ HTTP/1.1" 200 21461
+"POST /purchases/orders/create/ HTTP/1.1" 200 21461
+"GET /purchases/orders/ HTTP/1.1" 200 15093
+"GET /purchases/orders/ HTTP/1.1" 200 15093
+"GET /purchases/orders/create/ HTTP/1.1" 200 21461
+"GET /purchases/orders/create/ HTTP/1.1" 200 21461
+"GET /dashboard/ HTTP/1.1" 200 16389
+"GET /purchases/orders/ HTTP/1.1" 200 16812
+"GET /purchases/orders/create/ HTTP/1.1" 200 21443
+"POST /purchases/orders/create/ HTTP/1.1" 200 21443
+"GET /purchases/orders/ HTTP/1.1" 200 16812
+"GET /purchases/orders/9/edit/ HTTP/1.1" 200 16996
+"GET /purchases/orders/ HTTP/1.1" 200 16812
+"GET /purchases/orders/9/edit/ HTTP/1.1" 200 16996
+"GET /purchases/orders/create/ HTTP/1.1" 200 21443
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4564
+"GET /stock/warehouses/ HTTP/1.1" 200 12537
+"GET /stock/warehouses/create/ HTTP/1.1" 200 9863
+"GET /stock/products/ HTTP/1.1" 200 28379
+"GET /stock/products/create/ HTTP/1.1" 200 12943
+"GET /stock/stock/ HTTP/1.1" 200 69283
+"GET /stock/movements/ HTTP/1.1" 200 102463
+"GET /stock/alerts/ HTTP/1.1" 200 8017
+"GET /stock/reports/stock/ HTTP/1.1" 200 10371
+"GET /stock/reports/valuation/ HTTP/1.1" 200 10371
+"GET /customers/ HTTP/1.1" 200 19997
+"GET /customers/create/ HTTP/1.1" 200 11834
+"GET /customers/ledger/ HTTP/1.1" 200 8007
+"GET /customers/commission/ HTTP/1.1" 200 10853
+"GET /customers/commitment/ HTTP/1.1" 200 8019
+"GET /suppliers/ HTTP/1.1" 200 16783
+"GET /suppliers/create/ HTTP/1.1" 200 11573
+"GET /suppliers/ledger/ HTTP/1.1" 200 8007
+"GET /suppliers/commission/ HTTP/1.1" 200 8019
+"GET /sales/orders/ HTTP/1.1" 200 25236
+"GET /sales/orders/create/ HTTP/1.1" 200 21743
+"GET /sales/invoices/ HTTP/1.1" 200 7991
+"GET /sales/invoices/create/ HTTP/1.1" 200 8667
+"GET /sales/returns/ HTTP/1.1" 200 7985
+"GET /sales/payments/ HTTP/1.1" 200 7991
+"GET /sales/reports/daily/ HTTP/1.1" 200 7694
+"GET /sales/reports/monthly/ HTTP/1.1" 200 13530
+"GET /purchases/orders/ HTTP/1.1" 200 20259
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+"GET /purchases/receipts/ HTTP/1.1" 200 7999
+"GET /purchases/receipts/create/ HTTP/1.1" 200 8675
+"GET /purchases/invoices/ HTTP/1.1" 200 8005
+"GET /purchases/returns/ HTTP/1.1" 200 7999
+"GET /purchases/payments/ HTTP/1.1" 200 8005
+"GET /purchases/reports/daily/ HTTP/1.1" 200 7703
+"GET /purchases/reports/monthly/ HTTP/1.1" 200 10268
+"GET /accounting/banks/ HTTP/1.1" 200 8029
+"GET /accounting/banks/create/ HTTP/1.1" 200 11715
+"GET /accounting/loans/ HTTP/1.1" 200 7971
+"GET /accounting/loans/create/ HTTP/1.1" 200 11159
+"GET /accounting/trial-balance/ HTTP/1.1" 200 9275
+"GET /accounting/trial-balance/create/ HTTP/1.1" 200 9788
+"GET /accounting/reports/daily/ HTTP/1.1" 200 7682
+"GET /accounting/reports/monthly/ HTTP/1.1" 200 15825
+"GET /accounting/reports/bank/ HTTP/1.1" 200 9476
+Watching for file changes with StatReloader
+"GET /purchases/orders/9/edit/ HTTP/1.1" 200 22148
+"POST /purchases/orders/9/edit/ HTTP/1.1" 200 22154
+"GET /purchases/orders/ HTTP/1.1" 200 20259
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/10/edit/ HTTP/1.1" 200 22148
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"POST /purchases/orders/10/edit/ HTTP/1.1" 200 22153
+"GET /purchases/orders/ HTTP/1.1" 200 20259
+"GET /purchases/orders/ HTTP/1.1" 200 20259
+"GET /purchases/orders/9/edit/ HTTP/1.1" 200 22148
+"POST /purchases/orders/9/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 20652
+"GET /purchases/orders/10/edit/ HTTP/1.1" 200 22148
+"POST /purchases/orders/10/edit/ HTTP/1.1" 200 22155
+"GET /purchases/orders/ HTTP/1.1" 200 20263
+"GET /purchases/orders/11/edit/ HTTP/1.1" 200 22287
+"POST /purchases/orders/11/edit/ HTTP/1.1" 200 22287
+"GET /purchases/orders/ HTTP/1.1" 200 20263
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+"GET /purchases/orders/ HTTP/1.1" 200 20263
+"GET /purchases/orders/1/delete/ HTTP/1.1" 200 9060
+"POST /purchases/orders/1/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 18547
+"GET /purchases/orders/2/delete/ HTTP/1.1" 200 9056
+"POST /purchases/orders/2/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 16837
+"GET /purchases/orders/10/delete/ HTTP/1.1" 200 9065
+"POST /purchases/orders/10/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 15115
+"GET /purchases/orders/11/delete/ HTTP/1.1" 200 9068
+"POST /purchases/orders/11/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+"POST /purchases/orders/create/ HTTP/1.1" 200 22107
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+"POST /purchases/orders/create/ HTTP/1.1" 200 22107
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/ HTTP/1.1" 200 13390
+"GET /purchases/orders/create/ HTTP/1.1" 200 22107
+"GET /purchases/orders/create/ HTTP/1.1" 200 28633
+"HEAD /purchases/orders/create/ HTTP/1.1" 200 0
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 27125
+"GET /purchases/orders/ HTTP/1.1" 200 27125
+"GET /purchases/orders/16/edit/ HTTP/1.1" 200 29433
+"POST /purchases/orders/16/edit/ HTTP/1.1" 200 29440
+"GET /purchases/orders/ HTTP/1.1" 200 27125
+"GET /purchases/orders/16/edit/ HTTP/1.1" 200 29433
+"POST /purchases/orders/16/edit/ HTTP/1.1" 200 29442
+"POST /purchases/orders/16/edit/ HTTP/1.1" 200 29439
+Watching for file changes with StatReloader
+"POST /purchases/orders/16/edit/ HTTP/1.1" 200 29440
+"GET /purchases/orders/ HTTP/1.1" 200 27125
+"GET /purchases/orders/ HTTP/1.1" 200 27125
+"GET /purchases/orders/14/edit/ HTTP/1.1" 200 29426
+"POST /purchases/orders/14/edit/ HTTP/1.1" 200 29433
+"POST /purchases/orders/14/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 27531
+"GET /purchases/orders/ HTTP/1.1" 200 27141
+"GET /purchases/orders/16/edit/ HTTP/1.1" 200 29433
+"GET /purchases/orders/ HTTP/1.1" 200 27141
+"GET /purchases/orders/19/delete/ HTTP/1.1" 200 9067
+"POST /purchases/orders/19/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 25417
+"GET /purchases/orders/18/delete/ HTTP/1.1" 200 9068
+"POST /purchases/orders/18/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 23692
+"GET /purchases/orders/17/delete/ HTTP/1.1" 200 9056
+"POST /purchases/orders/17/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 21979
+"GET /purchases/orders/16/delete/ HTTP/1.1" 200 9056
+"POST /purchases/orders/16/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 20266
+"GET /purchases/orders/15/delete/ HTTP/1.1" 200 9059
+"POST /purchases/orders/15/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/create/ HTTP/1.1" 200 29377
+"POST /purchases/orders/create/ HTTP/1.1" 200 29377
+"HEAD /purchases/orders/create/ HTTP/1.1" 200 0
+"POST /purchases/orders/create/ HTTP/1.1" 200 32069
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/4/edit/ HTTP/1.1" 200 39945
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/4/delete/ HTTP/1.1" 200 9056
+"GET /purchases/orders/4/ HTTP/1.1" 200 11110
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/create/ HTTP/1.1" 200 32069
+"POST /purchases/orders/create/ HTTP/1.1" 200 32069
+"GET /purchases/orders/ HTTP/1.1" 200 18550
+"GET /purchases/orders/create/ HTTP/1.1" 200 32069
+"POST /purchases/orders/create/ HTTP/1.1" 200 32069
