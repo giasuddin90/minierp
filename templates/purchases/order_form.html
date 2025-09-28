@@ -15,11 +15,6 @@
                 </h5>
             </div>
             <div class="card-body">
-                <!-- Required Fields Notice -->
-                <div class="alert alert-info mb-4">
-                    <h6><i class="bi bi-info-circle"></i> Required Fields</h6>
-                    <p class="mb-0">Fields marked with <span class="text-danger fw-bold">*</span> are required and must be filled before submitting the form.</p>
-                </div>
                 
                 <form method="post">
                     {% csrf_token %}
@@ -58,8 +53,8 @@
                         <div class="col-md-6 mb-3">
                             <label for="id_status" class="form-label">Status</label>
                             <select class="form-select" id="id_status" name="status">
-                                <option value="pending" {% if object.status == 'pending' %}selected{% endif %}>Pending</option>
-                                <option value="confirmed" {% if object.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="draft" {% if object.status == 'draft' or not object %}selected{% endif %}>Draft</option>
+                                <option value="sent" {% if object.status == 'sent' %}selected{% endif %}>Sent</option>
                                 <option value="received" {% if object.status == 'received' %}selected{% endif %}>Received</option>
                                 <option value="cancelled" {% if object.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
                             </select>

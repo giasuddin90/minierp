@@ -4335,3 +4335,153 @@ Watching for file changes with StatReloader
 "GET /purchases/orders/ HTTP/1.1" 200 18550
 "GET /purchases/orders/create/ HTTP/1.1" 200 32069
 "POST /purchases/orders/create/ HTTP/1.1" 200 32069
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 21979
+"GET /purchases/orders/ HTTP/1.1" 200 21979
+"GET /purchases/orders/3/delete/ HTTP/1.1" 200 9060
+"POST /purchases/orders/3/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 20263
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 16389
+"GET /purchases/orders/ HTTP/1.1" 200 20263
+"GET /admin/ HTTP/1.1" 200 25777
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+"GET /static/admin/js/theme.js HTTP/1.1" 304 0
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+"GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /admin/purchases/purchaseorder/ HTTP/1.1" 200 31074
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"POST /admin/purchases/purchaseorder/ HTTP/1.1" 200 24029
+"GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+"POST /admin/purchases/purchaseorder/ HTTP/1.1" 302 0
+"GET /admin/purchases/purchaseorder/ HTTP/1.1" 200 25574
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /purchases/orders/ HTTP/1.1" 200 8047
+"GET /purchases/orders/ HTTP/1.1" 200 8047
+"GET /purchases/orders/create/ HTTP/1.1" 200 30492
+"POST /purchases/orders/create/ HTTP/1.1" 200 30492
+"GET /purchases/orders/ HTTP/1.1" 200 8047
+"GET /purchases/orders/create/ HTTP/1.1" 200 30492
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 10350
+"GET /purchases/orders/ HTTP/1.1" 200 9964
+"GET /purchases/orders/ HTTP/1.1" 200 9964
+"GET /purchases/orders/create/ HTTP/1.1" 200 30492
+"GET /purchases/orders/create/ HTTP/1.1" 200 30492
+"POST /purchases/orders/create/ HTTP/1.1" 200 30492
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"POST /purchases/orders/create/ HTTP/1.1" 200 30486
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 15494
+"GET /purchases/orders/25/delete/ HTTP/1.1" 200 9063
+"POST /purchases/orders/25/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13389
+"GET /purchases/orders/24/delete/ HTTP/1.1" 200 9056
+"POST /purchases/orders/24/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 11677
+"GET /purchases/orders/23/delete/ HTTP/1.1" 200 9056
+"POST /purchases/orders/23/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 9964
+"GET /purchases/orders/create/ HTTP/1.1" 200 30486
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 12066
+"GET /purchases/orders/26/edit/ HTTP/1.1" 200 30517
+"POST /purchases/orders/26/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 12075
+"GET /purchases/orders/ HTTP/1.1" 200 11713
+"GET /purchases/orders/ HTTP/1.1" 200 11713
+"GET /purchases/orders/create/ HTTP/1.1" 200 30562
+"GET /purchases/orders/create/ HTTP/1.1" 200 30562
+"GET /purchases/orders/create/ HTTP/1.1" 200 30562
+"GET /purchases/orders/create/ HTTP/1.1" 200 30562
+"GET /purchases/orders/create/ HTTP/1.1" 200 30562
+"GET /purchases/orders/create/ HTTP/1.1" 200 30562
+"GET /purchases/orders/create/ HTTP/1.1" 200 31705
+"GET /purchases/orders/create/ HTTP/1.1" 200 31705
+"POST /purchases/orders/create/ HTTP/1.1" 200 31705
+"POST /purchases/orders/create/ HTTP/1.1" 200 31705
+"GET /purchases/orders/ HTTP/1.1" 200 13398
+"GET /purchases/orders/27/delete/ HTTP/1.1" 200 9056
+"POST /purchases/orders/27/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 11685
+"GET /purchases/orders/26/delete/ HTTP/1.1" 200 9064
+"POST /purchases/orders/26/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 9964
+"GET /purchases/orders/create/ HTTP/1.1" 200 31705
+"GET /purchases/orders/create/ HTTP/1.1" 200 31699
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 12071
+"GET /purchases/orders/ HTTP/1.1" 200 11685
+"GET /purchases/orders/create/ HTTP/1.1" 200 31699
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13789
+"GET /purchases/orders/ HTTP/1.1" 200 13403
+"GET /purchases/orders/ HTTP/1.1" 200 13403
+"GET /purchases/orders/28/edit/ HTTP/1.1" 200 31861
+"POST /purchases/orders/28/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13793
+"GET /purchases/orders/28/edit/ HTTP/1.1" 200 39593
+"POST /purchases/orders/28/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13793
+"GET /purchases/orders/28/edit/ HTTP/1.1" 200 39593
+"POST /purchases/orders/28/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13793
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/building_materials_full/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 13403
+"GET /purchases/orders/ HTTP/1.1" 200 13403
+"GET /purchases/orders/28/edit/ HTTP/1.1" 200 39593
+"POST /purchases/orders/28/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13404
+"GET /accounting/trial-balance/ HTTP/1.1" 200 9275
+"GET /purchases/orders/ HTTP/1.1" 200 13404
+"GET /purchases/orders/28/edit/ HTTP/1.1" 200 47328
+"POST /purchases/orders/28/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 13405
+"GET /suppliers/ HTTP/1.1" 200 20267
+"GET /suppliers/6/ HTTP/1.1" 200 11233
+"GET /suppliers/ledger/ HTTP/1.1" 200 8007
+"GET /suppliers/ledger/create/ HTTP/1.1" 200 8686
+"GET /suppliers/6/edit/ HTTP/1.1" 200 11628
+"GET /suppliers/ HTTP/1.1" 200 20267
+"GET /suppliers/6/ HTTP/1.1" 200 11233
+"GET /purchases/orders/create/ HTTP/1.1" 200 31699
+"GET /suppliers/ledger/ HTTP/1.1" 200 8007

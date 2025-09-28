@@ -45,10 +45,14 @@ class PurchaseOrderCreateView(CreateView):
                 form.instance.order_number = order_number
                 form.instance.created_by = self.request.user
                 
+                # Ensure status is valid (default to draft if invalid)
+                if form.instance.status not in ['draft', 'sent', 'received', 'cancelled']:
+                    form.instance.status = 'draft'
+                
                 # Save the order first
                 response = super().form_valid(form)
                 
-                # Handle multiple products
+                # Handle products - simplified approach
                 products = self.request.POST.getlist('products[]')
                 warehouses = self.request.POST.getlist('warehouses[]')
                 quantities = self.request.POST.getlist('quantities[]')
@@ -56,59 +60,36 @@ class PurchaseOrderCreateView(CreateView):
                 
                 total_amount = 0
                 items_created = 0
-                errors = []
                 
-                # Validate product data
-                if products and products[0]:
+                # Simple validation - just check if we have products
+                if products and products[0] and products[0].strip():
                     for i, product_id in enumerate(products):
-                        if not product_id:
+                        if not product_id or not product_id.strip():
                             continue
                             
-                        # Check if we have all required data for this product
-                        if i >= len(warehouses) or i >= len(quantities) or i >= len(prices):
-                            errors.append(f"Product {i+1}: Missing warehouse, quantity, or price")
-                            continue
-                            
-                        warehouse_id = warehouses[i]
-                        quantity_str = quantities[i]
-                        price_str = prices[i]
+                        # Get corresponding data
+                        warehouse_id = warehouses[i] if i < len(warehouses) else ''
+                        quantity_str = quantities[i] if i < len(quantities) else ''
+                        price_str = prices[i] if i < len(prices) else ''
                         
-                        # Validate product exists
+                        # Skip if any required data is missing
+                        if not warehouse_id or not quantity_str or not price_str:
+                            continue
+                            
                         try:
+                            # Get objects
                             product = Product.objects.get(id=product_id)
-                        except Product.DoesNotExist:
-                            errors.append(f"Product {i+1}: Product not found")
-                            continue
-                        
-                        # Validate warehouse exists
-                        try:
                             warehouse = Warehouse.objects.get(id=warehouse_id)
-                        except Warehouse.DoesNotExist:
-                            errors.append(f"Product {i+1}: Warehouse not found")
-                            continue
-                        
-                        # Validate quantity
-                        try:
-                            quantity = float(quantity_str) if quantity_str else 0
-                            if quantity <= 0:
-                                errors.append(f"Product {i+1} ({product.name}): Quantity must be greater than 0")
+                            
+                            # Convert to numbers
+                            quantity = float(quantity_str)
+                            unit_price = float(price_str)
+                            
+                            # Skip if invalid numbers
+                            if quantity <= 0 or unit_price <= 0:
                                 continue
-                        except ValueError:
-                            errors.append(f"Product {i+1} ({product.name}): Invalid quantity '{quantity_str}'")
-                            continue
-                        
-                        # Validate price
-                        try:
-                            unit_price = float(price_str) if price_str else 0
-                            if unit_price <= 0:
-                                errors.append(f"Product {i+1} ({product.name}): Price must be greater than 0")
-                                continue
-                        except ValueError:
-                            errors.append(f"Product {i+1} ({product.name}): Invalid price '{price_str}'")
-                            continue
-                        
-                        # Create order item
-                        try:
+                            
+                            # Create item
                             item_total = quantity * unit_price
                             PurchaseOrderItem.objects.create(
                                 purchase_order=self.object,
@@ -121,32 +102,21 @@ class PurchaseOrderCreateView(CreateView):
                             total_amount += item_total
                             items_created += 1
                             
-                        except Exception as e:
-                            errors.append(f"Product {i+1} ({product.name}): Failed to create item - {str(e)}")
+                        except (Product.DoesNotExist, Warehouse.DoesNotExist, ValueError, IndexError):
+                            # Silently skip invalid items
                             continue
-                
-                # Show errors if any
-                if errors:
-                    for error in errors:
-                        messages.error(self.request, error)
                 
                 # Update total amount
                 self.object.total_amount = total_amount
                 self.object.save()
                 
-                # Show success message
-                if items_created > 0:
-                    messages.success(self.request, f"✅ Purchase order {order_number} created successfully!")
-                    messages.info(self.request, f"📦 Added {items_created} products with total value: ৳{total_amount:,.2f}")
-                else:
-                    messages.warning(self.request, f"⚠️ Purchase order {order_number} created without products")
-                    messages.info(self.request, "💡 You can edit the order later to add products")
+                # Order created successfully - no message needed
                 
                 return response
                 
         except Exception as e:
-            messages.error(self.request, f"❌ Error creating purchase order: {str(e)}")
-            messages.info(self.request, "💡 Please check all fields and try again")
+            # Simple error message
+            messages.error(self.request, f"❌ Failed to create order. Please try again.")
             return self.form_invalid(form)
 
 
@@ -211,10 +181,7 @@ class PurchaseOrderUpdateView(UpdateView):
                 self.object.total_amount = total_amount
                 self.object.save()
                 
-                if items_created > 0:
-                    messages.success(self.request, f"Purchase order updated successfully with {items_created} products! Total: ৳{total_amount}")
-                else:
-                    messages.warning(self.request, f"Purchase order updated without items. Please add products to complete the order.")
+                # Order updated successfully - no message needed
                 
                 return response
                 
