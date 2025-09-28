@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Suppliers - Building Materials ERP{% endblock %}
+
+{% block page_title %}Suppliers{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'suppliers:supplier_create' %}" class="btn btn-primary">
+    <i class="bi bi-plus-circle"></i> Add Supplier
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-truck"></i>
+                    Supplier List
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if suppliers %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Payment Terms</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for supplier in suppliers %}
+                            <tr>
+                                <td>
+                                    <strong>{{ supplier.name }}</strong>
+                                    {% if supplier.company_name %}
+                                    <br><small class="text-muted">{{ supplier.company_name }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div>
+                                        <i class="bi bi-telephone"></i> {{ supplier.phone|default:"-" }}<br>
+                                        <i class="bi bi-envelope"></i> {{ supplier.email|default:"-" }}
+                                    </div>
+                                </td>
+                                <td>{{ supplier.payment_terms|default:"-" }}</td>
+                                <td>
+                                    {% if supplier.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'suppliers:supplier_detail' supplier.pk %}" class="btn btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{% url 'suppliers:supplier_edit' supplier.pk %}" class="btn btn-outline-warning">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'suppliers:supplier_delete' supplier.pk %}" class="btn btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-truck fs-1 text-muted"></i>
+                    <h5 class="text-muted mt-3">No suppliers found</h5>
+                    <p class="text-muted">Start by adding your first supplier.</p>
+                    <a href="{% url 'suppliers:supplier_create' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Supplier
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

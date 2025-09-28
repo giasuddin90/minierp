@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Product - Building Materials ERP{% endblock %}
+
+{% block page_title %}{% if object %}Edit Product{% else %}Add Product{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-box-seam"></i>
+                    {% if object %}Edit Product{% else %}Add New Product{% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_name" class="form-label">Product Name *</label>
+                            <input type="text" class="form-control" id="id_name" name="name" value="{{ object.name|default:'' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_brand" class="form-label">Brand</label>
+                            <input type="text" class="form-control" id="id_brand" name="brand" value="{{ object.brand|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_unit_type" class="form-label">Unit Type *</label>
+                            <select class="form-select" id="id_unit_type" name="unit_type" required>
+                                <option value="">Select Unit Type</option>
+                                <option value="bag" {% if object.unit_type == 'bag' %}selected{% endif %}>Bag</option>
+                                <option value="bundle" {% if object.unit_type == 'bundle' %}selected{% endif %}>Bundle</option>
+                                <option value="pcs" {% if object.unit_type == 'pcs' %}selected{% endif %}>Pieces</option>
+                                <option value="kg" {% if object.unit_type == 'kg' %}selected{% endif %}>Kilogram</option>
+                                <option value="sqft" {% if object.unit_type == 'sqft' %}selected{% endif %}>Square Feet</option>
+                                <option value="liter" {% if object.unit_type == 'liter' %}selected{% endif %}>Liter</option>
+                                <option value="other" {% if object.unit_type == 'other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_unit_name" class="form-label">Unit Name *</label>
+                            <input type="text" class="form-control" id="id_unit_name" name="unit_name" value="{{ object.unit_name|default:'' }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_min_stock_level" class="form-label">Minimum Stock Level</label>
+                            <input type="number" class="form-control" id="id_min_stock_level" name="min_stock_level" value="{{ object.min_stock_level|default:0 }}" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_cost_price" class="form-label">Cost Price *</label>
+                            <input type="number" class="form-control" id="id_cost_price" name="cost_price" value="{{ object.cost_price|default:0 }}" step="0.01" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_selling_price" class="form-label">Selling Price *</label>
+                            <input type="number" class="form-control" id="id_selling_price" name="selling_price" value="{{ object.selling_price|default:0 }}" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_description" class="form-label">Description</label>
+                        <textarea class="form-control" id="id_description" name="description" rows="3">{{ object.description|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="id_is_active" name="is_active" {% if object.is_active or not object %}checked{% endif %}>
+                        <label class="form-check-label" for="id_is_active">
+                            Active
+                        </label>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'stock:product_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Products
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Create{% endif %} Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Product Information
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small">
+                    <strong>Product Name:</strong> Enter a descriptive name for the product.
+                </p>
+                <p class="text-muted small">
+                    <strong>Category:</strong> Select the appropriate category for better organization.
+                </p>
+                <p class="text-muted small">
+                    <strong>Unit Type:</strong> Choose the measurement unit (bag, kg, sqft, etc.).
+                </p>
+                <p class="text-muted small">
+                    <strong>Pricing:</strong> Set both cost and selling prices for profit calculation.
+                </p>
+                <p class="text-muted small">
+                    <strong>Stock Level:</strong> Set minimum stock level for alerts.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

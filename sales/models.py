@@ -27,6 +27,28 @@ class SalesOrder(models.Model):
     def __str__(self):
         return f"SO-{self.order_number} - {self.customer.name}"
 
+    def complete_order(self, user=None):
+        """Complete the order and update inventory"""
+        from stock.models import Stock
+        
+        if self.status != 'delivered':
+            self.status = 'delivered'
+            self.save()
+            
+            # Update inventory for each item
+            for item in self.items.all():
+                # Reduce stock (outward movement)
+                Stock.update_stock(
+                    product=item.product,
+                    warehouse=item.warehouse,
+                    quantity_change=item.quantity,
+                    unit_cost=item.unit_price,
+                    movement_type='outward',
+                    reference=f"SO-{self.order_number}",
+                    description=f"Sales order completion - {self.customer.name}",
+                    user=user
+                )
+
     class Meta:
         verbose_name = "Sales Order"
         verbose_name_plural = "Sales Orders"
@@ -35,6 +57,7 @@ class SalesOrder(models.Model):
 class SalesOrderItem(models.Model):
     sales_order = models.ForeignKey(SalesOrder, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_price = models.DecimalField(max_digits=15, decimal_places=2)
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -81,7 +104,7 @@ class SalesInvoice(models.Model):
 class SalesInvoiceItem(models.Model):
     sales_invoice = models.ForeignKey(SalesInvoice, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_price = models.DecimalField(max_digits=15, decimal_places=2)
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -121,7 +144,7 @@ class SalesReturn(models.Model):
 class SalesReturnItem(models.Model):
     sales_return = models.ForeignKey(SalesReturn, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_price = models.DecimalField(max_digits=15, decimal_places=2)
     total_price = models.DecimalField(max_digits=15, decimal_places=2)

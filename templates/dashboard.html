@@ -204,12 +204,12 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
-                    <i class="bi bi-pie-chart"></i>
-                    Product Categories
+                    <i class="bi bi-box-seam"></i>
+                    Stock Overview
                 </h5>
             </div>
             <div class="card-body">
-                <canvas id="categoryChart" width="400" height="200"></canvas>
+                <canvas id="stockChart" width="400" height="200"></canvas>
             </div>
         </div>
     </div>
@@ -242,20 +242,18 @@ new Chart(salesCtx, {
     }
 });
 
-// Product Categories Chart
-const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-new Chart(categoryCtx, {
+// Stock Overview Chart
+const stockCtx = document.getElementById('stockChart').getContext('2d');
+new Chart(stockCtx, {
     type: 'doughnut',
     data: {
-        labels: ['Cement', 'Rod', 'Tiles', 'Paint', 'Others'],
+        labels: ['In Stock', 'Low Stock', 'Out of Stock'],
         datasets: [{
-            data: [30, 25, 20, 15, 10],
+            data: [60, 25, 15],
             backgroundColor: [
-                '#667eea',
-                '#764ba2',
-                '#f093fb',
-                '#f5576c',
-                '#4facfe'
+                '#28a745',
+                '#ffc107',
+                '#dc3545'
             ]
         }]
     },

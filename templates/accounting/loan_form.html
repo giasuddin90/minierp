@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {% if object %}Edit Loan{% else %}Add Loan{% endif %}
+{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:loan_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bank"></i>
+                    {% if object %}Edit Loan{% else %}Add Loan{% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_loan_number" class="form-label">Loan Number *</label>
+                            <input type="text" class="form-control" id="id_loan_number" name="loan_number" value="{{ object.loan_number|default:'' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_bank_account" class="form-label">Bank Account *</label>
+                            <select class="form-select" id="id_bank_account" name="bank_account" required>
+                                <option value="">Select Bank Account</option>
+                                {% for bank in banks %}
+                                <option value="{{ bank.id }}" {% if object.bank_account.id == bank.id %}selected{% endif %}>
+                                    {{ bank.bank_name }} - {{ bank.account_number }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_amount" class="form-label">Amount *</label>
+                            <input type="number" class="form-control" id="id_amount" name="amount" value="{{ object.amount|default:0 }}" step="0.01" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_interest_rate" class="form-label">Interest Rate (%)</label>
+                            <input type="number" class="form-control" id="id_interest_rate" name="interest_rate" value="{{ object.interest_rate|default:0 }}" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_start_date" class="form-label">Start Date *</label>
+                            <input type="date" class="form-control" id="id_start_date" name="start_date" value="{{ object.start_date|default:'' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="id_end_date" name="end_date" value="{{ object.end_date|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_status" class="form-label">Status</label>
+                            <select class="form-select" id="id_status" name="status">
+                                <option value="active" {% if object.status == 'active' %}selected{% endif %}>Active</option>
+                                <option value="paid" {% if object.status == 'paid' %}selected{% endif %}>Paid</option>
+                                <option value="default" {% if object.status == 'default' %}selected{% endif %}>Default</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="id_notes" name="notes" rows="3">{{ object.notes|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'accounting:loan_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">
+                            {% if object %}Update{% else %}Create{% endif %} Loan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

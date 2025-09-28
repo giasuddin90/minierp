@@ -11,12 +11,6 @@ urlpatterns = [
     path('warehouses/<int:pk>/edit/', views.WarehouseUpdateView.as_view(), name='warehouse_edit'),
     path('warehouses/<int:pk>/delete/', views.WarehouseDeleteView.as_view(), name='warehouse_delete'),
     
-    # Product Category Management
-    path('categories/', views.ProductCategoryListView.as_view(), name='category_list'),
-    path('categories/create/', views.ProductCategoryCreateView.as_view(), name='category_create'),
-    path('categories/<int:pk>/edit/', views.ProductCategoryUpdateView.as_view(), name='category_edit'),
-    path('categories/<int:pk>/delete/', views.ProductCategoryDeleteView.as_view(), name='category_delete'),
-    
     # Product Management
     path('products/', views.ProductListView.as_view(), name='product_list'),
     path('products/create/', views.ProductCreateView.as_view(), name='product_create'),

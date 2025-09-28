@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Bank Report{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bank"></i>
+                    Bank Report
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if reports %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Bank Name</th>
+                                <th>Account Number</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bank in reports %}
+                            <tr>
+                                <td>{{ bank.bank_name }}</td>
+                                <td>{{ bank.account_number }}</td>
+                                <td>৳{{ bank.current_balance|floatformat:2 }}</td>
+                                <td>
+                                    {% if bank.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="bi bi-bank text-muted" style="font-size: 3rem;"></i>
+                    <p class="text-muted mt-3">No bank accounts found.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

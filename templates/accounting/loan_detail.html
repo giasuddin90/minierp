@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Loan Details{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:loan_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+    <a href="{% url 'accounting:loan_edit' object.pk %}" class="btn btn-outline-primary">
+        <i class="bi bi-pencil"></i> Edit
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bank"></i>
+                    Loan Details
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Loan Number:</strong></td>
+                        <td>{{ object.loan_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bank Account:</strong></td>
+                        <td>{{ object.bank_account.bank_name }} - {{ object.bank_account.account_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amount:</strong></td>
+                        <td>৳{{ object.amount|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interest Rate:</strong></td>
+                        <td>{{ object.interest_rate }}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Start Date:</strong></td>
+                        <td>{{ object.start_date|date:"M d, Y" }}</td>
+                    </tr>
+                    {% if object.end_date %}
+                    <tr>
+                        <td><strong>End Date:</strong></td>
+                        <td>{{ object.end_date|date:"M d, Y" }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td><strong>Status:</strong></td>
+                        <td>
+                            <span class="badge bg-{% if object.status == 'active' %}success{% elif object.status == 'paid' %}primary{% else %}warning{% endif %}">
+                                {{ object.get_status_display }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% if object.notes %}
+                    <tr>
+                        <td><strong>Notes:</strong></td>
+                        <td>{{ object.notes }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -107,8 +107,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login/Logout URLs
 LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/admin/login/'
+
+# Custom login template
+LOGIN_TEMPLATE = 'registration/login.html'
 
 # Session configuration
 SESSION_COOKIE_AGE = 86400  # 24 hours

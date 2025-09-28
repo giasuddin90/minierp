@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Trial Balance Details{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:trial_balance_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+    <a href="{% url 'accounting:trial_balance_edit' object.pk %}" class="btn btn-outline-primary">
+        <i class="bi bi-pencil"></i> Edit
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-calculator"></i>
+                    Trial Balance Details
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Date:</strong></td>
+                        <td>{{ object.date|date:"M d, Y" }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Debits:</strong></td>
+                        <td>৳{{ object.total_debits|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Credits:</strong></td>
+                        <td>৳{{ object.total_credits|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Balance:</strong></td>
+                        <td>৳{{ object.balance|floatformat:2 }}</td>
+                    </tr>
+                    {% if object.notes %}
+                    <tr>
+                        <td><strong>Notes:</strong></td>
+                        <td>{{ object.notes }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

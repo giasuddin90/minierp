@@ -3,12 +3,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
+from . import views
+from . import admin_views
 
-def redirect_to_admin(request):
-    return redirect('/admin/')
+def redirect_to_dashboard(request):
+    return redirect('/dashboard/')
 
 urlpatterns = [
-    path('', redirect_to_admin, name='home'),
+    path('', redirect_to_dashboard, name='home'),
+    path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
     path('accounting/', include('accounting.urls')),
     path('customers/', include('customers.urls')),

@@ -37,25 +37,25 @@ class SupplierDeleteView(DeleteView):
 
 class SupplierLedgerListView(ListView):
     model = SupplierLedger
-    template_name = 'suppliers/supplier_ledger_list.html'
-    context_object_name = 'ledger_entries'
+    template_name = 'suppliers/ledger_list.html'
+    context_object_name = 'items'
 
 
 class SupplierLedgerCreateView(CreateView):
     model = SupplierLedger
-    template_name = 'suppliers/supplier_ledger_form.html'
+    template_name = 'suppliers/ledger_form.html'
     fields = '__all__'
-    success_url = reverse_lazy('suppliers:supplier_list')
+    success_url = reverse_lazy('suppliers:ledger_list')
 
 
 class SupplierCommissionListView(ListView):
     model = SupplierCommission
-    template_name = 'suppliers/supplier_commission_list.html'
-    context_object_name = 'commissions'
+    template_name = 'suppliers/commission_list.html'
+    context_object_name = 'items'
 
 
 class SupplierCommissionCreateView(CreateView):
     model = SupplierCommission
-    template_name = 'suppliers/supplier_commission_form.html'
+    template_name = 'suppliers/commission_form.html'
     fields = '__all__'
-    success_url = reverse_lazy('suppliers:supplier_list')
+    success_url = reverse_lazy('suppliers:commission_list')

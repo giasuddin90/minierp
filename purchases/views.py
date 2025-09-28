@@ -158,15 +158,31 @@ class PurchasePaymentDeleteView(DeleteView):
 
 
 class PurchaseDailyReportView(ListView):
+    model = PurchaseOrder
     template_name = 'purchases/purchase_daily_report.html'
     context_object_name = 'reports'
+    
+    def get_queryset(self):
+        from django.utils import timezone
+        today = timezone.now().date()
+        return PurchaseOrder.objects.filter(order_date=today)
 
 
 class PurchaseMonthlyReportView(ListView):
+    model = PurchaseOrder
     template_name = 'purchases/purchase_monthly_report.html'
     context_object_name = 'reports'
+    
+    def get_queryset(self):
+        from django.utils import timezone
+        now = timezone.now()
+        return PurchaseOrder.objects.filter(
+            order_date__year=now.year,
+            order_date__month=now.month
+        )
 
 
 class PurchaseSupplierReportView(ListView):
+    model = PurchaseOrder
     template_name = 'purchases/purchase_supplier_report.html'
     context_object_name = 'reports'

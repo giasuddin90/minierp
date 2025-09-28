@@ -26,6 +26,8 @@ urlpatterns = [
     path('trial-balance/', views.TrialBalanceListView.as_view(), name='trial_balance_list'),
     path('trial-balance/create/', views.TrialBalanceCreateView.as_view(), name='trial_balance_create'),
     path('trial-balance/<int:pk>/', views.TrialBalanceDetailView.as_view(), name='trial_balance_detail'),
+    path('trial-balance/<int:pk>/edit/', views.TrialBalanceUpdateView.as_view(), name='trial_balance_edit'),
+    path('trial-balance/<int:pk>/delete/', views.TrialBalanceDeleteView.as_view(), name='trial_balance_delete'),
     
     # Reports
     path('reports/daily/', views.DailyReportView.as_view(), name='daily_report'),

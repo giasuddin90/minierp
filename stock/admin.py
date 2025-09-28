@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Warehouse, ProductCategory, Product, Stock, StockMovement, StockAlert
+from .models import Warehouse, Product, Stock, StockMovement, StockAlert
 
 
 @admin.register(Warehouse)
@@ -10,18 +10,10 @@ class WarehouseAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at']
 
 
-@admin.register(ProductCategory)
-class ProductCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'is_active']
-    list_filter = ['is_active', 'created_at']
-    search_fields = ['name', 'description']
-    readonly_fields = ['created_at']
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'brand', 'unit_type', 'cost_price', 'selling_price', 'is_active']
-    list_filter = ['category', 'unit_type', 'is_active', 'created_at']
+    list_display = ['name', 'brand', 'unit_type', 'cost_price', 'selling_price', 'is_active']
+    list_filter = ['unit_type', 'is_active', 'created_at']
     search_fields = ['name', 'brand', 'description']
     readonly_fields = ['created_at', 'updated_at']
 

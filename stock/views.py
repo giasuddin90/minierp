@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Warehouse, ProductCategory, Product, Stock, StockMovement, StockAlert
+from .models import Warehouse, Product, Stock, StockMovement, StockAlert
 
 
 class WarehouseListView(ListView):
@@ -35,30 +35,6 @@ class WarehouseDeleteView(DeleteView):
     success_url = reverse_lazy('stock:warehouse_list')
 
 
-class ProductCategoryListView(ListView):
-    model = ProductCategory
-    template_name = 'stock/category_list.html'
-    context_object_name = 'categories'
-
-
-class ProductCategoryCreateView(CreateView):
-    model = ProductCategory
-    template_name = 'stock/category_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('stock:category_list')
-
-
-class ProductCategoryUpdateView(UpdateView):
-    model = ProductCategory
-    template_name = 'stock/category_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('stock:category_list')
-
-
-class ProductCategoryDeleteView(DeleteView):
-    model = ProductCategory
-    template_name = 'stock/category_confirm_delete.html'
-    success_url = reverse_lazy('stock:category_list')
 
 
 class ProductListView(ListView):
@@ -130,10 +106,12 @@ class StockAlertListView(ListView):
 
 
 class StockReportView(ListView):
+    model = Stock
     template_name = 'stock/stock_report.html'
     context_object_name = 'reports'
 
 
 class StockValuationReportView(ListView):
+    model = Stock
     template_name = 'stock/stock_valuation_report.html'
     context_object_name = 'reports'

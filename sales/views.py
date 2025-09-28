@@ -127,15 +127,31 @@ class SalesPaymentDeleteView(DeleteView):
 
 
 class SalesDailyReportView(ListView):
+    model = SalesOrder
     template_name = 'sales/sales_daily_report.html'
     context_object_name = 'reports'
+    
+    def get_queryset(self):
+        from django.utils import timezone
+        today = timezone.now().date()
+        return SalesOrder.objects.filter(order_date=today)
 
 
 class SalesMonthlyReportView(ListView):
+    model = SalesOrder
     template_name = 'sales/sales_monthly_report.html'
     context_object_name = 'reports'
+    
+    def get_queryset(self):
+        from django.utils import timezone
+        now = timezone.now()
+        return SalesOrder.objects.filter(
+            order_date__year=now.year,
+            order_date__month=now.month
+        )
 
 
 class SalesCustomerReportView(ListView):
+    model = SalesOrder
     template_name = 'sales/sales_customer_report.html'
     context_object_name = 'reports'

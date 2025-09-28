@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Bank Account - Building Materials ERP{% endblock %}
+
+{% block page_title %}{% if object %}Edit Bank Account{% else %}Add Bank Account{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bank"></i>
+                    {% if object %}Edit Bank Account{% else %}Add New Bank Account{% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_account_name" class="form-label">Account Name *</label>
+                            <input type="text" class="form-control" id="id_account_name" name="account_name" value="{{ object.account_name|default:'' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_bank_name" class="form-label">Bank Name *</label>
+                            <input type="text" class="form-control" id="id_bank_name" name="bank_name" value="{{ object.bank_name|default:'' }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_account_number" class="form-label">Account Number *</label>
+                            <input type="text" class="form-control" id="id_account_number" name="account_number" value="{{ object.account_number|default:'' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_account_type" class="form-label">Account Type *</label>
+                            <select class="form-select" id="id_account_type" name="account_type" required>
+                                <option value="">Select Type</option>
+                                <option value="savings" {% if object.account_type == 'savings' %}selected{% endif %}>Savings</option>
+                                <option value="current" {% if object.account_type == 'current' %}selected{% endif %}>Current</option>
+                                <option value="fixed_deposit" {% if object.account_type == 'fixed_deposit' %}selected{% endif %}>Fixed Deposit</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_current_balance" class="form-label">Current Balance *</label>
+                            <input type="number" class="form-control" id="id_current_balance" name="current_balance" value="{{ object.current_balance|default:0 }}" step="0.01" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_branch_name" class="form-label">Branch Name</label>
+                            <input type="text" class="form-control" id="id_branch_name" name="branch_name" value="{{ object.branch_name|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="id_is_active" name="is_active" {% if object.is_active or not object %}checked{% endif %}>
+                        <label class="form-check-label" for="id_is_active">
+                            Active
+                        </label>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'accounting:bank_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Accounts
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Create{% endif %} Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Account Information
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small">
+                    <strong>Account Name:</strong> Descriptive name for the account.
+                </p>
+                <p class="text-muted small">
+                    <strong>Account Type:</strong> Type of bank account (Savings, Current, Fixed Deposit).
+                </p>
+                <p class="text-muted small">
+                    <strong>Current Balance:</strong> Opening balance for the account.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
