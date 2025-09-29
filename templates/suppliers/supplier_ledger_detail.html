@@ -108,6 +108,7 @@
                                 <th>Type</th>
                                 <th>Reference</th>
                                 <th>Description</th>
+                                <th>Payment Method</th>
                                 <th class="text-end">Debit</th>
                                 <th class="text-end">Credit</th>
                                 <th class="text-end">Balance</th>
@@ -133,6 +134,30 @@
                                     <code>{{ transaction.reference }}</code>
                                 </td>
                                 <td>{{ transaction.description }}</td>
+                                <td>
+                                    {% if transaction.payment_method %}
+                                        <span class="badge 
+                                            {% if transaction.payment_method == 'cash' %}bg-success
+                                            {% elif transaction.payment_method == 'bank_transfer' %}bg-primary
+                                            {% elif transaction.payment_method == 'cheque' %}bg-warning
+                                            {% else %}bg-secondary{% endif %}">
+                                            {% if transaction.payment_method == 'cash' %}
+                                                <i class="bi bi-cash me-1"></i>Cash
+                                            {% elif transaction.payment_method == 'bank_transfer' %}
+                                                <i class="bi bi-bank me-1"></i>Bank
+                                            {% elif transaction.payment_method == 'cheque' %}
+                                                <i class="bi bi-credit-card me-1"></i>Cheque
+                                            {% else %}
+                                                {{ transaction.payment_method|title }}
+                                            {% endif %}
+                                        </span>
+                                        {% if transaction.bank_account %}
+                                            <br><small class="text-muted">{{ transaction.bank_account.name }}</small>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
                                 <td class="text-end">
                                     {% if transaction.debit > 0 %}
                                         <span class="text-danger">৳{{ transaction.debit|floatformat:2 }}</span>

@@ -298,15 +298,33 @@ class PurchasePaymentListView(ListView):
 class PurchasePaymentCreateView(CreateView):
     model = PurchasePayment
     template_name = 'purchases/payment_form.html'
-    fields = '__all__'
+    fields = ['purchase_invoice', 'payment_date', 'payment_method', 'bank_account', 'amount', 'reference', 'notes']
     success_url = reverse_lazy('purchases:payment_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        from accounting.models import BankAccount
+        context['invoices'] = PurchaseInvoice.objects.filter(is_paid=False)
+        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
+        return context
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class PurchasePaymentUpdateView(UpdateView):
     model = PurchasePayment
     template_name = 'purchases/payment_form.html'
-    fields = '__all__'
+    fields = ['purchase_invoice', 'payment_date', 'payment_method', 'bank_account', 'amount', 'reference', 'notes']
     success_url = reverse_lazy('purchases:payment_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        from accounting.models import BankAccount
+        context['invoices'] = PurchaseInvoice.objects.all()
+        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
+        return context
 
 
 class PurchasePaymentDeleteView(DeleteView):
