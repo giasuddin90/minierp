@@ -123,6 +123,9 @@
                     <a href="{% url 'suppliers:supplier_ledger_detail' object.pk %}" class="btn btn-info">
                         <i class="bi bi-journal-text"></i> View Ledger
                     </a>
+                    <a href="{% url 'suppliers:supplier_opening_balance' object.pk %}" class="btn btn-warning">
+                        <i class="bi bi-wallet2"></i> Set Opening Balance
+                    </a>
                 </div>
             </div>
         </div>

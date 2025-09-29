@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from decimal import Decimal
 
 
@@ -19,6 +20,23 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def set_opening_balance(self, amount, user=None):
+        """Set opening balance and create ledger entry"""
+        self.opening_balance = amount
+        self.current_balance = amount
+        self.save()
+        
+        # Create opening balance ledger entry
+        SupplierLedger.objects.create(
+            supplier=self,
+            transaction_type='opening_balance',
+            amount=amount,
+            description=f"Opening balance set to ৳{amount}",
+            reference="OPENING",
+            transaction_date=timezone.now(),
+            created_by=user
+        )
 
     class Meta:
         verbose_name = "Supplier"
@@ -27,6 +45,7 @@ class Supplier(models.Model):
 
 class SupplierLedger(models.Model):
     TRANSACTION_TYPES = [
+        ('opening_balance', 'Opening Balance'),
         ('purchase', 'Purchase'),
         ('return', 'Return'),
         ('payment', 'Payment'),

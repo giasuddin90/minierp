@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Q, Sum
 from django.utils import timezone
+from django.contrib import messages
 from decimal import Decimal
 from .models import Supplier, SupplierLedger, SupplierCommission
 from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseReturn
@@ -154,6 +155,9 @@ class SupplierLedgerDetailView(DetailView):
             elif entry.transaction_type == 'payment':
                 debit = Decimal('0.00')
                 credit = entry.amount
+            elif entry.transaction_type == 'opening_balance':
+                debit = entry.amount if entry.amount > 0 else Decimal('0.00')
+                credit = abs(entry.amount) if entry.amount < 0 else Decimal('0.00')
             else:
                 debit = entry.amount if entry.amount > 0 else Decimal('0.00')
                 credit = abs(entry.amount) if entry.amount < 0 else Decimal('0.00')
@@ -173,7 +177,7 @@ class SupplierLedgerDetailView(DetailView):
         transactions.sort(key=lambda x: x['date'], reverse=True)
         
         # Calculate running balance
-        running_balance = supplier.opening_balance
+        running_balance = Decimal('0.00')  # Start from zero
         for transaction in reversed(transactions):  # Process oldest first for balance calculation
             running_balance += transaction['debit'] - transaction['credit']
             transaction['balance'] = running_balance
@@ -184,14 +188,46 @@ class SupplierLedgerDetailView(DetailView):
         # Calculate totals
         total_debit = sum(t['debit'] for t in transactions)
         total_credit = sum(t['credit'] for t in transactions)
-        current_balance = supplier.opening_balance + total_debit - total_credit
+        current_balance = total_debit - total_credit
+        
+        # Calculate actual opening balance from ledger entries
+        opening_balance_entry = next((t for t in transactions if t['type'] == 'Opening Balance'), None)
+        if opening_balance_entry:
+            actual_opening_balance = opening_balance_entry['debit'] - opening_balance_entry['credit']
+        else:
+            actual_opening_balance = Decimal('0.00')
+        
+        # Debug information
+        debug_info = {
+            'supplier_opening_balance': supplier.opening_balance,
+            'total_transactions': len(transactions),
+            'purchase_orders_count': len([t for t in transactions if t['type'] == 'Purchase Order']),
+            'opening_balance_entries': len([t for t in transactions if t['type'] == 'Opening Balance']),
+        }
         
         context.update({
             'transactions': transactions,
             'total_debit': total_debit,
             'total_credit': total_credit,
-            'opening_balance': supplier.opening_balance,
+            'opening_balance': actual_opening_balance,
             'current_balance': current_balance,
+            'debug_info': debug_info,
         })
         
         return context
+
+
+def set_opening_balance(request, pk):
+    """Set opening balance for a supplier"""
+    supplier = get_object_or_404(Supplier, pk=pk)
+    
+    if request.method == 'POST':
+        try:
+            amount = Decimal(request.POST.get('amount', 0))
+            supplier.set_opening_balance(amount, user=request.user)
+            messages.success(request, f'Opening balance set to ৳{amount} for {supplier.name}')
+            return redirect('suppliers:supplier_ledger_detail', pk=supplier.pk)
+        except (ValueError, TypeError):
+            messages.error(request, 'Invalid amount entered')
+    
+    return render(request, 'suppliers/set_opening_balance.html', {'supplier': supplier})

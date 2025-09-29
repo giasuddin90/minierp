@@ -12,6 +12,9 @@
     <a href="{% url 'suppliers:supplier_ledger_create' supplier.pk %}" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> Add Manual Entry
     </a>
+    <a href="{% url 'suppliers:supplier_opening_balance' supplier.pk %}" class="btn btn-warning">
+        <i class="bi bi-wallet2"></i> Set Opening Balance
+    </a>
     <a href="{% url 'purchases:order_create' %}" class="btn btn-success">
         <i class="bi bi-cart-plus"></i> New Purchase Order
     </a>
@@ -117,7 +120,8 @@
                                 <td>{{ transaction.date|date:"M d, Y" }}</td>
                                 <td>
                                     <span class="badge 
-                                        {% if transaction.type == 'Purchase Order' %}bg-primary
+                                        {% if transaction.type == 'Opening Balance' %}bg-dark
+                                        {% elif transaction.type == 'Purchase Order' %}bg-primary
                                         {% elif transaction.type == 'Purchase Invoice' %}bg-info
                                         {% elif transaction.type == 'Payment' %}bg-success
                                         {% elif transaction.type == 'Return' %}bg-warning
@@ -257,6 +261,42 @@
                     <strong class="{% if current_balance >= 0 %}text-danger{% else %}text-success{% endif %}">
                         ৳{{ current_balance|floatformat:2 }}
                     </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Debug Information (remove in production) -->
+{% if debug_info %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h6 class="mb-0">
+                    <i class="bi bi-bug me-1"></i>
+                    Debug Information
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Supplier Opening Balance:</strong><br>
+                        <span class="text-primary">৳{{ debug_info.supplier_opening_balance|floatformat:2 }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Total Transactions:</strong><br>
+                        <span class="text-info">{{ debug_info.total_transactions }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Purchase Orders:</strong><br>
+                        <span class="text-success">{{ debug_info.purchase_orders_count }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Opening Balance Entries:</strong><br>
+                        <span class="text-warning">{{ debug_info.opening_balance_entries }}</span>
+                    </div>
                 </div>
             </div>
         </div>
