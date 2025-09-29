@@ -5,31 +5,92 @@
 {% block page_title %}Customers{% endblock %}
 
 {% block page_actions %}
-<a href="{% url 'customers:customer_create' %}" class="btn btn-primary">
-    <i class="bi bi-plus-circle"></i> Add Customer
-</a>
+<div class="btn-group">
+    <a href="{% url 'customers:customer_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Add Customer
+    </a>
+    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+        <i class="bi bi-funnel"></i> Filter
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">All Customers</a></li>
+        <li><a class="dropdown-item" href="#">Active Only</a></li>
+        <li><a class="dropdown-item" href="#">Inactive Only</a></li>
+    </ul>
+</div>
 {% endblock %}
 
 {% block content %}
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Customers</h6>
+                        <h3 class="mb-0">{{ customers|length }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-people" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Active</h6>
+                        <h3 class="mb-0">{{ active_customers }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Receivable</h6>
+                        <h3 class="mb-0">৳{{ total_receivable|floatformat:2 }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-arrow-up-circle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customers Table -->
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
                 <h5 class="mb-0">
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-list-ul me-2"></i>
                     Customer List
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body p-0">
                 {% if customers %}
                 <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
                             <tr>
-                                <th>Name</th>
-                                <th>Type</th>
+                                <th>Customer</th>
                                 <th>Contact</th>
-                                <th>Credit Limit</th>
+                                <th>Current Balance</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -38,41 +99,62 @@
                             {% for customer in customers %}
                             <tr>
                                 <td>
-                                    <strong>{{ customer.name }}</strong>
-                                    {% if customer.company_name %}
-                                    <br><small class="text-muted">{{ customer.company_name }}</small>
-                                    {% endif %}
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">{{ customer.name }}</h6>
+                                            <small class="text-muted">{{ customer.get_customer_type_display }}</small>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
-                                    <span class="badge {% if customer.customer_type == 'retail' %}bg-info{% else %}bg-primary{% endif %}">
-                                        {{ customer.get_customer_type_display }}
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-telephone me-2 text-muted"></i>
+                                        <span>{{ customer.phone|default:"No phone" }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-end">
+                                        <div class="fw-bold {% if customer.current_balance >= 0 %}text-danger{% else %}text-success{% endif %}">
+                                            ৳{{ customer.current_balance|floatformat:2 }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge {% if customer.is_active %}bg-success{% else %}bg-danger{% endif %} fs-6">
+                                        {% if customer.is_active %}Active{% else %}Inactive{% endif %}
                                     </span>
                                 </td>
                                 <td>
-                                    <div>
-                                        <i class="bi bi-telephone"></i> {{ customer.phone|default:"-" }}<br>
-                                        <i class="bi bi-envelope"></i> {{ customer.email|default:"-" }}
-                                    </div>
-                                </td>
-                                <td>৳{{ customer.credit_limit|floatformat:2 }}</td>
-                                <td>
-                                    {% if customer.is_active %}
-                                        <span class="badge bg-success">Active</span>
-                                    {% else %}
-                                        <span class="badge bg-danger">Inactive</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="{% url 'customers:customer_detail' customer.pk %}" class="btn btn-outline-primary">
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'customers:customer_detail' customer.pk %}" class="btn btn-outline-primary btn-sm" title="View Details">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{% url 'customers:customer_edit' customer.pk %}" class="btn btn-outline-warning">
-                                            <i class="bi bi-pencil"></i>
+                                        <a href="{% url 'customers:customer_ledger_detail' customer.pk %}" class="btn btn-outline-info btn-sm" title="View Ledger">
+                                            <i class="bi bi-journal-text"></i>
                                         </a>
-                                        <a href="{% url 'customers:customer_delete' customer.pk %}" class="btn btn-outline-danger">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" title="More Actions">
+                                                <i class="bi bi-three-dots"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{% url 'customers:customer_edit' customer.pk %}">
+                                                    <i class="bi bi-pencil me-2"></i>Edit
+                                                </a></li>
+                                                <li><a class="dropdown-item" href="{% url 'customers:customer_opening_balance' customer.pk %}">
+                                                    <i class="bi bi-wallet2 me-2"></i>Set Opening Balance
+                                                </a></li>
+                                                <li><a class="dropdown-item" href="{% url 'sales:order_create' %}">
+                                                    <i class="bi bi-cart-plus me-2"></i>New Sales Order
+                                                </a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="{% url 'customers:customer_delete' customer.pk %}">
+                                                    <i class="bi bi-trash me-2"></i>Delete
+                                                </a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -82,11 +164,11 @@
                 </div>
                 {% else %}
                 <div class="text-center py-5">
-                    <i class="bi bi-people fs-1 text-muted"></i>
-                    <h5 class="text-muted mt-3">No customers found</h5>
-                    <p class="text-muted">Start by adding your first customer.</p>
-                    <a href="{% url 'customers:customer_create' %}" class="btn btn-primary">
-                        <i class="bi bi-plus-circle"></i> Add Customer
+                    <i class="bi bi-people text-muted" style="font-size: 4rem;"></i>
+                    <h4 class="text-muted mt-3">No Customers Found</h4>
+                    <p class="text-muted">Start by adding your first customer to manage your sales.</p>
+                    <a href="{% url 'customers:customer_create' %}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-circle"></i> Add Your First Customer
                     </a>
                 </div>
                 {% endif %}
@@ -94,4 +176,41 @@
         </div>
     </div>
 </div>
+
+<style>
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.btn-group .btn {
+    margin-right: 0.25rem;
+}
+
+.card {
+    border: none;
+    border-radius: 1rem;
+}
+
+.card-header {
+    border-radius: 1rem 1rem 0 0 !important;
+    border: none;
+}
+</style>
 {% endblock %}

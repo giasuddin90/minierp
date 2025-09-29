@@ -12,8 +12,9 @@ urlpatterns = [
     path('<int:pk>/delete/', views.CustomerDeleteView.as_view(), name='customer_delete'),
     
     # Customer Ledger
-    path('<int:customer_id>/ledger/', views.CustomerLedgerListView.as_view(), name='customer_ledger_list'),
+    path('<int:pk>/ledger/', views.CustomerLedgerDetailView.as_view(), name='customer_ledger_detail'),
     path('<int:customer_id>/ledger/create/', views.CustomerLedgerCreateView.as_view(), name='customer_ledger_create'),
+    path('<int:pk>/opening-balance/', views.set_opening_balance, name='customer_opening_balance'),
     
     # Customer Commission
     path('<int:customer_id>/commissions/', views.CustomerCommissionListView.as_view(), name='customer_commission_list'),

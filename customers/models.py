@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from decimal import Decimal
 
 
@@ -25,6 +26,23 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.customer_type})"
+    
+    def set_opening_balance(self, amount, user=None):
+        """Set opening balance and create ledger entry"""
+        self.opening_balance = amount
+        self.current_balance = amount
+        self.save()
+        
+        # Create opening balance ledger entry
+        CustomerLedger.objects.create(
+            customer=self,
+            transaction_type='opening_balance',
+            amount=amount,
+            description=f"Opening balance set to ৳{amount}",
+            reference="OPENING",
+            transaction_date=timezone.now(),
+            created_by=user
+        )
 
     class Meta:
         verbose_name = "Customer"
@@ -33,11 +51,19 @@ class Customer(models.Model):
 
 class CustomerLedger(models.Model):
     TRANSACTION_TYPES = [
+        ('opening_balance', 'Opening Balance'),
         ('sale', 'Sale'),
         ('return', 'Return'),
         ('payment', 'Payment'),
         ('adjustment', 'Adjustment'),
         ('commission', 'Commission'),
+    ]
+    
+    PAYMENT_METHODS = [
+        ('cash', 'Cash'),
+        ('bank_transfer', 'Bank Transfer'),
+        ('cheque', 'Cheque'),
+        ('other', 'Other'),
     ]
     
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -46,6 +72,8 @@ class CustomerLedger(models.Model):
     description = models.TextField()
     reference = models.CharField(max_length=100, blank=True)
     transaction_date = models.DateTimeField()
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS, blank=True, null=True)
+    bank_account = models.ForeignKey('accounting.BankAccount', on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
