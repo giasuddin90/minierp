@@ -13,6 +13,27 @@ class SupplierListView(ListView):
     model = Supplier
     template_name = 'suppliers/supplier_list.html'
     context_object_name = 'suppliers'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        suppliers = self.get_queryset()
+        
+        # Calculate total payable amount (positive balances = you owe money)
+        total_payable = sum(supplier.current_balance for supplier in suppliers if supplier.current_balance > 0)
+        
+        # Calculate total receivable amount (negative balances = they owe you money)
+        total_receivable = sum(abs(supplier.current_balance) for supplier in suppliers if supplier.current_balance < 0)
+        
+        # Count active suppliers
+        active_suppliers = suppliers.filter(is_active=True).count()
+        
+        context.update({
+            'total_payable': total_payable,
+            'total_receivable': total_receivable,
+            'active_suppliers': active_suppliers,
+        })
+        
+        return context
 
 
 class SupplierDetailView(DetailView):
