@@ -42,4 +42,25 @@ urlpatterns = [
     
     # Banking Dashboard
     path('dashboard/', views.BankingDashboardView.as_view(), name='banking_dashboard'),
+    
+    # Expense Management
+    path('expenses/', views.ExpenseListView.as_view(), name='expense_list'),
+    path('expenses/create/', views.ExpenseCreateView.as_view(), name='expense_create'),
+    path('expenses/<int:pk>/edit/', views.ExpenseUpdateView.as_view(), name='expense_edit'),
+    path('expenses/<int:pk>/delete/', views.ExpenseDeleteView.as_view(), name='expense_delete'),
+    
+    # Income Management
+    path('income/', views.IncomeListView.as_view(), name='income_list'),
+    path('income/create/', views.IncomeCreateView.as_view(), name='income_create'),
+    path('income/<int:pk>/edit/', views.IncomeUpdateView.as_view(), name='income_edit'),
+    path('income/<int:pk>/delete/', views.IncomeDeleteView.as_view(), name='income_delete'),
+    
+    # Chart of Accounts
+    path('accounts/', views.AccountListView.as_view(), name='account_list'),
+    path('accounts/create/', views.AccountCreateView.as_view(), name='account_create'),
+    path('accounts/<int:pk>/edit/', views.AccountUpdateView.as_view(), name='account_edit'),
+    
+    # Enhanced Trial Balance
+    path('trial-balance/enhanced/', views.EnhancedTrialBalanceView.as_view(), name='enhanced_trial_balance'),
+    path('daily-summary/', views.DailyFinancialSummaryView.as_view(), name='daily_financial_summary'),
 ]

@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Edit Account{% else %}Add Account{% endif %} - Building Materials ERP
+{% endblock %}
+
+{% block page_title %}
+    {% if object %}Edit Account{% else %}Add Account{% endif %}
+{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:account_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-list-check"></i>
+                    {% if object %}Edit Account{% else %}Add Account{% endif %}
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_code" class="form-label">Account Code *</label>
+                                <input type="text" class="form-control" id="id_code" name="code" 
+                                       value="{{ object.code|default:'' }}" required>
+                                <div class="form-text">Unique code for the account (e.g., 1000, 2000)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_name" class="form-label">Account Name *</label>
+                                <input type="text" class="form-control" id="id_name" name="name" 
+                                       value="{{ object.name|default:'' }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_category" class="form-label">Account Category *</label>
+                                <select class="form-select" id="id_category" name="category" required>
+                                    <option value="">Select Category</option>
+                                    {% for category in account_categories %}
+                                    <option value="{{ category.id }}" {% if object.category.id == category.id %}selected{% endif %}>
+                                        {{ category.name }} ({{ category.get_account_type_display }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_parent_account" class="form-label">Parent Account</label>
+                                <select class="form-select" id="id_parent_account" name="parent_account">
+                                    <option value="">Select Parent Account (Optional)</option>
+                                    {% for account in parent_accounts %}
+                                    <option value="{{ account.id }}" {% if object.parent_account.id == account.id %}selected{% endif %}>
+                                        {{ account.code }} - {{ account.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="id_is_active" name="is_active" 
+                                           {% if object.is_active or not object %}checked{% endif %}>
+                                    <label class="form-check-label" for="id_is_active">
+                                        Active Account
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'accounting:account_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Save{% endif %} Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Account Categories
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    {% for category in account_categories %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ category.name }}</span>
+                        <span class="badge 
+                            {% if category.account_type == 'asset' %}bg-primary
+                            {% elif category.account_type == 'liability' %}bg-danger
+                            {% elif category.account_type == 'equity' %}bg-success
+                            {% elif category.account_type == 'income' %}bg-info
+                            {% else %}bg-warning{% endif %}">
+                            {{ category.get_account_type_display }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-lightning"></i>
+                    Quick Actions
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'accounting:account_list' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-list-ul"></i> View All Accounts
+                    </a>
+                    <a href="{% url 'accounting:enhanced_trial_balance' %}" class="btn btn-outline-info">
+                        <i class="bi bi-calculator"></i> Trial Balance
+                    </a>
+                    <a href="{% url 'accounting:daily_financial_summary' %}" class="btn btn-outline-success">
+                        <i class="bi bi-graph-up"></i> Daily Summary
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Account Types
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <strong>Assets:</strong> Resources owned by the business
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Liabilities:</strong> Debts and obligations
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Equity:</strong> Owner's investment and retained earnings
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Income:</strong> Revenue and earnings
+                    </div>
+                    <div class="list-group-item">
+                        <strong>Expenses:</strong> Costs and expenditures
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

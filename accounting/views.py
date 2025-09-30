@@ -6,7 +6,11 @@ from django.db import transaction, models
 from django.utils import timezone
 from django.http import JsonResponse
 from decimal import Decimal
-from .models import BankAccount, BankTransaction, Loan, LoanTransaction, TrialBalance
+from .models import (
+    BankAccount, BankTransaction, Loan, LoanTransaction, TrialBalance,
+    AccountCategory, Account, ExpenseCategory, IncomeCategory, 
+    Expense, Income, JournalEntry, JournalEntryLine
+)
 
 
 class BankAccountListView(ListView):
@@ -354,6 +358,248 @@ class BankingDashboardView(ListView):
             'monthly_deposits': monthly_deposits,
             'monthly_withdrawals': monthly_withdrawals,
             'net_monthly_flow': monthly_deposits - monthly_withdrawals,
+        })
+        
+        return context
+
+
+# Expense Management Views
+class ExpenseListView(ListView):
+    model = Expense
+    template_name = 'accounting/expense_list.html'
+    context_object_name = 'expenses'
+    paginate_by = 20
+    
+    def get_queryset(self):
+        return Expense.objects.select_related('expense_category', 'bank_account', 'created_by').order_by('-expense_date')
+
+
+class ExpenseCreateView(CreateView):
+    model = Expense
+    template_name = 'accounting/expense_form.html'
+    fields = ['expense_category', 'amount', 'description', 'payment_method', 'bank_account', 'expense_date', 'reference']
+    success_url = reverse_lazy('accounting:expense_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['expense_categories'] = ExpenseCategory.objects.filter(is_active=True)
+        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
+        return context
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class ExpenseUpdateView(UpdateView):
+    model = Expense
+    template_name = 'accounting/expense_form.html'
+    fields = ['expense_category', 'amount', 'description', 'payment_method', 'bank_account', 'expense_date', 'reference']
+    success_url = reverse_lazy('accounting:expense_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['expense_categories'] = ExpenseCategory.objects.filter(is_active=True)
+        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
+        return context
+
+
+class ExpenseDeleteView(DeleteView):
+    model = Expense
+    template_name = 'accounting/expense_confirm_delete.html'
+    success_url = reverse_lazy('accounting:expense_list')
+
+
+# Income Management Views
+class IncomeListView(ListView):
+    model = Income
+    template_name = 'accounting/income_list.html'
+    context_object_name = 'incomes'
+    paginate_by = 20
+    
+    def get_queryset(self):
+        return Income.objects.select_related('income_category', 'bank_account', 'created_by').order_by('-income_date')
+
+
+class IncomeCreateView(CreateView):
+    model = Income
+    template_name = 'accounting/income_form.html'
+    fields = ['income_category', 'amount', 'description', 'payment_method', 'bank_account', 'income_date', 'reference']
+    success_url = reverse_lazy('accounting:income_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['income_categories'] = IncomeCategory.objects.filter(is_active=True)
+        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
+        return context
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class IncomeUpdateView(UpdateView):
+    model = Income
+    template_name = 'accounting/income_form.html'
+    fields = ['income_category', 'amount', 'description', 'payment_method', 'bank_account', 'income_date', 'reference']
+    success_url = reverse_lazy('accounting:income_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['income_categories'] = IncomeCategory.objects.filter(is_active=True)
+        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
+        return context
+
+
+class IncomeDeleteView(DeleteView):
+    model = Income
+    template_name = 'accounting/income_confirm_delete.html'
+    success_url = reverse_lazy('accounting:income_list')
+
+
+# Chart of Accounts Views
+class AccountListView(ListView):
+    model = Account
+    template_name = 'accounting/account_list.html'
+    context_object_name = 'accounts'
+    
+    def get_queryset(self):
+        return Account.objects.select_related('category', 'parent_account').order_by('code')
+
+
+class AccountCreateView(CreateView):
+    model = Account
+    template_name = 'accounting/account_form.html'
+    fields = ['code', 'name', 'category', 'parent_account', 'is_active']
+    success_url = reverse_lazy('accounting:account_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['account_categories'] = AccountCategory.objects.filter(is_active=True)
+        context['parent_accounts'] = Account.objects.filter(is_active=True)
+        return context
+
+
+class AccountUpdateView(UpdateView):
+    model = Account
+    template_name = 'accounting/account_form.html'
+    fields = ['code', 'name', 'category', 'parent_account', 'is_active']
+    success_url = reverse_lazy('accounting:account_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['account_categories'] = AccountCategory.objects.filter(is_active=True)
+        context['parent_accounts'] = Account.objects.filter(is_active=True)
+        return context
+
+
+# Enhanced Trial Balance View
+class EnhancedTrialBalanceView(ListView):
+    model = TrialBalance
+    template_name = 'accounting/enhanced_trial_balance.html'
+    context_object_name = 'trial_balances'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get all transactions for today
+        today = timezone.now().date()
+        
+        # Bank transactions
+        bank_transactions = BankTransaction.objects.filter(
+            transaction_date__date=today
+        ).select_related('bank_account')
+        
+        # Expenses
+        expenses = Expense.objects.filter(expense_date=today).select_related('expense_category')
+        
+        # Income
+        incomes = Income.objects.filter(income_date=today).select_related('income_category')
+        
+        # Calculate totals
+        total_bank_debits = sum(t.amount for t in bank_transactions if t.transaction_type in ['deposit', 'transfer_in'])
+        total_bank_credits = sum(t.amount for t in bank_transactions if t.transaction_type in ['withdrawal', 'transfer_out'])
+        
+        total_expenses = sum(e.amount for e in expenses)
+        total_income = sum(i.amount for i in incomes)
+        
+        # Calculate trial balance
+        total_debits = total_bank_credits + total_expenses
+        total_credits = total_bank_debits + total_income
+        
+        # Check if balanced
+        is_balanced = abs(total_debits - total_credits) < Decimal('0.01')
+        
+        context.update({
+            'today': today,
+            'bank_transactions': bank_transactions,
+            'expenses': expenses,
+            'incomes': incomes,
+            'total_bank_debits': total_bank_debits,
+            'total_bank_credits': total_bank_credits,
+            'total_expenses': total_expenses,
+            'total_income': total_income,
+            'total_debits': total_debits,
+            'total_credits': total_credits,
+            'is_balanced': is_balanced,
+            'difference': total_debits - total_credits,
+        })
+        
+        return context
+
+
+# Daily Financial Summary
+class DailyFinancialSummaryView(ListView):
+    model = Expense
+    template_name = 'accounting/daily_financial_summary.html'
+    context_object_name = 'expenses'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get today's date
+        today = timezone.now().date()
+        
+        # Get all transactions for today
+        bank_transactions = BankTransaction.objects.filter(transaction_date__date=today)
+        expenses = Expense.objects.filter(expense_date=today)
+        incomes = Income.objects.filter(income_date=today)
+        
+        # Calculate totals
+        total_bank_inflow = sum(t.amount for t in bank_transactions if t.transaction_type in ['deposit', 'transfer_in'])
+        total_bank_outflow = sum(t.amount for t in bank_transactions if t.transaction_type in ['withdrawal', 'transfer_out'])
+        total_expenses = sum(e.amount for e in expenses)
+        total_income = sum(i.amount for i in incomes)
+        
+        # Net cash flow
+        net_cash_flow = (total_bank_inflow + total_income) - (total_bank_outflow + total_expenses)
+        
+        # Category-wise breakdown
+        expense_by_category = {}
+        for expense in expenses:
+            category = expense.expense_category.name
+            if category not in expense_by_category:
+                expense_by_category[category] = 0
+            expense_by_category[category] += expense.amount
+        
+        income_by_category = {}
+        for income in incomes:
+            category = income.income_category.name
+            if category not in income_by_category:
+                income_by_category[category] = 0
+            income_by_category[category] += income.amount
+        
+        context.update({
+            'today': today,
+            'bank_transactions': bank_transactions,
+            'incomes': incomes,
+            'total_bank_inflow': total_bank_inflow,
+            'total_bank_outflow': total_bank_outflow,
+            'total_expenses': total_expenses,
+            'total_income': total_income,
+            'net_cash_flow': net_cash_flow,
+            'expense_by_category': expense_by_category,
+            'income_by_category': income_by_category,
         })
         
         return context

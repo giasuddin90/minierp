@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% block title %}Enhanced Trial Balance - Building Materials ERP{% endblock %}
+
+{% block page_title %}Enhanced Trial Balance - {{ today|date:"F d, Y" }}{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:daily_financial_summary' %}" class="btn btn-outline-info">
+        <i class="bi bi-graph-up"></i> Daily Summary
+    </a>
+    <a href="{% url 'accounting:banking_dashboard' %}" class="btn btn-outline-primary">
+        <i class="bi bi-speedometer2"></i> Banking Dashboard
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Balance Status Card -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card {% if is_balanced %}border-success{% else %}border-danger{% endif %}">
+            <div class="card-header {% if is_balanced %}bg-success text-white{% else %}bg-danger text-white{% endif %}">
+                <h6 class="mb-0">
+                    <i class="bi bi-{% if is_balanced %}check-circle{% else %}exclamation-triangle{% endif %}"></i>
+                    Trial Balance Status - {{ today|date:"F d, Y" }}
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h5 class="{% if is_balanced %}text-success{% else %}text-danger{% endif %}">
+                            ৳{{ total_debits|floatformat:2 }}
+                        </h5>
+                        <small class="text-muted">Total Debits</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="{% if is_balanced %}text-success{% else %}text-danger{% endif %}">
+                            ৳{{ total_credits|floatformat:2 }}
+                        </h5>
+                        <small class="text-muted">Total Credits</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="{% if is_balanced %}text-success{% else %}text-warning{% endif %}">
+                            ৳{{ difference|floatformat:2 }}
+                        </h5>
+                        <small class="text-muted">Difference</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="{% if is_balanced %}text-success{% else %}text-danger{% endif %}">
+                            {% if is_balanced %}✓ Balanced{% else %}✗ Unbalanced{% endif %}
+                        </h5>
+                        <small class="text-muted">Status</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Bank Deposits</h6>
+                <h3 class="mb-0">৳{{ total_bank_debits|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Bank Withdrawals</h6>
+                <h3 class="mb-0">৳{{ total_bank_credits|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Expenses</h6>
+                <h3 class="mb-0">৳{{ total_expenses|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Income</h6>
+                <h3 class="mb-0">৳{{ total_income|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Transaction Tables -->
+<div class="row">
+    <!-- Bank Transactions -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-bank"></i>
+                    Bank Transactions
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if bank_transactions %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Bank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in bank_transactions %}
+                            <tr>
+                                <td>{{ transaction.transaction_date|date:"H:i" }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if transaction.transaction_type == 'deposit' %}bg-success
+                                        {% elif transaction.transaction_type == 'withdrawal' %}bg-danger
+                                        {% elif transaction.transaction_type == 'transfer_in' %}bg-info
+                                        {% else %}bg-warning{% endif %}">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </span>
+                                </td>
+                                <td>৳{{ transaction.amount|floatformat:2 }}</td>
+                                <td>{{ transaction.bank_account.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-bank text-muted"></i>
+                    <p class="text-muted mb-0">No bank transactions today</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Expenses -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-down-circle text-danger"></i>
+                    Expenses
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if expenses %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in expenses %}
+                            <tr>
+                                <td>
+                                    <span class="badge bg-warning">{{ expense.expense_category.name }}</span>
+                                </td>
+                                <td class="text-danger">৳{{ expense.amount|floatformat:2 }}</td>
+                                <td>{{ expense.get_payment_method_display }}</td>
+                                <td>{{ expense.description|truncatechars:20 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-arrow-down-circle text-muted"></i>
+                    <p class="text-muted mb-0">No expenses today</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Income Section -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-up-circle text-success"></i>
+                    Income
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if incomes %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Description</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for income in incomes %}
+                            <tr>
+                                <td>
+                                    <span class="badge bg-success">{{ income.income_category.name }}</span>
+                                </td>
+                                <td class="text-success">৳{{ income.amount|floatformat:2 }}</td>
+                                <td>{{ income.get_payment_method_display }}</td>
+                                <td>{{ income.description|truncatechars:30 }}</td>
+                                <td>{{ income.reference|default:"-" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-arrow-up-circle text-muted"></i>
+                    <p class="text-muted mb-0">No income today</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trial Balance Summary -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-calculator"></i>
+                    Trial Balance Summary
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-danger">Debit Side</h6>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Bank Withdrawals:</td>
+                                <td class="text-end">৳{{ total_bank_credits|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Expenses:</td>
+                                <td class="text-end">৳{{ total_expenses|floatformat:2 }}</td>
+                            </tr>
+                            <tr class="table-danger">
+                                <td><strong>Total Debits:</strong></td>
+                                <td class="text-end"><strong>৳{{ total_debits|floatformat:2 }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-success">Credit Side</h6>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Bank Deposits:</td>
+                                <td class="text-end">৳{{ total_bank_debits|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Income:</td>
+                                <td class="text-end">৳{{ total_income|floatformat:2 }}</td>
+                            </tr>
+                            <tr class="table-success">
+                                <td><strong>Total Credits:</strong></td>
+                                <td class="text-end"><strong>৳{{ total_credits|floatformat:2 }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h5 class="{% if is_balanced %}text-success{% else %}text-danger{% endif %}">
+                            {% if is_balanced %}
+                                <i class="bi bi-check-circle"></i> Trial Balance is Balanced!
+                            {% else %}
+                                <i class="bi bi-exclamation-triangle"></i> Trial Balance is Unbalanced!
+                                <br><small>Difference: ৳{{ difference|floatformat:2 }}</small>
+                            {% endif %}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

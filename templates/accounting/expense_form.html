@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Edit Expense{% else %}Add Expense{% endif %} - Building Materials ERP
+{% endblock %}
+
+{% block page_title %}
+    {% if object %}Edit Expense{% else %}Add Expense{% endif %}
+{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:expense_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-down-circle"></i>
+                    {% if object %}Edit Expense{% else %}Add Expense{% endif %}
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_expense_category" class="form-label">Expense Category *</label>
+                                <select class="form-select" id="id_expense_category" name="expense_category" required>
+                                    <option value="">Select Category</option>
+                                    {% for category in expense_categories %}
+                                    <option value="{{ category.id }}" {% if object.expense_category.id == category.id %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_amount" class="form-label">Amount *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">৳</span>
+                                    <input type="number" class="form-control" id="id_amount" name="amount" 
+                                           value="{{ object.amount|default:'' }}" step="0.01" min="0.01" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_payment_method" class="form-label">Payment Method *</label>
+                                <select class="form-select" id="id_payment_method" name="payment_method" required>
+                                    <option value="">Select Method</option>
+                                    <option value="cash" {% if object.payment_method == 'cash' %}selected{% endif %}>Cash</option>
+                                    <option value="bank" {% if object.payment_method == 'bank' %}selected{% endif %}>Bank Transfer</option>
+                                    <option value="check" {% if object.payment_method == 'check' %}selected{% endif %}>Check</option>
+                                    <option value="card" {% if object.payment_method == 'card' %}selected{% endif %}>Credit/Debit Card</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_bank_account" class="form-label">Bank Account</label>
+                                <select class="form-select" id="id_bank_account" name="bank_account">
+                                    <option value="">Select Bank Account (Optional)</option>
+                                    {% for bank in bank_accounts %}
+                                    <option value="{{ bank.id }}" {% if object.bank_account.id == bank.id %}selected{% endif %}>
+                                        {{ bank.name }} - {{ bank.bank_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_expense_date" class="form-label">Expense Date *</label>
+                                <input type="date" class="form-control" id="id_expense_date" name="expense_date" 
+                                       value="{{ object.expense_date|default:'' }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_reference" class="form-label">Reference</label>
+                                <input type="text" class="form-control" id="id_reference" name="reference" 
+                                       value="{{ object.reference|default:'' }}" placeholder="Reference number">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_description" class="form-label">Description *</label>
+                        <textarea class="form-control" id="id_description" name="description" rows="3" required>{{ object.description|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'accounting:expense_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Save{% endif %} Expense
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Expense Categories
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    {% for category in expense_categories %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ category.name }}</span>
+                        <small class="text-muted">{{ category.description|truncatechars:20 }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-lightning"></i>
+                    Quick Actions
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'accounting:expense_list' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-list-ul"></i> View All Expenses
+                    </a>
+                    <a href="{% url 'accounting:daily_financial_summary' %}" class="btn btn-outline-info">
+                        <i class="bi bi-graph-up"></i> Daily Summary
+                    </a>
+                    <a href="{% url 'accounting:enhanced_trial_balance' %}" class="btn btn-outline-success">
+                        <i class="bi bi-calculator"></i> Trial Balance
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default expense date to today
+    const today = new Date().toISOString().slice(0, 10);
+    document.getElementById('id_expense_date').value = today;
+    
+    // Show/hide bank account based on payment method
+    const paymentMethod = document.getElementById('id_payment_method');
+    const bankAccount = document.getElementById('id_bank_account').closest('.mb-3');
+    
+    paymentMethod.addEventListener('change', function() {
+        if (this.value === 'bank') {
+            bankAccount.style.display = 'block';
+            document.getElementById('id_bank_account').required = true;
+        } else {
+            bankAccount.style.display = 'block';
+            document.getElementById('id_bank_account').required = false;
+        }
+    });
+});
+</script>
+{% endblock %}
