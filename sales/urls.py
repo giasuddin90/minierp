@@ -35,4 +35,11 @@ urlpatterns = [
     path('reports/daily/', views.SalesDailyReportView.as_view(), name='sales_daily_report'),
     path('reports/monthly/', views.SalesMonthlyReportView.as_view(), name='sales_monthly_report'),
     path('reports/customer/', views.SalesCustomerReportView.as_view(), name='sales_customer_report'),
+    
+    # Invoice from Order
+    path('orders/<int:order_id>/create-invoice/', views.create_invoice_from_order, name='create_invoice_from_order'),
+    
+    # PDF and Payment
+    path('invoices/<int:invoice_id>/pdf/', views.invoice_pdf, name='invoice_pdf'),
+    path('invoices/<int:invoice_id>/payment/', views.process_invoice_payment, name='process_invoice_payment'),
 ]

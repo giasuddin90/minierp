@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
@@ -23,17 +23,238 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form method="post">
+                <form method="post" id="invoiceForm">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="id_name" class="form-label">Name *</label>
-                        <input type="text" class="form-control" id="id_name" name="name" value="{{ object.name|default:'' }}" required>
+                    
+                    <!-- Invoice Header -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_customer" class="form-label">Customer *</label>
+                                <select class="form-select" id="id_customer" name="customer" required>
+                                    <option value="">Select Customer</option>
+                                    {% for customer in customers %}
+                                        <option value="{{ customer.id }}" {% if object.customer.id == customer.id %}selected{% endif %}>
+                                            {{ customer.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_sales_order" class="form-label">Sales Order</label>
+                                <select class="form-select" id="id_sales_order" name="sales_order">
+                                    <option value="">Select Sales Order (Optional)</option>
+                                    {% for order in sales_orders %}
+                                        <option value="{{ order.id }}" {% if object.sales_order.id == order.id %}selected{% endif %}>
+                                            {{ order.order_number }} - {{ order.customer.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="id_invoice_date" class="form-label">Invoice Date *</label>
+                                <input type="date" class="form-control" id="id_invoice_date" name="invoice_date" 
+                                       value="{{ object.invoice_date|date:'Y-m-d'|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="id_payment_type" class="form-label">Payment Type *</label>
+                                <select class="form-select" id="id_payment_type" name="payment_type" required>
+                                    <option value="">Select Payment Type</option>
+                                    <option value="cash" {% if object.payment_type == 'cash' %}selected{% endif %}>Cash</option>
+                                    <option value="credit" {% if object.payment_type == 'credit' %}selected{% endif %}>Credit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="id_paid_amount" class="form-label">Paid Amount</label>
+                                <input type="number" class="form-control" id="id_paid_amount" name="paid_amount" 
+                                       value="{{ object.paid_amount|default:0 }}" step="0.01" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Section -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">Products</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="products-container">
+                                {% if object and object.items.all %}
+                                    <!-- Show existing products for edit mode -->
+                                    {% for item in object.items.all %}
+                                    <div class="row product-row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Product *</label>
+                                            <select class="form-select product-select" name="products[]" required>
+                                                <option value="">Select Product</option>
+                                                {% for product in products %}
+                                                    <option value="{{ product.id }}" {% if item.product.id == product.id %}selected{% endif %}>{{ product.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Warehouse</label>
+                                            <select class="form-select warehouse-select" name="warehouses[]">
+                                                <option value="">Select Warehouse</option>
+                                                {% for warehouse in warehouses %}
+                                                    <option value="{{ warehouse.id }}" {% if item.warehouse and item.warehouse.id == warehouse.id %}selected{% endif %}>{{ warehouse.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Quantity *</label>
+                                            <input type="number" class="form-control quantity-input" name="quantities[]" 
+                                                   value="{{ item.quantity }}" step="0.01" min="0" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Unit Price *</label>
+                                            <input type="number" class="form-control price-input" name="prices[]" 
+                                                   value="{{ item.unit_price }}" step="0.01" min="0" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Total</label>
+                                            <input type="number" class="form-control total-input" value="{{ item.total_price }}" readonly>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button type="button" class="btn btn-danger btn-sm remove-product">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <!-- Default empty row for new invoice -->
+                                    <div class="row product-row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Product *</label>
+                                            <select class="form-select product-select" name="products[]" required>
+                                                <option value="">Select Product</option>
+                                                {% for product in products %}
+                                                    <option value="{{ product.id }}">{{ product.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Warehouse</label>
+                                            <select class="form-select warehouse-select" name="warehouses[]">
+                                                <option value="">Select Warehouse</option>
+                                                {% for warehouse in warehouses %}
+                                                    <option value="{{ warehouse.id }}">{{ warehouse.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Quantity *</label>
+                                            <input type="number" class="form-control quantity-input" name="quantities[]" 
+                                                   step="0.01" min="0" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Unit Price *</label>
+                                            <input type="number" class="form-control price-input" name="prices[]" 
+                                                   step="0.01" min="0" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Total</label>
+                                            <input type="number" class="form-control total-input" readonly>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button type="button" class="btn btn-danger btn-sm remove-product" style="display: none;">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="add-product">
+                                <i class="bi bi-plus"></i> Add Product
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Invoice Totals -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="bi bi-calculator"></i>
+                                Invoice Totals
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_labor_charges" class="form-label">
+                                            <i class="bi bi-tools"></i> Labor Charges
+                                        </label>
+                                        <input type="number" class="form-control" id="id_labor_charges" name="labor_charges" 
+                                               value="{{ object.labor_charges|default:0 }}" step="0.01" min="0" placeholder="0.00">
+                                        <div class="form-text">Additional labor charges for this invoice</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="id_discount" class="form-label">
+                                            <i class="bi bi-percent"></i> Discount
+                                        </label>
+                                        <input type="number" class="form-control" id="id_discount" name="discount" 
+                                               value="{{ object.discount|default:0 }}" step="0.01" min="0" placeholder="0.00">
+                                        <div class="form-text">Discount amount to be deducted</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Auto-calculated totals display -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info">
+                                        <h6><i class="bi bi-info-circle"></i> Invoice Calculation</h6>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <strong>Subtotal:</strong> <span id="display-subtotal">৳0.00</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <strong>Labor Charges:</strong> <span id="display-labor">৳0.00</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <strong>Discount:</strong> <span id="display-discount">৳0.00</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Total Amount:</strong> <span id="display-total" class="text-primary">৳0.00</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong>Due Amount:</strong> <span id="display-due" class="text-warning">৳0.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="id_description" class="form-label">Description</label>
-                        <textarea class="form-control" id="id_description" name="description" rows="3">{{ object.description|default:'' }}</textarea>
+                        <label for="id_notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="id_notes" name="notes" rows="3">{{ object.notes|default:'' }}</textarea>
                     </div>
+                    
+                    <!-- Hidden fields for calculations -->
+                    <input type="hidden" id="id_subtotal" name="subtotal" value="{{ object.subtotal|default:0 }}">
+                    <input type="hidden" id="id_total_amount" name="total_amount" value="{{ object.total_amount|default:0 }}">
                     
                     <div class="d-flex justify-content-between">
                         <a href="{% url 'sales:invoice_list' %}" class="btn btn-secondary">Cancel</a>
@@ -46,4 +267,99 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addProductBtn = document.getElementById('add-product');
+    const productsContainer = document.getElementById('products-container');
+    
+    // Add product row
+    addProductBtn.addEventListener('click', function() {
+        const firstRow = productsContainer.querySelector('.product-row');
+        const newRow = firstRow.cloneNode(true);
+        
+        // Clear values in new row
+        newRow.querySelectorAll('input, select').forEach(input => {
+            if (input.type !== 'button') {
+                input.value = '';
+            }
+        });
+        
+        // Show remove button for new row
+        newRow.querySelector('.remove-product').style.display = 'block';
+        
+        productsContainer.appendChild(newRow);
+        updateRemoveButtons();
+    });
+    
+    // Remove product row
+    productsContainer.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-product')) {
+            e.target.closest('.product-row').remove();
+            updateRemoveButtons();
+        }
+    });
+    
+    // Calculate totals
+    productsContainer.addEventListener('input', function(e) {
+        if (e.target.classList.contains('quantity-input') || e.target.classList.contains('price-input')) {
+            const row = e.target.closest('.product-row');
+            const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
+            const price = parseFloat(row.querySelector('.price-input').value) || 0;
+            const total = quantity * price;
+            row.querySelector('.total-input').value = total.toFixed(2);
+            updateInvoiceTotals();
+        }
+    });
+    
+    // Update invoice totals when labor charges or discount change
+    document.getElementById('id_labor_charges').addEventListener('input', updateInvoiceTotals);
+    document.getElementById('id_discount').addEventListener('input', updateInvoiceTotals);
+    document.getElementById('id_paid_amount').addEventListener('input', updateInvoiceTotals);
+    
+    function updateInvoiceTotals() {
+        // Calculate subtotal from all products
+        let subtotal = 0;
+        const totalInputs = document.querySelectorAll('.total-input');
+        totalInputs.forEach(input => {
+            subtotal += parseFloat(input.value) || 0;
+        });
+        
+        // Get labor charges and discount
+        const laborCharges = parseFloat(document.getElementById('id_labor_charges').value) || 0;
+        const discount = parseFloat(document.getElementById('id_discount').value) || 0;
+        const paidAmount = parseFloat(document.getElementById('id_paid_amount').value) || 0;
+        
+        // Calculate totals
+        const totalAmount = subtotal + laborCharges - discount;
+        const dueAmount = totalAmount - paidAmount;
+        
+        // Update display
+        document.getElementById('display-subtotal').textContent = '৳' + subtotal.toFixed(2);
+        document.getElementById('display-labor').textContent = '৳' + laborCharges.toFixed(2);
+        document.getElementById('display-discount').textContent = '৳' + discount.toFixed(2);
+        document.getElementById('display-total').textContent = '৳' + totalAmount.toFixed(2);
+        document.getElementById('display-due').textContent = '৳' + dueAmount.toFixed(2);
+        
+        // Update hidden fields
+        document.getElementById('id_subtotal').value = subtotal.toFixed(2);
+        document.getElementById('id_total_amount').value = totalAmount.toFixed(2);
+    }
+    
+    function updateRemoveButtons() {
+        const rows = productsContainer.querySelectorAll('.product-row');
+        rows.forEach((row, index) => {
+            const removeBtn = row.querySelector('.remove-product');
+            if (rows.length > 1) {
+                removeBtn.style.display = 'block';
+            } else {
+                removeBtn.style.display = 'none';
+            }
+        });
+    }
+    
+    // Initialize totals on page load
+    updateInvoiceTotals();
+});
+</script>
 {% endblock %}
