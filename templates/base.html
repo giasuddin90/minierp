@@ -100,11 +100,29 @@
                             </a>
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'customers:customer_list' %}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="customersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-people"></i>
                                 Customers
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="customersDropdown">
+                                <li><a class="dropdown-item" href="{% url 'customers:customer_list' %}">
+                                    <i class="bi bi-list-ul"></i> Customer List
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'customers:ledger_list' %}">
+                                    <i class="bi bi-journal-text"></i> Customer Ledger
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'customers:commission_list' %}">
+                                    <i class="bi bi-percent"></i> Commissions
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'customers:commitment_list' %}">
+                                    <i class="bi bi-handshake"></i> Commitments
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'customers:customer_create' %}">
+                                    <i class="bi bi-plus-circle"></i> New Customer
+                                </a></li>
+                            </ul>
                         </li>
                         
                         <li class="nav-item">
@@ -121,18 +139,51 @@
                             </a>
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'sales:order_list' %}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="salesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-cart-check"></i>
                                 Sales
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="salesDropdown">
+                                <li><a class="dropdown-item" href="{% url 'sales:order_list' %}">
+                                    <i class="bi bi-list-ul"></i> Sales Orders
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'sales:invoice_list' %}">
+                                    <i class="bi bi-receipt"></i> Invoices
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'sales:return_list' %}">
+                                    <i class="bi bi-arrow-return-left"></i> Returns
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'sales:payment_list' %}">
+                                    <i class="bi bi-credit-card"></i> Payments
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'sales:order_create' %}">
+                                    <i class="bi bi-plus-circle"></i> New Order
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'sales:invoice_create' %}">
+                                    <i class="bi bi-plus-circle"></i> New Invoice
+                                </a></li>
+                            </ul>
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'purchases:order_list' %}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="purchasesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-cart-plus"></i>
                                 Purchases
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="purchasesDropdown">
+                                <li><a class="dropdown-item" href="{% url 'purchases:order_list' %}">
+                                    <i class="bi bi-list-ul"></i> Purchase Orders
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'purchases:payment_list' %}">
+                                    <i class="bi bi-credit-card"></i> Payments
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'purchases:order_create' %}">
+                                    <i class="bi bi-plus-circle"></i> New Purchase Order
+                                </a></li>
+                            </ul>
                         </li>
                         
                         <li class="nav-item">
