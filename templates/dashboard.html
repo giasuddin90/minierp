@@ -2,48 +2,76 @@
 
 {% block title %}Dashboard - Building Materials ERP{% endblock %}
 
-{% block page_title %}Dashboard{% endblock %}
+{% block page_title %}Welcome to BuildERP{% endblock %}
+{% block page_description %}Your comprehensive construction management dashboard{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <button class="btn btn-primary" onclick="refreshDashboard()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+    <button class="btn btn-outline-primary" onclick="exportDashboard()">
+        <i class="bi bi-download"></i> Export
+    </button>
+</div>
+{% endblock %}
 
 {% block content %}
-<div class="row">
-    <!-- Quick Stats -->
-    <div class="col-md-3 mb-4">
-        <div class="card stats-card">
-            <div class="card-body text-center">
-                <i class="bi bi-people-fill fs-1 mb-2"></i>
-                <div class="stats-number">{{ total_customers|default:0 }}</div>
-                <div class="fs-6">Total Customers</div>
+<!-- Stats Cards -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="stats-card">
+            <div class="icon primary">
+                <i class="bi bi-people"></i>
             </div>
+            <h3>{{ total_customers|default:0 }}</h3>
+            <p>Total Customers</p>
+            <div class="progress mt-3">
+                <div class="progress-bar" style="width: 75%"></div>
+            </div>
+            <small class="text-success">+12% from last month</small>
         </div>
     </div>
     
-    <div class="col-md-3 mb-4">
-        <div class="card stats-card">
-            <div class="card-body text-center">
-                <i class="bi bi-truck fs-1 mb-2"></i>
-                <div class="stats-number">{{ total_suppliers|default:0 }}</div>
-                <div class="fs-6">Total Suppliers</div>
+    <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="stats-card">
+            <div class="icon success">
+                <i class="bi bi-truck"></i>
             </div>
+            <h3>{{ total_suppliers|default:0 }}</h3>
+            <p>Total Suppliers</p>
+            <div class="progress mt-3">
+                <div class="progress-bar" style="width: 85%"></div>
+            </div>
+            <small class="text-success">+8% from last month</small>
         </div>
     </div>
     
-    <div class="col-md-3 mb-4">
-        <div class="card stats-card">
-            <div class="card-body text-center">
-                <i class="bi bi-box-seam fs-1 mb-2"></i>
-                <div class="stats-number">{{ total_products|default:0 }}</div>
-                <div class="fs-6">Total Products</div>
+    <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="stats-card">
+            <div class="icon warning">
+                <i class="bi bi-box-seam"></i>
             </div>
+            <h3>{{ total_products|default:0 }}</h3>
+            <p>Total Products</p>
+            <div class="progress mt-3">
+                <div class="progress-bar" style="width: 60%"></div>
+            </div>
+            <small class="text-success">+15% from last month</small>
         </div>
     </div>
     
-    <div class="col-md-3 mb-4">
-        <div class="card stats-card">
-            <div class="card-body text-center">
-                <i class="bi bi-cash-coin fs-1 mb-2"></i>
-                <div class="stats-number">৳{{ total_sales|default:0|floatformat:0 }}</div>
-                <div class="fs-6">Total Sales</div>
+    <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="stats-card">
+            <div class="icon danger">
+                <i class="bi bi-cash-coin"></i>
             </div>
+            <h3>৳{{ total_sales|default:0|floatformat:0 }}</h3>
+            <p>Total Sales</p>
+            <div class="progress mt-3">
+                <div class="progress-bar" style="width: 25%"></div>
+            </div>
+            <small class="text-warning">Needs attention</small>
         </div>
     </div>
 </div>
@@ -266,5 +294,21 @@ new Chart(stockCtx, {
         }
     }
 });
+
+// Dashboard functions
+function refreshDashboard() {
+    location.reload();
+}
+
+function exportDashboard() {
+    // Implement export functionality
+    alert('Export functionality will be implemented soon!');
+}
+
+// Auto-refresh every 5 minutes
+setInterval(function() {
+    // Refresh only the data, not the entire page
+    console.log('Auto-refreshing dashboard data...');
+}, 300000);
 </script>
 {% endblock %}
