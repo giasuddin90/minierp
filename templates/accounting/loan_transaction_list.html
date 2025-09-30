@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Loan Transactions - Building Materials ERP{% endblock %}
+
+{% block page_title %}Loan Transactions{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:loan_detail' loan.pk %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Loan
+    </a>
+    <a href="{% url 'accounting:loan_transaction_create' loan.pk %}" class="btn btn-outline-success">
+        <i class="bi bi-plus-circle"></i> Add Transaction
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-credit-card"></i>
+                    Loan: {{ loan.deal_number }} - ৳{{ loan.principal_amount|floatformat:2 }}
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h5 class="text-primary">৳{{ loan.principal_amount|floatformat:2 }}</h5>
+                        <small class="text-muted">Principal Amount</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-success">৳{{ loan.total_principal_paid|floatformat:2 }}</h5>
+                        <small class="text-muted">Principal Paid</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-info">৳{{ loan.total_interest_paid|floatformat:2 }}</h5>
+                        <small class="text-muted">Interest Paid</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-warning">৳{{ loan.outstanding_amount|floatformat:2 }}</h5>
+                        <small class="text-muted">Outstanding</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-list-ul"></i>
+                    Transaction History
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if transactions %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Created By</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.transaction_date|date:"M d, Y H:i" }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if transaction.transaction_type == 'principal_payment' %}bg-success
+                                        {% elif transaction.transaction_type == 'interest_payment' %}bg-info
+                                        {% else %}bg-warning{% endif %}">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <strong class="{% if transaction.transaction_type == 'principal_payment' %}text-success{% elif transaction.transaction_type == 'interest_payment' %}text-info{% else %}text-warning{% endif %}">
+                                        ৳{{ transaction.amount|floatformat:2 }}
+                                    </strong>
+                                </td>
+                                <td>{{ transaction.description|truncatechars:50 }}</td>
+                                <td>{{ transaction.created_by|default:"System" }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-info" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-credit-card fs-1 text-muted"></i>
+                    <h5 class="text-muted mt-3">No transactions found</h5>
+                    <p class="text-muted">Start by adding the first transaction for this loan.</p>
+                    <a href="{% url 'accounting:loan_transaction_create' loan.pk %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Transaction
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

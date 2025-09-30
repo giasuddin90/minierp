@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+
+{% block title %}Banking Dashboard - Building Materials ERP{% endblock %}
+
+{% block page_title %}Banking Dashboard{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:bank_list' %}" class="btn btn-outline-primary">
+        <i class="bi bi-bank"></i> Banks
+    </a>
+    <a href="{% url 'accounting:loan_list' %}" class="btn btn-outline-info">
+        <i class="bi bi-credit-card"></i> Loans
+    </a>
+    <a href="{% url 'accounting:bank_create' %}" class="btn btn-outline-success">
+        <i class="bi bi-plus-circle"></i> Add Bank
+    </a>
+    <a href="{% url 'accounting:loan_create' %}" class="btn btn-outline-warning">
+        <i class="bi bi-plus-circle"></i> Add Loan
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Financial Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Balance</h6>
+                        <h3 class="mb-0">৳{{ total_balance|floatformat:2 }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-wallet2" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Active Loans</h6>
+                        <h3 class="mb-0">{{ active_loans_count }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-credit-card" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Outstanding Loans</h6>
+                        <h3 class="mb-0">৳{{ outstanding_loans|floatformat:2 }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Net Monthly Flow</h6>
+                        <h3 class="mb-0">৳{{ net_monthly_flow|floatformat:2 }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-arrow-up-down" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Monthly Transaction Summary -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-down-circle text-success"></i>
+                    Monthly Deposits
+                </h6>
+            </div>
+            <div class="card-body text-center">
+                <h2 class="text-success">৳{{ monthly_deposits|floatformat:2 }}</h2>
+                <p class="text-muted mb-0">This month's total deposits</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-up-circle text-danger"></i>
+                    Monthly Withdrawals
+                </h6>
+            </div>
+            <div class="card-body text-center">
+                <h2 class="text-danger">৳{{ monthly_withdrawals|floatformat:2 }}</h2>
+                <p class="text-muted mb-0">This month's total withdrawals</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bank Accounts Overview -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-bank"></i>
+                    Bank Accounts Overview
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if banks %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Bank Name</th>
+                                <th>Account Number</th>
+                                <th>Branch</th>
+                                <th>Current Balance</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bank in banks %}
+                            <tr>
+                                <td>
+                                    <strong>{{ bank.name }}</strong>
+                                    <br><small class="text-muted">{{ bank.bank_name }}</small>
+                                </td>
+                                <td>{{ bank.account_number }}</td>
+                                <td>{{ bank.branch|default:"-" }}</td>
+                                <td>
+                                    <strong class="{% if bank.current_balance >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                        ৳{{ bank.current_balance|floatformat:2 }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    {% if bank.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'accounting:bank_detail' bank.pk %}" class="btn btn-outline-primary" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{% url 'accounting:bank_edit' bank.pk %}" class="btn btn-outline-warning" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-bank text-muted" style="font-size: 3rem;"></i>
+                    <h5 class="text-muted mt-3">No Bank Accounts</h5>
+                    <p class="text-muted">Start by adding your first bank account.</p>
+                    <a href="{% url 'accounting:bank_create' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Bank Account
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-left-right"></i>
+                    Recent Bank Transactions
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if recent_transactions %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Bank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in recent_transactions %}
+                            <tr>
+                                <td>{{ transaction.transaction_date|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if transaction.transaction_type == 'deposit' %}bg-success
+                                        {% elif transaction.transaction_type == 'withdrawal' %}bg-danger
+                                        {% elif transaction.transaction_type == 'transfer_in' %}bg-info
+                                        {% else %}bg-warning{% endif %}">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </span>
+                                </td>
+                                <td>৳{{ transaction.amount|floatformat:2 }}</td>
+                                <td>{{ transaction.bank_account.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-arrow-left-right text-muted"></i>
+                    <p class="text-muted mb-0">No recent transactions</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-credit-card"></i>
+                    Recent Loan Transactions
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if recent_loan_transactions %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Loan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in recent_loan_transactions %}
+                            <tr>
+                                <td>{{ transaction.transaction_date|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if transaction.transaction_type == 'principal_payment' %}bg-success
+                                        {% elif transaction.transaction_type == 'interest_payment' %}bg-info
+                                        {% else %}bg-warning{% endif %}">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </span>
+                                </td>
+                                <td>৳{{ transaction.amount|floatformat:2 }}</td>
+                                <td>{{ transaction.loan.deal_number }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-credit-card text-muted"></i>
+                    <p class="text-muted mb-0">No recent loan transactions</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-lightning"></i>
+                    Quick Actions
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'accounting:bank_create' %}" class="btn btn-primary w-100">
+                            <i class="bi bi-plus-circle"></i><br>
+                            Add Bank Account
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'accounting:loan_create' %}" class="btn btn-info w-100">
+                            <i class="bi bi-credit-card"></i><br>
+                            Create Loan
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'accounting:daily_report' %}" class="btn btn-success w-100">
+                            <i class="bi bi-graph-up"></i><br>
+                            Daily Report
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'accounting:monthly_report' %}" class="btn btn-warning w-100">
+                            <i class="bi bi-calendar-month"></i><br>
+                            Monthly Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

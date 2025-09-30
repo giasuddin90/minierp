@@ -93,11 +93,39 @@
                             </a>
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounting:bank_list' %}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="bankingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-bank"></i>
                                 Banking
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="bankingDropdown">
+                                <li><a class="dropdown-item" href="{% url 'accounting:banking_dashboard' %}">
+                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:bank_list' %}">
+                                    <i class="bi bi-bank"></i> Bank Accounts
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:loan_list' %}">
+                                    <i class="bi bi-credit-card"></i> Loans
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:trial_balance_list' %}">
+                                    <i class="bi bi-calculator"></i> Trial Balance
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:bank_create' %}">
+                                    <i class="bi bi-plus-circle"></i> New Bank Account
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:loan_create' %}">
+                                    <i class="bi bi-plus-circle"></i> New Loan
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:daily_report' %}">
+                                    <i class="bi bi-graph-up"></i> Daily Report
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounting:monthly_report' %}">
+                                    <i class="bi bi-calendar-month"></i> Monthly Report
+                                </a></li>
+                            </ul>
                         </li>
                         
                         <li class="nav-item dropdown">

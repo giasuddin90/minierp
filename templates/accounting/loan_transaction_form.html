@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Loan Transaction - Building Materials ERP{% endblock %}
+
+{% block page_title %}Add Loan Transaction{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:loan_detail' loan.pk %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Loan
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-plus-circle"></i>
+                    Add Loan Transaction
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.transaction_type.id_for_label }}" class="form-label">Transaction Type</label>
+                                {{ form.transaction_type }}
+                                {% if form.transaction_type.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.transaction_type.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.amount.id_for_label }}" class="form-label">Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">৳</span>
+                                    {{ form.amount }}
+                                </div>
+                                {% if form.amount.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.amount.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.transaction_date.id_for_label }}" class="form-label">Transaction Date</label>
+                                {{ form.transaction_date }}
+                                {% if form.transaction_date.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.transaction_date.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.description.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'accounting:loan_detail' loan.pk %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> Save Transaction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Loan Information
+                </h6>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Deal Number:</strong></td>
+                        <td>{{ loan.deal_number }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Principal Amount:</strong></td>
+                        <td>৳{{ loan.principal_amount|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Outstanding:</strong></td>
+                        <td>
+                            <strong class="text-warning">৳{{ loan.outstanding_amount|floatformat:2 }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interest Rate:</strong></td>
+                        <td>{{ loan.interest_rate }}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status:</strong></td>
+                        <td>
+                            <span class="badge bg-{% if loan.status == 'active' %}success{% else %}secondary{% endif %}">
+                                {{ loan.get_status_display }}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-calculator"></i>
+                    Payment Summary
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h6 class="text-success">৳{{ loan.total_principal_paid|floatformat:2 }}</h6>
+                        <small class="text-muted">Principal Paid</small>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-info">৳{{ loan.total_interest_paid|floatformat:2 }}</h6>
+                        <small class="text-muted">Interest Paid</small>
+                    </div>
+                </div>
+                
+                {% if loan.principal_amount > 0 %}
+                {% widthratio loan.total_principal_paid loan.principal_amount 100 as progress_percent %}
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between">
+                        <small>Progress</small>
+                        <small>{{ progress_percent }}%</small>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ progress_percent }}%" 
+                             aria-valuenow="{{ progress_percent }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default transaction date to today
+    const today = new Date().toISOString().slice(0, 16);
+    document.getElementById('{{ form.transaction_date.id_for_label }}').value = today;
+    
+    // Set max amount to outstanding amount
+    const amountField = document.getElementById('{{ form.amount.id_for_label }}');
+    amountField.max = {{ loan.outstanding_amount }};
+    
+    // Add form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const amount = parseFloat(amountField.value);
+        const outstanding = {{ loan.outstanding_amount }};
+        
+        if (amount > outstanding) {
+            e.preventDefault();
+            alert(`Payment amount (৳${amount.toFixed(2)}) cannot exceed outstanding amount (৳${outstanding.toFixed(2)})`);
+            return false;
+        }
+        
+        if (amount <= 0) {
+            e.preventDefault();
+            alert('Payment amount must be greater than zero');
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %}

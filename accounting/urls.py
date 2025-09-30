@@ -33,4 +33,13 @@ urlpatterns = [
     path('reports/daily/', views.DailyReportView.as_view(), name='daily_report'),
     path('reports/monthly/', views.MonthlyReportView.as_view(), name='monthly_report'),
     path('reports/bank/', views.BankReportView.as_view(), name='bank_report'),
+    
+    # Enhanced Loan Management
+    path('loans/<int:loan_id>/transactions/', views.LoanTransactionListView.as_view(), name='loan_transaction_list'),
+    path('loans/<int:loan_id>/transactions/create/', views.LoanTransactionCreateView.as_view(), name='loan_transaction_create'),
+    path('loans/<int:loan_id>/payment/', views.process_loan_payment, name='process_loan_payment'),
+    path('loans/<int:loan_id>/calculate-interest/', views.calculate_loan_interest, name='calculate_loan_interest'),
+    
+    # Banking Dashboard
+    path('dashboard/', views.BankingDashboardView.as_view(), name='banking_dashboard'),
 ]

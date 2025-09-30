@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}Loan Details - Building Materials ERP{% endblock %}
+
 {% block page_title %}Loan Details{% endblock %}
 
 {% block page_actions %}
@@ -10,64 +12,305 @@
     <a href="{% url 'accounting:loan_edit' object.pk %}" class="btn btn-outline-primary">
         <i class="bi bi-pencil"></i> Edit
     </a>
+    {% if object.status == 'active' %}
+    <a href="{% url 'accounting:loan_transaction_create' object.pk %}" class="btn btn-outline-success">
+        <i class="bi bi-plus-circle"></i> Add Payment
+    </a>
+    {% endif %}
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-bank"></i>
-                    Loan Details
-                </h5>
+<!-- Loan Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Principal Amount</h6>
+                <h3 class="mb-0">৳{{ object.principal_amount|floatformat:2 }}</h3>
             </div>
-            <div class="card-body">
-                <table class="table table-sm">
-                    <tr>
-                        <td><strong>Loan Number:</strong></td>
-                        <td>{{ object.loan_number }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bank Account:</strong></td>
-                        <td>{{ object.bank_account.bank_name }} - {{ object.bank_account.account_number }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Amount:</strong></td>
-                        <td>৳{{ object.amount|floatformat:2 }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Interest Rate:</strong></td>
-                        <td>{{ object.interest_rate }}%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Start Date:</strong></td>
-                        <td>{{ object.start_date|date:"M d, Y" }}</td>
-                    </tr>
-                    {% if object.end_date %}
-                    <tr>
-                        <td><strong>End Date:</strong></td>
-                        <td>{{ object.end_date|date:"M d, Y" }}</td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <td><strong>Status:</strong></td>
-                        <td>
-                            <span class="badge bg-{% if object.status == 'active' %}success{% elif object.status == 'paid' %}primary{% else %}warning{% endif %}">
-                                {{ object.get_status_display }}
-                            </span>
-                        </td>
-                    </tr>
-                    {% if object.notes %}
-                    <tr>
-                        <td><strong>Notes:</strong></td>
-                        <td>{{ object.notes }}</td>
-                    </tr>
-                    {% endif %}
-                </table>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Outstanding Amount</h6>
+                <h3 class="mb-0">৳{{ object.outstanding_amount|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Principal Paid</h6>
+                <h3 class="mb-0">৳{{ object.total_principal_paid|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h6 class="card-title">Interest Paid</h6>
+                <h3 class="mb-0">৳{{ object.total_interest_paid|floatformat:2 }}</h3>
             </div>
         </div>
     </div>
 </div>
+
+<div class="row">
+    <!-- Loan Details -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-credit-card"></i>
+                    Loan Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Deal Number:</strong></td>
+                                <td>{{ object.deal_number }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bank Account:</strong></td>
+                                <td>
+                                    <a href="{% url 'accounting:bank_detail' object.bank_account.pk %}">
+                                        {{ object.bank_account.name }} - {{ object.bank_account.bank_name }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Principal Amount:</strong></td>
+                                <td>৳{{ object.principal_amount|floatformat:2 }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interest Rate:</strong></td>
+                                <td>{{ object.interest_rate }}% per annum</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Loan Date:</strong></td>
+                                <td>{{ object.loan_date|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Maturity Date:</strong></td>
+                                <td>{{ object.maturity_date|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status:</strong></td>
+                                <td>
+                                    <span class="badge bg-{% if object.status == 'active' %}success{% else %}secondary{% endif %}">
+                                        {{ object.get_status_display }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Days Remaining:</strong></td>
+                                <td>
+                                    {% now "Y-m-d" as today %}
+                                    {% if object.maturity_date|date:"Y-m-d" > today %}
+                                        {{ object.maturity_date|timeuntil }}
+                                    {% else %}
+                                        <span class="text-danger">Overdue</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Form (if loan is active) -->
+        {% if object.status == 'active' %}
+        <div class="card mt-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-cash"></i>
+                    Process Payment
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'accounting:process_loan_payment' object.pk %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="payment_amount" class="form-label">Payment Amount</label>
+                                <input type="number" class="form-control" id="payment_amount" name="payment_amount" 
+                                       step="0.01" min="0.01" max="{{ object.outstanding_amount }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="payment_type" class="form-label">Payment Type</label>
+                                <select class="form-select" id="payment_type" name="payment_type" required>
+                                    <option value="principal_payment">Principal Payment</option>
+                                    <option value="interest_payment">Interest Payment</option>
+                                    <option value="penalty">Penalty</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="description" name="description" 
+                                       placeholder="Payment description">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-info" onclick="calculateInterest()">
+                            <i class="bi bi-calculator"></i> Calculate Interest
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> Process Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Loan Progress -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-graph-up"></i>
+                    Payment Progress
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if object.principal_amount > 0 %}
+                {% widthratio object.total_principal_paid object.principal_amount 100 as progress_percent %}
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Principal Paid</span>
+                        <span>{{ progress_percent }}%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ progress_percent }}%" 
+                             aria-valuenow="{{ progress_percent }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div class="border-end">
+                            <h5 class="text-success">৳{{ object.total_principal_paid|floatformat:2 }}</h5>
+                            <small class="text-muted">Principal Paid</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="text-info">৳{{ object.total_interest_paid|floatformat:2 }}</h5>
+                        <small class="text-muted">Interest Paid</small>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="d-grid gap-2">
+                    <a href="{% url 'accounting:loan_transaction_list' object.pk %}" class="btn btn-outline-primary">
+                        <i class="bi bi-list-ul"></i> View All Transactions
+                    </a>
+                    <a href="{% url 'accounting:loan_transaction_create' object.pk %}" class="btn btn-outline-success">
+                        <i class="bi bi-plus-circle"></i> Add Transaction
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">
+                    <i class="bi bi-clock-history"></i>
+                    Recent Transactions
+                </h6>
+                <a href="{% url 'accounting:loan_transaction_list' object.pk %}" class="btn btn-sm btn-outline-primary">
+                    View All
+                </a>
+            </div>
+            <div class="card-body">
+                {% if object.loantransaction_set.all %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in object.loantransaction_set.all|slice:":5" %}
+                            <tr>
+                                <td>{{ transaction.transaction_date|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if transaction.transaction_type == 'principal_payment' %}bg-success
+                                        {% elif transaction.transaction_type == 'interest_payment' %}bg-info
+                                        {% else %}bg-warning{% endif %}">
+                                        {{ transaction.get_transaction_type_display }}
+                                    </span>
+                                </td>
+                                <td>৳{{ transaction.amount|floatformat:2 }}</td>
+                                <td>{{ transaction.description|truncatechars:30 }}</td>
+                                <td>{{ transaction.created_by|default:"System" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-credit-card text-muted"></i>
+                    <p class="text-muted mb-0">No transactions yet</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateInterest() {
+    fetch('{% url "accounting:calculate_loan_interest" object.pk %}')
+        .then(response => response.json())
+        .then(data => {
+            alert(`Interest Calculation:\n` +
+                  `Outstanding Amount: ৳${data.outstanding_amount.toFixed(2)}\n` +
+                  `Interest Rate: ${data.interest_rate}%\n` +
+                  `Days Elapsed: ${data.days_elapsed}\n` +
+                  `Interest Amount: ৳${data.interest_amount.toFixed(2)}\n` +
+                  `Total Due: ৳${data.total_due.toFixed(2)}`);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error calculating interest');
+        });
+}
+</script>
 {% endblock %}

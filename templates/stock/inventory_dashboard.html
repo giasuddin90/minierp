@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory Dashboard - Building Materials ERP{% endblock %}
+
+{% block page_title %}Inventory Dashboard{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'stock:product_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-list-ul"></i> Product List
+    </a>
+    <a href="{% url 'stock:stock_list' %}" class="btn btn-outline-info">
+        <i class="bi bi-box-seam"></i> Stock List
+    </a>
+    <a href="{% url 'stock:movement_list' %}" class="btn btn-outline-warning">
+        <i class="bi bi-arrow-left-right"></i> Movements
+    </a>
+    <a href="{% url 'stock:alert_list' %}" class="btn btn-outline-danger">
+        <i class="bi bi-exclamation-triangle"></i> Alerts
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Products</h6>
+                        <h3 class="mb-0">{{ total_products }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">In Stock</h6>
+                        <h3 class="mb-0">{{ in_stock_products }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Low Stock</h6>
+                        <h3 class="mb-0">{{ low_stock_products }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Out of Stock</h6>
+                        <h3 class="mb-0">{{ out_of_stock_products }}</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-x-circle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stock Value and Warehouse Summary -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-currency-dollar"></i>
+                    Total Stock Value
+                </h6>
+            </div>
+            <div class="card-body text-center">
+                <h2 class="text-primary">৳{{ total_stock_value|floatformat:2 }}</h2>
+                <p class="text-muted mb-0">Current inventory value</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-building"></i>
+                    Warehouse Summary
+                </h6>
+            </div>
+            <div class="card-body">
+                {% for warehouse in warehouse_summary %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span><strong>{{ warehouse.warehouse.name }}</strong></span>
+                    <span class="badge bg-info">{{ warehouse.product_count }} products</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <small class="text-muted">Quantity: {{ warehouse.total_quantity|floatformat:2 }}</small>
+                    <small class="text-muted">Value: ৳{{ warehouse.total_value|floatformat:2 }}</small>
+                </div>
+                {% if not forloop.last %}<hr>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Low Stock Alerts -->
+{% if low_stock_alerts %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h6 class="mb-0">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Low Stock Alerts
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for alert in low_stock_alerts %}
+                    <div class="col-md-4 mb-3">
+                        <div class="alert alert-warning">
+                            <h6 class="alert-heading">{{ alert.product.name }}</h6>
+                            <p class="mb-1">
+                                <strong>Current:</strong> {{ alert.current_quantity|floatformat:2 }} {{ alert.product.unit_name }}<br>
+                                <strong>Minimum:</strong> {{ alert.min_quantity|floatformat:2 }} {{ alert.product.unit_name }}<br>
+                                <strong>Warehouse:</strong> {{ alert.warehouse.name }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Top Selling Products -->
+{% if top_selling %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-trophy"></i>
+                    Top Selling Products (Last 30 Days)
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for item in top_selling %}
+                    <div class="col-md-6 mb-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ item.product__name }}</span>
+                            <span class="badge bg-success">{{ item.total_sold|floatformat:2 }} sold</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Recent Stock Movements -->
+{% if recent_movements %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-arrow-left-right"></i>
+                    Recent Stock Movements
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Warehouse</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for movement in recent_movements %}
+                            <tr>
+                                <td>{{ movement.movement_date|date:"M d, Y H:i" }}</td>
+                                <td>{{ movement.product.name }}</td>
+                                <td>{{ movement.warehouse.name }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if movement.movement_type == 'inward' %}bg-success
+                                        {% elif movement.movement_type == 'outward' %}bg-danger
+                                        {% elif movement.movement_type == 'transfer' %}bg-info
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ movement.get_movement_type_display }}
+                                    </span>
+                                </td>
+                                <td>{{ movement.quantity|floatformat:2 }}</td>
+                                <td>{{ movement.reference|default:"-" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Detailed Inventory Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-list-check"></i>
+                    Detailed Inventory Status
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if inventory_data %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Product</th>
+                                <th>Current Stock</th>
+                                <th>Stock Value</th>
+                                <th>Total Sold</th>
+                                <th>Total Purchased</th>
+                                <th>Status</th>
+                                <th>Last Movement</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in inventory_data %}
+                            <tr>
+                                <td>
+                                    <strong>{{ item.product.name }}</strong>
+                                    {% if item.product.brand %}
+                                    <br><small class="text-muted">{{ item.product.brand }}</small>
+                                    {% endif %}
+                                    <br><small class="text-muted">{{ item.product.unit_name }}</small>
+                                </td>
+                                <td>
+                                    <strong class="{% if item.stock_status == 'out_of_stock' %}text-danger{% elif item.stock_status == 'low_stock' %}text-warning{% else %}text-success{% endif %}">
+                                        {{ item.total_quantity|floatformat:2 }}
+                                    </strong>
+                                    {% if item.min_stock_level > 0 %}
+                                    <br><small class="text-muted">Min: {{ item.min_stock_level|floatformat:2 }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>৳{{ item.total_value|floatformat:2 }}</td>
+                                <td>
+                                    <span class="text-success">{{ item.total_sold|floatformat:2 }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-info">{{ item.total_purchased|floatformat:2 }}</span>
+                                </td>
+                                <td>
+                                    {% if item.stock_status == 'out_of_stock' %}
+                                        <span class="badge bg-danger">Out of Stock</span>
+                                    {% elif item.stock_status == 'low_stock' %}
+                                        <span class="badge bg-warning">Low Stock</span>
+                                    {% else %}
+                                        <span class="badge bg-success">In Stock</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.last_movement %}
+                                        <small>{{ item.last_movement.movement_date|date:"M d, Y" }}</small>
+                                        <br><small class="text-muted">{{ item.last_movement.get_movement_type_display }}</small>
+                                    {% else %}
+                                        <small class="text-muted">No movements</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'stock:product_detail' item.product.pk %}" class="btn btn-outline-primary" title="View Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{% url 'stock:product_edit' item.product.pk %}" class="btn btn-outline-warning" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+                    <h5 class="text-muted mt-3">No Inventory Data</h5>
+                    <p class="text-muted">Start by adding products and managing stock.</p>
+                    <a href="{% url 'stock:product_create' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Product
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
