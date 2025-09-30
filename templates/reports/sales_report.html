@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales Report - Building Materials ERP{% endblock %}
+
+{% block page_title %}Sales Report{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'reports:dashboard' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+    <button class="btn btn-primary" onclick="generateReport()">
+        <i class="bi bi-download"></i> Generate Report
+    </button>
+    <button class="btn btn-outline-info" onclick="window.print()">
+        <i class="bi bi-printer"></i> Print
+    </button>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Date Range Filter -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-calendar"></i>
+                    Date Range Filter
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" 
+                               value="{{ start_date }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" 
+                               value="{{ end_date }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">&nbsp;</label>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Summary -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-center border-primary">
+            <div class="card-body">
+                <h5 class="text-primary">{{ total_orders }}</h5>
+                <small class="text-muted">Total Orders</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-success">
+            <div class="card-body">
+                <h5 class="text-success">{{ total_invoices }}</h5>
+                <small class="text-muted">Total Invoices</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-info">
+            <div class="card-body">
+                <h5 class="text-info">৳{{ total_sales|floatformat:2 }}</h5>
+                <small class="text-muted">Total Sales</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-warning">
+            <div class="card-body">
+                <h5 class="text-warning">৳{{ total_payments|floatformat:2 }}</h5>
+                <small class="text-muted">Total Payments</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top Customers -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-trophy"></i>
+                    Top Customers
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if top_customers %}
+                <div class="list-group list-group-flush">
+                    {% for customer in top_customers %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ customer.customer__name }}</strong><br>
+                            <small class="text-muted">{{ customer.order_count }} orders</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="text-success">৳{{ customer.total_sales|floatformat:2 }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-trophy fs-1 text-muted"></i>
+                    <p class="text-muted">No customer data available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sales by Product -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-box-seam"></i>
+                    Top Selling Products
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if sales_by_product %}
+                <div class="list-group list-group-flush">
+                    {% for product in sales_by_product %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ product.product__name }}</strong><br>
+                            <small class="text-muted">Qty: {{ product.total_quantity|floatformat:2 }}</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="text-success">৳{{ product.total_value|floatformat:2 }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-box-seam fs-1 text-muted"></i>
+                    <p class="text-muted">No product sales data available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Charts -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-pie-chart"></i>
+                    Sales vs Payments
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="salesPaymentsChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-bar-chart"></i>
+                    Top Customers by Sales
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="topCustomersChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Summary -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-file-text"></i>
+                    Sales Report Summary
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Period: {{ start_date|date:"M d, Y" }} to {{ end_date|date:"M d, Y" }}</h6>
+                        <h6>Total Orders: {{ total_orders }}</h6>
+                        <h6>Total Invoices: {{ total_invoices }}</h6>
+                        <h6>Total Sales: ৳{{ total_sales|floatformat:2 }}</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Total Payments: ৳{{ total_payments|floatformat:2 }}</h6>
+                        <h6>Outstanding: ৳{{ total_sales|add:total_payments|floatformat:2 }}</h6>
+                        <h6>Payment Rate: 90%</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Sales vs Payments Chart
+const salesPaymentsCtx = document.getElementById('salesPaymentsChart').getContext('2d');
+new Chart(salesPaymentsCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Total Sales', 'Total Payments'],
+        datasets: [{
+            data: [{{ total_sales }}, {{ total_payments }}],
+            backgroundColor: ['#007bff', '#28a745'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Top Customers Chart
+const topCustomersCtx = document.getElementById('topCustomersChart').getContext('2d');
+new Chart(topCustomersCtx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for customer in top_customers|slice:":5" %}
+                '{{ customer.customer__name|truncatechars:15 }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Sales (৳)',
+            data: [
+                {% for customer in top_customers|slice:":5" %}
+                    {{ customer.total_sales }},
+                {% endfor %}
+            ],
+            backgroundColor: '#007bff',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Generate Report Function
+function generateReport() {
+    const startDate = document.getElementById('start_date').value;
+    const endDate = document.getElementById('end_date').value;
+    
+    fetch(`{% url 'reports:generate_report' 'sales' %}?start_date=${startDate}&end_date=${endDate}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Report generated successfully!');
+                // You can add logic to download the report here
+            } else {
+                alert('Error generating report: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error generating report');
+        });
+}
+</script>
+{% endblock %}

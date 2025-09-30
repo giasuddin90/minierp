@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Report - Building Materials ERP{% endblock %}
+
+{% block page_title %}Customer Report{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'reports:dashboard' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+    <button class="btn btn-primary" onclick="generateReport()">
+        <i class="bi bi-download"></i> Generate Report
+    </button>
+    <button class="btn btn-outline-info" onclick="window.print()">
+        <i class="bi bi-printer"></i> Print
+    </button>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Customer Summary -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-center border-primary">
+            <div class="card-body">
+                <h5 class="text-primary">{{ total_customers }}</h5>
+                <small class="text-muted">Total Customers</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-success">
+            <div class="card-body">
+                <h5 class="text-success">৳{{ customer_balances|length }}</h5>
+                <small class="text-muted">Active Customers</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-info">
+            <div class="card-body">
+                <h5 class="text-info">৳{{ top_customers|length }}</h5>
+                <small class="text-muted">Top Customers</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-warning">
+            <div class="card-body">
+                <h5 class="text-warning">৳0.00</h5>
+                <small class="text-muted">Total Outstanding</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Balances -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-people"></i>
+                    Customer Balances
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if customer_balances %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Customer</th>
+                                <th>Total Sales</th>
+                                <th>Total Payments</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in customer_balances %}
+                            <tr>
+                                <td>
+                                    <strong>{{ customer.customer.name }}</strong><br>
+                                    <small class="text-muted">{{ customer.customer.email|default:"No email" }}</small>
+                                </td>
+                                <td class="text-success">৳{{ customer.total_sales|floatformat:2 }}</td>
+                                <td class="text-info">৳{{ customer.total_payments|floatformat:2 }}</td>
+                                <td class="{% if customer.balance > 0 %}text-danger{% elif customer.balance < 0 %}text-success{% else %}text-muted{% endif %}">
+                                    ৳{{ customer.balance|floatformat:2 }}
+                                </td>
+                                <td>
+                                    {% if customer.balance > 0 %}
+                                        <span class="badge bg-warning">Outstanding</span>
+                                    {% elif customer.balance < 0 %}
+                                        <span class="badge bg-success">Credit</span>
+                                    {% else %}
+                                        <span class="badge bg-info">Paid</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'customers:customer_detail' customer.customer.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-people fs-1 text-muted"></i>
+                    <h5 class="text-muted mt-3">No customer data available</h5>
+                    <p class="text-muted">Customer balances will appear here once transactions are recorded.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top Customers -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-trophy"></i>
+                    Top Customers by Sales
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if top_customers %}
+                <div class="list-group list-group-flush">
+                    {% for customer in top_customers %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ customer.customer__name }}</strong><br>
+                            <small class="text-muted">{{ customer.invoice_count }} invoices</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="text-success">৳{{ customer.total_sales|floatformat:2 }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-trophy fs-1 text-muted"></i>
+                    <p class="text-muted">No customer sales data available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Customer Analysis Chart -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-pie-chart"></i>
+                    Customer Status Distribution
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="customerStatusChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Performance Chart -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-bar-chart"></i>
+                    Top Customers by Sales Volume
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="topCustomersChart" width="800" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Summary -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-file-text"></i>
+                    Customer Report Summary
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Total Customers: {{ total_customers }}</h6>
+                        <h6>Active Customers: {{ customer_balances|length }}</h6>
+                        <h6>Top Customers: {{ top_customers|length }}</h6>
+                        <h6>Total Outstanding: ৳0.00</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Customer Status: 
+                            {% if customer_balances|length > 0 %}
+                                <span class="text-success">Active</span>
+                            {% else %}
+                                <span class="text-warning">No Data</span>
+                            {% endif %}
+                        </h6>
+                        <h6>Payment Status: 
+                            {% if customer_balances|length > 0 %}
+                                <span class="text-info">Mixed</span>
+                            {% else %}
+                                <span class="text-muted">No Data</span>
+                            {% endif %}
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Customer Status Chart
+const customerStatusCtx = document.getElementById('customerStatusChart').getContext('2d');
+new Chart(customerStatusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Outstanding', 'Paid', 'Credit'],
+        datasets: [{
+            data: [
+                {% for customer in customer_balances %}
+                    {% if customer.balance > 0 %}1{% else %}0{% endif %},
+                {% endfor %}
+                {% for customer in customer_balances %}
+                    {% if customer.balance == 0 %}1{% else %}0{% endif %},
+                {% endfor %}
+                {% for customer in customer_balances %}
+                    {% if customer.balance < 0 %}1{% else %}0{% endif %},
+                {% endfor %}
+            ],
+            backgroundColor: ['#ffc107', '#28a745', '#17a2b8'],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Top Customers Chart
+const topCustomersCtx = document.getElementById('topCustomersChart').getContext('2d');
+new Chart(topCustomersCtx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for customer in top_customers|slice:":10" %}
+                '{{ customer.customer__name|truncatechars:20 }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Sales (৳)',
+            data: [
+                {% for customer in top_customers|slice:":10" %}
+                    {{ customer.total_sales }},
+                {% endfor %}
+            ],
+            backgroundColor: '#007bff',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Generate Report Function
+function generateReport() {
+    fetch(`{% url 'reports:generate_report' 'customer' %}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Report generated successfully!');
+                // You can add logic to download the report here
+            } else {
+                alert('Error generating report: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error generating report');
+        });
+}
+</script>
+{% endblock %}

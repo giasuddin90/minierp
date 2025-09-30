@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}Reports Dashboard - Building Materials ERP{% endblock %}
+
+{% block page_title %}Reports Dashboard{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'reports:financial_report' %}" class="btn btn-primary">
+        <i class="bi bi-graph-up"></i> Financial Report
+    </a>
+    <a href="{% url 'reports:inventory_report' %}" class="btn btn-outline-info">
+        <i class="bi bi-box-seam"></i> Inventory Report
+    </a>
+    <a href="{% url 'reports:sales_report' %}" class="btn btn-outline-success">
+        <i class="bi bi-cart-check"></i> Sales Report
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Report Statistics -->
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-primary">{{ total_reports }}</h5>
+                <small class="text-muted">Total Reports</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-success">{{ completed_reports }}</h5>
+                <small class="text-muted">Completed</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-danger">{{ failed_reports }}</h5>
+                <small class="text-muted">Failed</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-info">{{ recent_reports_count }}</h5>
+                <small class="text-muted">This Week</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <!-- Quick Reports -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-lightning"></i>
+                    Quick Reports
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'reports:financial_report' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-graph-up"></i> Financial Report
+                    </a>
+                    <a href="{% url 'reports:inventory_report' %}" class="btn btn-outline-info">
+                        <i class="bi bi-box-seam"></i> Inventory Report
+                    </a>
+                    <a href="{% url 'reports:sales_report' %}" class="btn btn-outline-success">
+                        <i class="bi bi-cart-check"></i> Sales Report
+                    </a>
+                    <a href="{% url 'reports:purchase_report' %}" class="btn btn-outline-warning">
+                        <i class="bi bi-cart-plus"></i> Purchase Report
+                    </a>
+                    <a href="{% url 'reports:customer_report' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-people"></i> Customer Report
+                    </a>
+                    <a href="{% url 'reports:supplier_report' %}" class="btn btn-outline-dark">
+                        <i class="bi bi-truck"></i> Supplier Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Report Types Distribution -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-pie-chart"></i>
+                    Report Types
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if report_types %}
+                <div class="list-group list-group-flush">
+                    {% for report_type in report_types %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ report_type.report_type|title }}</span>
+                        <span class="badge bg-primary rounded-pill">{{ report_type.count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-pie-chart fs-1 text-muted"></i>
+                    <p class="text-muted">No reports generated yet</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Reports -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-clock-history"></i>
+                    Recent Reports
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if recent_reports %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Report Name</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Generated By</th>
+                                <th>Generated At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for report in recent_reports %}
+                            <tr>
+                                <td>{{ report.report_name }}</td>
+                                <td>
+                                    <span class="badge bg-info">{{ report.report_type|title }}</span>
+                                </td>
+                                <td>
+                                    {% if report.status == 'completed' %}
+                                        <span class="badge bg-success">Completed</span>
+                                    {% elif report.status == 'failed' %}
+                                        <span class="badge bg-danger">Failed</span>
+                                    {% elif report.status == 'generating' %}
+                                        <span class="badge bg-warning">Generating</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Pending</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ report.generated_by.get_full_name|default:report.generated_by.username }}</td>
+                                <td>{{ report.generated_at|date:"M d, Y H:i" }}</td>
+                                <td>
+                                    {% if report.status == 'completed' and report.file_path %}
+                                    <a href="{{ report.file_path }}" class="btn btn-sm btn-outline-primary" title="Download">
+                                        <i class="bi bi-download"></i>
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-clock-history fs-1 text-muted"></i>
+                    <h5 class="text-muted mt-3">No recent reports</h5>
+                    <p class="text-muted">Generate your first report to see it here.</p>
+                    <a href="{% url 'reports:financial_report' %}" class="btn btn-primary">
+                        <i class="bi bi-graph-up"></i> Generate Financial Report
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

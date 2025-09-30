@@ -43,6 +43,23 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.brand})"
+    
+    def get_total_quantity(self):
+        """Get total quantity across all warehouses"""
+        try:
+            return sum(stock.quantity for stock in self.stock_set.all())
+        except:
+            return 0
+    
+    def get_total_stock_value(self):
+        """Get total stock value across all warehouses"""
+        try:
+            total_value = 0
+            for stock in self.stock_set.all():
+                total_value += stock.quantity * self.selling_price
+            return total_value
+        except:
+            return 0
 
     class Meta:
         verbose_name = "Product"

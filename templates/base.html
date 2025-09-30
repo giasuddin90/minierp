@@ -272,11 +272,41 @@
                             </ul>
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounting:trial_balance_list' %}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-graph-up"></i>
                                 Reports
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+                                <li><a class="dropdown-item" href="{% url 'reports:dashboard' %}">
+                                    <i class="bi bi-speedometer2"></i> Dashboard
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:financial_report' %}">
+                                    <i class="bi bi-graph-up"></i> Financial Report
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:inventory_report' %}">
+                                    <i class="bi bi-box-seam"></i> Inventory Report
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:sales_report' %}">
+                                    <i class="bi bi-cart-check"></i> Sales Report
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:purchase_report' %}">
+                                    <i class="bi bi-cart-plus"></i> Purchase Report
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:customer_report' %}">
+                                    <i class="bi bi-people"></i> Customer Report
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:supplier_report' %}">
+                                    <i class="bi bi-truck"></i> Supplier Report
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:template_list' %}">
+                                    <i class="bi bi-file-text"></i> Report Templates
+                                </a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:log_list' %}">
+                                    <i class="bi bi-clock-history"></i> Report Logs
+                                </a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

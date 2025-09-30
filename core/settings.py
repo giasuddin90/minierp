@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'accounting',
+    'reports',
     'customers',
     'suppliers',
     'stock',
