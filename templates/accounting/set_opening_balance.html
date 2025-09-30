@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+
+{% block title %}Set Opening Balance - Building Materials ERP{% endblock %}
+
+{% block page_title %}Set Opening Balance{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'accounting:opening_balance' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Opening Balance
+    </a>
+    <a href="{% url 'accounting:comprehensive_trial_balance' %}" class="btn btn-outline-info">
+        <i class="bi bi-calculator"></i> Trial Balance
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-calculator"></i>
+                    Set Opening Balance
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="post" id="openingBalanceForm">
+                    {% csrf_token %}
+                    
+                    <!-- Entry Date and Description -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_entry_date" class="form-label">Opening Balance Date *</label>
+                                <input type="date" class="form-control" id="id_entry_date" name="entry_date" 
+                                       value="{{ today|date:'Y-m-d' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_description" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="id_description" name="description" 
+                                       value="Opening Balance Entry" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accounts Opening Balances -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Account</th>
+                                    <th>Type</th>
+                                    <th>Opening Balance</th>
+                                    <th>Debit/Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for account in accounts %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ account.code }}</strong><br>
+                                        <small class="text-muted">{{ account.name }}</small>
+                                    </td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if account.category.account_type == 'asset' %}bg-primary
+                                            {% elif account.category.account_type == 'liability' %}bg-danger
+                                            {% elif account.category.account_type == 'equity' %}bg-success
+                                            {% elif account.category.account_type == 'income' %}bg-info
+                                            {% else %}bg-warning{% endif %}">
+                                            {{ account.category.get_account_type_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-text">৳</span>
+                                            <input type="number" class="form-control balance-input" 
+                                                   id="balance_{{ account.id }}" name="balance_{{ account.id }}" 
+                                                   step="0.01" min="0" value="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info" id="debit_credit_{{ account.id }}">
+                                            {% if account.category.account_type in 'asset,expense' %}Debit{% else %}Credit{% endif %}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Balance Summary -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h6 class="text-danger">Total Debits</h6>
+                                    <h3 class="text-danger" id="totalDebits">৳0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h6 class="text-success">Total Credits</h6>
+                                    <h3 class="text-success" id="totalCredits">৳0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Balance Status -->
+                    <div class="alert alert-info mt-3" id="balanceStatus">
+                        <h6 class="alert-heading">
+                            <i class="bi bi-info-circle"></i> Balance Status
+                        </h6>
+                        <p class="mb-0" id="balanceMessage">Enter opening balances for all accounts. Total debits must equal total credits.</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'accounting:opening_balance' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                            <i class="bi bi-check-circle"></i> Set Opening Balance
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Instructions
+                </h6>
+            </div>
+            <div class="card-body">
+                <h6>How to Set Opening Balances:</h6>
+                <ol class="small">
+                    <li>Enter the opening balance date</li>
+                    <li>For each account, enter the opening balance amount</li>
+                    <li>Assets and Expenses: Enter positive amounts (Debit)</li>
+                    <li>Liabilities, Equity, and Income: Enter positive amounts (Credit)</li>
+                    <li>Total debits must equal total credits</li>
+                    <li>Click "Set Opening Balance" to save</li>
+                </ol>
+                
+                <h6 class="mt-3">Account Types:</h6>
+                <ul class="small">
+                    <li><span class="badge bg-primary">Assets</span> - Debit (Positive)</li>
+                    <li><span class="badge bg-danger">Liabilities</span> - Credit (Positive)</li>
+                    <li><span class="badge bg-success">Equity</span> - Credit (Positive)</li>
+                    <li><span class="badge bg-info">Income</span> - Credit (Positive)</li>
+                    <li><span class="badge bg-warning">Expenses</span> - Debit (Positive)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="bi bi-lightning"></i>
+                    Quick Actions
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-primary" onclick="setSampleBalances()">
+                        <i class="bi bi-magic"></i> Set Sample Balances
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="clearAllBalances()">
+                        <i class="bi bi-arrow-clockwise"></i> Clear All
+                    </button>
+                    <a href="{% url 'accounting:opening_balance' %}" class="btn btn-outline-info">
+                        <i class="bi bi-list-ul"></i> View Opening Balance
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const balanceInputs = document.querySelectorAll('.balance-input');
+    const totalDebitsElement = document.getElementById('totalDebits');
+    const totalCreditsElement = document.getElementById('totalCredits');
+    const balanceStatusElement = document.getElementById('balanceStatus');
+    const balanceMessageElement = document.getElementById('balanceMessage');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Calculate totals when any balance input changes
+    balanceInputs.forEach(input => {
+        input.addEventListener('input', calculateTotals);
+    });
+    
+    function calculateTotals() {
+        let totalDebits = 0;
+        let totalCredits = 0;
+        
+        balanceInputs.forEach(input => {
+            const accountId = input.name.replace('balance_', '');
+            const amount = parseFloat(input.value) || 0;
+            
+            // Determine if this account type is debit or credit
+            const debitCreditElement = document.getElementById(`debit_credit_${accountId}`);
+            const isDebit = debitCreditElement.textContent === 'Debit';
+            
+            if (isDebit) {
+                totalDebits += amount;
+            } else {
+                totalCredits += amount;
+            }
+        });
+        
+        // Update display
+        totalDebitsElement.textContent = `৳${totalDebits.toFixed(2)}`;
+        totalCreditsElement.textContent = `৳${totalCredits.toFixed(2)}`;
+        
+        // Check if balanced
+        const difference = Math.abs(totalDebits - totalCredits);
+        const isBalanced = difference < 0.01;
+        
+        if (isBalanced && totalDebits > 0) {
+            balanceStatusElement.className = 'alert alert-success mt-3';
+            balanceMessageElement.innerHTML = '<i class="bi bi-check-circle"></i> Opening balance is balanced and ready to save!';
+            submitBtn.disabled = false;
+        } else if (totalDebits === 0 && totalCredits === 0) {
+            balanceStatusElement.className = 'alert alert-info mt-3';
+            balanceMessageElement.innerHTML = '<i class="bi bi-info-circle"></i> Enter opening balances for all accounts. Total debits must equal total credits.';
+            submitBtn.disabled = true;
+        } else {
+            balanceStatusElement.className = 'alert alert-warning mt-3';
+            balanceMessageElement.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Opening balance is not balanced. Difference: ৳${difference.toFixed(2)}`;
+            submitBtn.disabled = true;
+        }
+    }
+    
+    // Set sample balances
+    window.setSampleBalances = function() {
+        const sampleBalances = {
+            'Cash in Hand': 50000,
+            'Bank Account': 200000,
+            'Accounts Receivable': 75000,
+            'Inventory': 150000,
+            'Equipment': 100000,
+            'Furniture': 25000,
+            'Accounts Payable': 45000,
+            'Bank Loan': 100000,
+            'Accrued Expenses': 5000,
+            'Owner Capital': 300000,
+            'Retained Earnings': 50000
+        };
+        
+        balanceInputs.forEach(input => {
+            const accountId = input.name.replace('balance_', '');
+            const accountName = input.closest('tr').querySelector('td:first-child small').textContent.trim();
+            
+            if (sampleBalances[accountName]) {
+                input.value = sampleBalances[accountName];
+            }
+        });
+        
+        calculateTotals();
+    };
+    
+    // Clear all balances
+    window.clearAllBalances = function() {
+        balanceInputs.forEach(input => {
+            input.value = 0;
+        });
+        calculateTotals();
+    };
+    
+    // Initial calculation
+    calculateTotals();
+});
+</script>
+{% endblock %}

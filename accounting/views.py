@@ -603,3 +603,188 @@ class DailyFinancialSummaryView(ListView):
         })
         
         return context
+
+
+class ComprehensiveTrialBalanceView(ListView):
+    model = TrialBalance
+    template_name = 'accounting/comprehensive_trial_balance.html'
+    context_object_name = 'trial_balances'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        today = timezone.now().date()
+        
+        # Get all transactions for today
+        bank_transactions = BankTransaction.objects.filter(transaction_date__date=today).select_related('bank_account')
+        expenses = Expense.objects.filter(expense_date=today).select_related('expense_category')
+        incomes = Income.objects.filter(income_date=today).select_related('income_category')
+        journal_entries = JournalEntry.objects.filter(entry_date=today).prefetch_related('lines')
+        
+        # Calculate bank transaction totals
+        total_bank_debits = sum(t.amount for t in bank_transactions if t.transaction_type == 'deposit')
+        total_bank_credits = sum(t.amount for t in bank_transactions if t.transaction_type == 'withdrawal')
+        
+        # Calculate expense and income totals
+        total_expenses = sum(e.amount for e in expenses)
+        total_income = sum(i.amount for i in incomes)
+        
+        # Calculate journal entry totals
+        total_journal_debits = sum(entry.total_debit for entry in journal_entries)
+        total_journal_credits = sum(entry.total_credit for entry in journal_entries)
+        
+        # Calculate total debits and credits
+        total_debits = total_bank_credits + total_expenses + total_journal_debits
+        total_credits = total_bank_debits + total_income + total_journal_credits
+        
+        # Check if balanced
+        is_balanced = abs(total_debits - total_credits) < Decimal('0.01')
+        difference = total_debits - total_credits
+        
+        context.update({
+            'today': today,
+            'bank_transactions': bank_transactions,
+            'expenses': expenses,
+            'incomes': incomes,
+            'journal_entries': journal_entries,
+            'total_bank_debits': total_bank_debits,
+            'total_bank_credits': total_bank_credits,
+            'total_expenses': total_expenses,
+            'total_income': total_income,
+            'total_journal_debits': total_journal_debits,
+            'total_journal_credits': total_journal_credits,
+            'total_debits': total_debits,
+            'total_credits': total_credits,
+            'is_balanced': is_balanced,
+            'difference': difference,
+        })
+        return context
+
+
+class OpeningBalanceView(ListView):
+    model = Account
+    template_name = 'accounting/opening_balance.html'
+    context_object_name = 'accounts'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get all accounts with their current balances
+        accounts = Account.objects.filter(is_active=True).select_related('category')
+        
+        # Get opening balance journal entry if exists
+        opening_balance_entry = JournalEntry.objects.filter(
+            entry_number__startswith='OB-'
+        ).first()
+        
+        # Calculate current balances for each account
+        account_balances = {}
+        if opening_balance_entry:
+            for line in opening_balance_entry.lines.all():
+                account_balances[line.account.id] = {
+                    'debit': line.debit_amount,
+                    'credit': line.credit_amount,
+                    'balance': line.debit_amount - line.credit_amount
+                }
+        
+        context.update({
+            'accounts': accounts,
+            'opening_balance_entry': opening_balance_entry,
+            'account_balances': account_balances,
+        })
+        return context
+
+
+class SetOpeningBalanceView(CreateView):
+    model = JournalEntry
+    template_name = 'accounting/set_opening_balance.html'
+    fields = ['entry_date', 'description']
+    success_url = reverse_lazy('accounting:opening_balance')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accounts'] = Account.objects.filter(is_active=True).select_related('category')
+        return context
+    
+    def form_valid(self, form):
+        # Create opening balance journal entry
+        journal_entry = form.save(commit=False)
+        journal_entry.entry_number = f"OB-{journal_entry.entry_date.strftime('%Y%m%d')}"
+        journal_entry.description = "Opening Balance Entry"
+        journal_entry.reference = "Opening Balance"
+        journal_entry.save()
+        
+        # Get opening balance data from form
+        opening_balances = {}
+        for key, value in self.request.POST.items():
+            if key.startswith('balance_'):
+                account_id = key.replace('balance_', '')
+                try:
+                    balance = Decimal(value) if value else Decimal('0')
+                    opening_balances[int(account_id)] = balance
+                except (ValueError, TypeError):
+                    continue
+        
+        # Create journal entry lines
+        total_debits = Decimal('0')
+        total_credits = Decimal('0')
+        
+        for account_id, balance in opening_balances.items():
+            if balance != 0:
+                try:
+                    account = Account.objects.get(id=account_id)
+                    
+                    if balance > 0:
+                        if account.category.account_type in ['asset', 'expense']:
+                            # Debit for assets and expenses
+                            JournalEntryLine.objects.create(
+                                journal_entry=journal_entry,
+                                account=account,
+                                description=f"Opening balance for {account.name}",
+                                debit_amount=balance,
+                                credit_amount=Decimal('0')
+                            )
+                            total_debits += balance
+                        else:
+                            # Credit for liabilities, equity, and income
+                            JournalEntryLine.objects.create(
+                                journal_entry=journal_entry,
+                                account=account,
+                                description=f"Opening balance for {account.name}",
+                                debit_amount=Decimal('0'),
+                                credit_amount=balance
+                            )
+                            total_credits += balance
+                    else:
+                        # Negative balance
+                        if account.category.account_type in ['asset', 'expense']:
+                            # Credit for negative assets/expenses
+                            JournalEntryLine.objects.create(
+                                journal_entry=journal_entry,
+                                account=account,
+                                description=f"Opening balance for {account.name}",
+                                debit_amount=Decimal('0'),
+                                credit_amount=abs(balance)
+                            )
+                            total_credits += abs(balance)
+                        else:
+                            # Debit for negative liabilities/equity/income
+                            JournalEntryLine.objects.create(
+                                journal_entry=journal_entry,
+                                account=account,
+                                description=f"Opening balance for {account.name}",
+                                debit_amount=abs(balance),
+                                credit_amount=Decimal('0')
+                            )
+                            total_debits += abs(balance)
+                            
+                except Account.DoesNotExist:
+                    continue
+        
+        # Update journal entry totals
+        journal_entry.total_debit = total_debits
+        journal_entry.total_credit = total_credits
+        journal_entry.is_balanced = abs(total_debits - total_credits) < Decimal('0.01')
+        journal_entry.save()
+        
+        messages.success(self.request, f'Opening balance entry created successfully!')
+        return super().form_valid(form)

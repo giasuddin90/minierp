@@ -62,5 +62,8 @@ urlpatterns = [
     
     # Enhanced Trial Balance
     path('trial-balance/enhanced/', views.EnhancedTrialBalanceView.as_view(), name='enhanced_trial_balance'),
+    path('trial-balance/comprehensive/', views.ComprehensiveTrialBalanceView.as_view(), name='comprehensive_trial_balance'),
+    path('opening-balance/', views.OpeningBalanceView.as_view(), name='opening_balance'),
+    path('opening-balance/set/', views.SetOpeningBalanceView.as_view(), name='set_opening_balance'),
     path('daily-summary/', views.DailyFinancialSummaryView.as_view(), name='daily_financial_summary'),
 ]
