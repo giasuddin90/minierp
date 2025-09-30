@@ -33,4 +33,7 @@ urlpatterns = [
     # Reports
     path('reports/stock/', views.StockReportView.as_view(), name='stock_report'),
     path('reports/valuation/', views.StockValuationReportView.as_view(), name='stock_valuation_report'),
+    
+    # Inventory Dashboard
+    path('dashboard/', views.InventoryDashboardView.as_view(), name='inventory_dashboard'),
 ]
