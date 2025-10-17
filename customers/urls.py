@@ -26,4 +26,6 @@ urlpatterns = [
     path('ledger/create/', views.CustomerLedgerCreateView.as_view(), name='ledger_create'),
     path('commitment/', views.CustomerCommitmentListView.as_view(), name='commitment_list'),
     path('commitment/create/', views.CustomerCommitmentCreateView.as_view(), name='commitment_create'),
+    path('commitment/<int:pk>/edit/', views.CustomerCommitmentUpdateView.as_view(), name='commitment_edit'),
+    path('commitment/<int:pk>/delete/', views.CustomerCommitmentDeleteView.as_view(), name='commitment_delete'),
 ]

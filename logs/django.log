@@ -8265,3 +8265,156 @@ django.template.exceptions.TemplateSyntaxError: Invalid filter: 'div'
 "GET /customers/commitment/create/ HTTP/1.1" 200 54393
 "GET /dashboard/ HTTP/1.1" 200 63150
 "GET /suppliers/ HTTP/1.1" 200 69758
+"GET /customers/commitment/ HTTP/1.1" 200 53724
+Internal Server Error: /customers/commitment/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 890, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 901, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomerCommitment' object has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 907, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1075, in render
+    output = self.filter_expression.resolve(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 743, in resolve
+    arg_vals.append(arg.resolve(context))
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 854, in resolve
+    value = self._resolve_lookup(context)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in <CustomerCommitment: ABC Construction Ltd - 2025-11-17 - 7003.00>
+"GET /customers/commitment/ HTTP/1.1" 500 214751
+"GET /customers/commitment/ HTTP/1.1" 200 57221
+"GET /customers/commitment/ HTTP/1.1" 200 57221
+"GET /customers/1/commitments/ HTTP/1.1" 200 57221
+"GET /customers/commitment/ HTTP/1.1" 200 57221
+"GET /customers/commitment/create/ HTTP/1.1" 200 54393
+"POST /customers/commitment/create/ HTTP/1.1" 200 54393
+"GET /customers/ HTTP/1.1" 200 73261
+"GET /customers/commitment/ HTTP/1.1" 200 57221
+"GET /customers/commitment/create/ HTTP/1.1" 200 54393
+"POST /customers/commitment/create/ HTTP/1.1" 200 54393
+"GET /customers/commitment/ HTTP/1.1" 200 57221
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /customers/commitment/create/ HTTP/1.1" 200 58853
+"GET /customers/commitment/1/edit/ HTTP/1.1" 200 58940
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /customers/commitment/ HTTP/1.1" 200 57428
+"GET /customers/commitment/create/ HTTP/1.1" 200 58853
+"GET /customers/commitment/1/edit/ HTTP/1.1" 200 58940
+"GET /customers/commitment/1/delete/ HTTP/1.1" 200 55802
+"GET /customers/commitment/ HTTP/1.1" 200 57428
+"GET /customers/commitment/1/edit/ HTTP/1.1" 200 58940
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /customers/commitment/ HTTP/1.1" 200 57428
+"GET /customers/commitment/create/ HTTP/1.1" 200 58853
+"POST /customers/commitment/create/ HTTP/1.1" 302 0
+"GET /customers/commitment/ HTTP/1.1" 200 58591
+"GET /stock/products/ HTTP/1.1" 200 64039
+"GET /stock/products/create/ HTTP/1.1" 200 58630
+"GET /stock/products/ HTTP/1.1" 200 64039
+"GET /stock/products/1/edit/ HTTP/1.1" 200 58686

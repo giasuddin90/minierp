@@ -26,7 +26,9 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -34,17 +36,25 @@
                         <tbody>
                             {% for item in items %}
                             <tr>
-                                <td>{{ item.name|default:item.title|default:item.id }}</td>
+                                <td>{{ item.customer.name }}</td>
+                                <td>{{ item.commitment_date }}</td>
+                                <td>৳{{ item.amount|floatformat:2 }}</td>
                                 <td>
-                                    <span class="badge bg-success">Active</span>
+                                    {% if item.is_fulfilled %}
+                                        <span class="badge bg-success">Fulfilled</span>
+                                    {% elif item.is_reminded %}
+                                        <span class="badge bg-warning">Reminded</span>
+                                    {% else %}
+                                        <span class="badge bg-primary">Pending</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="#" class="btn btn-outline-primary">
-                                            <i class="bi bi-eye"></i>
+                                        <a href="{% url 'customers:commitment_edit' item.pk %}" class="btn btn-outline-primary">
+                                            <i class="bi bi-pencil"></i> Edit
                                         </a>
-                                        <a href="#" class="btn btn-outline-secondary">
-                                            <i class="bi bi-pencil"></i>
+                                        <a href="{% url 'customers:commitment_delete' item.pk %}" class="btn btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Delete
                                         </a>
                                     </div>
                                 </td>

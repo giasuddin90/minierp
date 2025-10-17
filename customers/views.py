@@ -219,7 +219,30 @@ class CustomerCommitmentListView(ListView):
 class CustomerCommitmentCreateView(CreateView):
     model = CustomerCommitment
     template_name = 'customers/commitment_form.html'
-    fields = '__all__'
+    fields = ['customer', 'commitment_date', 'amount', 'description', 'is_reminded', 'is_fulfilled']
+    success_url = reverse_lazy('customers:commitment_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['customers'] = Customer.objects.all()
+        return context
+
+
+class CustomerCommitmentUpdateView(UpdateView):
+    model = CustomerCommitment
+    template_name = 'customers/commitment_form.html'
+    fields = ['customer', 'commitment_date', 'amount', 'description', 'is_reminded', 'is_fulfilled']
+    success_url = reverse_lazy('customers:commitment_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['customers'] = Customer.objects.all()
+        return context
+
+
+class CustomerCommitmentDeleteView(DeleteView):
+    model = CustomerCommitment
+    template_name = 'customers/commitment_confirm_delete.html'
     success_url = reverse_lazy('customers:commitment_list')
 
 

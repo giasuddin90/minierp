@@ -111,8 +111,19 @@ class Command(BaseCommand):
                     payment_method='cash',
                     created_by=user
                 )
+                
+                # Create some demo commitments for this customer
+                for i in range(random.randint(1, 3)):
+                    CustomerCommitment.objects.create(
+                        customer=customer,
+                        commitment_date=timezone.now().date() + timedelta(days=random.randint(1, 30)),
+                        amount=Decimal(str(random.randint(1000, 10000))),
+                        description=f'Payment commitment for {customer.name} - Amount {random.randint(1000, 10000)}',
+                        is_reminded=random.choice([True, False]),
+                        is_fulfilled=random.choice([True, False])
+                    )
         
-        self.stdout.write('✓ Created demo customers')
+        self.stdout.write('✓ Created demo customers and commitments')
 
     def create_demo_suppliers(self, user):
         """Create demo suppliers with sample data"""
