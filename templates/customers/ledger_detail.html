@@ -27,7 +27,7 @@
                 <table class="table table-sm">
                     <tr>
                         <td><strong>Name:</strong></td>
-                        <td>{{ object.name|default:object.title|default:object.id }}</td>
+                        <td>{{ object.customer.name }} - {{ object.description }}</td>
                     </tr>
                     {% if object.description %}
                     <tr>

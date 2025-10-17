@@ -34,7 +34,7 @@
                         <tbody>
                             {% for item in items %}
                             <tr>
-                                <td>{{ item.name|default:item.title|default:item.id }}</td>
+                                <td>{{ item.supplier.name }} - {{ item.description|truncatechars:50 }}</td>
                                 <td>
                                     <span class="badge bg-success">Active</span>
                                 </td>
