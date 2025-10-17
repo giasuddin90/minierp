@@ -220,18 +220,13 @@
                 <div class="collapse" id="reportsSubmenu">
                     <ul class="nav flex-column ms-3">
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'reports:dashboard' %}">
-                                <i class="bi bi-speedometer2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'financial_report' %}active{% endif %}" href="{% url 'reports:financial_report' %}">
-                                <i class="bi bi-graph-up"></i> Financial Report
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'inventory_report' %}active{% endif %}" href="{% url 'reports:inventory_report' %}">
                                 <i class="bi bi-box-seam"></i> Inventory Report
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'sales_report' %}active{% endif %}" href="{% url 'reports:sales_report' %}">
+                                <i class="bi bi-cart-check"></i> Sales Report
                             </a>
                         </li>
                         <li class="nav-item">
