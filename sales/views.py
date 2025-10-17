@@ -61,7 +61,6 @@ class SalesOrderCreateView(CreateView):
                 
                 # Handle multiple products
                 products = self.request.POST.getlist('products[]')
-                warehouses = self.request.POST.getlist('warehouses[]')
                 quantities = self.request.POST.getlist('quantities[]')
                 prices = self.request.POST.getlist('prices[]')
                 
@@ -70,7 +69,7 @@ class SalesOrderCreateView(CreateView):
                 
                 if products and products[0]:  # Check if at least one product is selected
                     for i, product_id in enumerate(products):
-                        if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
+                        if product_id and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
                                 quantity = float(quantities[i]) if quantities[i] else 0
@@ -82,7 +81,6 @@ class SalesOrderCreateView(CreateView):
                                     SalesOrderItem.objects.create(
                                         sales_order=self.object,
                                         product=product,
-                                        warehouse=warehouse,
                                         quantity=quantity,
                                         unit_price=unit_price,
                                         total_price=item_total
@@ -162,7 +160,6 @@ class SalesInvoiceCreateView(CreateView):
                 
                 # Handle multiple products
                 products = self.request.POST.getlist('products[]')
-                warehouses = self.request.POST.getlist('warehouses[]')
                 quantities = self.request.POST.getlist('quantities[]')
                 prices = self.request.POST.getlist('prices[]')
                 
@@ -172,7 +169,7 @@ class SalesInvoiceCreateView(CreateView):
                 
                 if products and products[0]:  # Check if at least one product is selected
                     for i, product_id in enumerate(products):
-                        if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
+                        if product_id and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
                                 quantity = float(quantities[i]) if quantities[i] else 0
@@ -184,7 +181,6 @@ class SalesInvoiceCreateView(CreateView):
                                     SalesInvoiceItem.objects.create(
                                         sales_invoice=self.object,
                                         product=product,
-                                        warehouse=warehouse,
                                         quantity=quantity,
                                         unit_price=unit_price,
                                         total_price=item_total
@@ -258,7 +254,6 @@ class SalesInvoiceUpdateView(UpdateView):
                 
                 # Handle product updates
                 products = self.request.POST.getlist('products[]')
-                warehouses = self.request.POST.getlist('warehouses[]')
                 quantities = self.request.POST.getlist('quantities[]')
                 prices = self.request.POST.getlist('prices[]')
                 
@@ -271,7 +266,7 @@ class SalesInvoiceUpdateView(UpdateView):
                 
                 if products and products[0]:  # Check if at least one product is selected
                     for i, product_id in enumerate(products):
-                        if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
+                        if product_id and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
                                 quantity = float(quantities[i]) if quantities[i] else 0
@@ -283,7 +278,6 @@ class SalesInvoiceUpdateView(UpdateView):
                                     SalesInvoiceItem.objects.create(
                                         sales_invoice=self.object,
                                         product=product,
-                                        warehouse=warehouse,
                                         quantity=quantity,
                                         unit_price=unit_price,
                                         total_price=item_total
@@ -476,7 +470,6 @@ def create_invoice_from_order(request, order_id):
                 SalesInvoiceItem.objects.create(
                     sales_invoice=invoice,
                     product=order_item.product,
-                    warehouse=order_item.warehouse,
                     quantity=order_item.quantity,
                     unit_price=order_item.unit_price,
                     total_price=order_item.total_price

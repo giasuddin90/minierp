@@ -53,7 +53,6 @@ class PurchaseOrderCreateView(CreateView):
                 
                 # Handle products - simplified approach
                 products = self.request.POST.getlist('products[]')
-                warehouses = self.request.POST.getlist('warehouses[]')
                 quantities = self.request.POST.getlist('quantities[]')
                 prices = self.request.POST.getlist('prices[]')
                 
@@ -67,12 +66,11 @@ class PurchaseOrderCreateView(CreateView):
                             continue
                             
                         # Get corresponding data
-                        warehouse_id = warehouses[i] if i < len(warehouses) else ''
                         quantity_str = quantities[i] if i < len(quantities) else ''
                         price_str = prices[i] if i < len(prices) else ''
                         
                         # Skip if any required data is missing
-                        if not warehouse_id or not quantity_str or not price_str:
+                        if not quantity_str or not price_str:
                             continue
                             
                         try:
@@ -92,7 +90,6 @@ class PurchaseOrderCreateView(CreateView):
                             PurchaseOrderItem.objects.create(
                                 purchase_order=self.object,
                                 product=product,
-                                warehouse=warehouse,
                                 quantity=quantity,
                                 unit_price=unit_price,
                                 total_price=item_total
@@ -138,7 +135,6 @@ class PurchaseOrderUpdateView(UpdateView):
                 
                 # Handle multiple products
                 products = self.request.POST.getlist('products[]')
-                warehouses = self.request.POST.getlist('warehouses[]')
                 quantities = self.request.POST.getlist('quantities[]')
                 prices = self.request.POST.getlist('prices[]')
                 
@@ -150,7 +146,7 @@ class PurchaseOrderUpdateView(UpdateView):
                 
                 if products and products[0]:  # Check if at least one product is selected
                     for i, product_id in enumerate(products):
-                        if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
+                        if product_id and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
                                 quantity = float(quantities[i]) if quantities[i] else 0
@@ -162,7 +158,6 @@ class PurchaseOrderUpdateView(UpdateView):
                                     PurchaseOrderItem.objects.create(
                                         purchase_order=self.object,
                                         product=product,
-                                        warehouse=warehouse,
                                         quantity=quantity,
                                         unit_price=unit_price,
                                         total_price=item_total

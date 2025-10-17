@@ -151,9 +151,6 @@
                                                 {{ transaction.payment_method|title }}
                                             {% endif %}
                                         </span>
-                                        {% if transaction.bank_account %}
-                                            <br><small class="text-muted">{{ transaction.bank_account.name }}</small>
-                                        {% endif %}
                                     {% else %}
                                         <span class="text-muted">-</span>
                                     {% endif %}

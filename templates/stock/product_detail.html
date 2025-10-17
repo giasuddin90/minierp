@@ -73,7 +73,7 @@
                                 <td>
                                     {% if object.selling_price > object.cost_price %}
                                         ৳{{ object.selling_price|floatformat:2|add:object.cost_price|floatformat:2 }}
-                                        ({{ object.selling_price|floatformat:2|div:object.cost_price|floatformat:2|sub:1|mul:100|floatformat:1 }}%)
+                                        ({{ object.profit_margin|floatformat:1 }}%)
                                     {% else %}
                                         <span class="text-danger">No Profit</span>
                                     {% endif %}
@@ -112,9 +112,6 @@
                     </a>
                     <a href="{% url 'stock:stock_list' %}" class="btn btn-info">
                         <i class="bi bi-boxes"></i> View Stock
-                    </a>
-                    <a href="{% url 'stock:movement_create' %}" class="btn btn-primary">
-                        <i class="bi bi-arrow-left-right"></i> Stock Movement
                     </a>
                 </div>
             </div>

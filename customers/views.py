@@ -110,7 +110,6 @@ class CustomerLedgerDetailView(DetailView):
                 'status': 'paid',
                 'created_at': payment.created_at,
                 'payment_method': payment.payment_method,
-                'bank_account': payment.bank_account,
             })
         
         # Sales Returns
@@ -153,7 +152,6 @@ class CustomerLedgerDetailView(DetailView):
                 'status': 'manual',
                 'created_at': entry.created_at,
                 'payment_method': entry.payment_method,
-                'bank_account': entry.bank_account,
             })
         
         # Sort all transactions by date (newest first)

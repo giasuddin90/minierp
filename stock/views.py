@@ -109,7 +109,7 @@ class InventoryDashboardView(ListView):
     context_object_name = 'products'
     
     def get_queryset(self):
-        return Product.objects.filter(is_active=True).prefetch_related('stock_set', 'stockmovement_set')
+        return Product.objects.filter(is_active=True).prefetch_related('stock_set')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -190,20 +190,8 @@ class InventoryDashboardView(ListView):
             total_sold=Sum('quantity')
         ).order_by('-total_sold')[:5]
         
-        # Get warehouse-wise stock summary
+        # Warehouse summary removed since warehouses are not used
         warehouse_summary = []
-        for warehouse in Warehouse.objects.filter(is_active=True):
-            warehouse_stocks = Stock.objects.filter(warehouse=warehouse)
-            warehouse_total_quantity = warehouse_stocks.aggregate(total=Sum('quantity'))['total'] or 0
-            warehouse_total_value = sum(stock.total_value for stock in warehouse_stocks)
-            warehouse_products = warehouse_stocks.count()
-            
-            warehouse_summary.append({
-                'warehouse': warehouse,
-                'total_quantity': warehouse_total_quantity,
-                'total_value': warehouse_total_value,
-                'product_count': warehouse_products
-            })
         
         context.update({
             'inventory_data': inventory_data,

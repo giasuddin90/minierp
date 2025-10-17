@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     
     # Local apps
+    'core',
     'reports',
     'customers',
     'suppliers',

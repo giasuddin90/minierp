@@ -73,17 +73,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    {% if payment.bank_account %}
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-bank text-primary me-2"></i>
-                                            <div>
-                                                <strong>{{ payment.bank_account.name }}</strong>
-                                                <br><small class="text-muted">{{ payment.bank_account.bank_name }}</small>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <span class="text-muted">-</span>
-                                    {% endif %}
+                                    <span class="text-muted">-</span>
                                 </td>
                                 <td>
                                     <div class="text-end">

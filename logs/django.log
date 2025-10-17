@@ -7437,3 +7437,831 @@ Watching for file changes with StatReloader
 "GET / HTTP/1.1" 302 0
 /home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4564
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 302 0
+Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'commission_list' not found. 'commission_list' is not a valid view function or pattern name.
+"GET /dashboard/ HTTP/1.1" 500 148534
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 302 0
+Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'warehouse_list' not found. 'warehouse_list' is not a valid view function or pattern name.
+"GET /dashboard/ HTTP/1.1" 500 148891
+Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'warehouse_list' not found. 'warehouse_list' is not a valid view function or pattern name.
+"GET /dashboard/ HTTP/1.1" 500 148891
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 302 0
+Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+                 ^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 299, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1396, in get_related_selections
+    raise FieldError(
+django.core.exceptions.FieldError: Invalid field name(s) given in select_related: 'warehouse'. Choices are: product
+"GET /dashboard/ HTTP/1.1" 500 202559
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 302 0
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 302 0
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /customers/ HTTP/1.1" 200 73261
+Internal Server Error: /customers/1/ledger/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/detail.py", line 113, in get
+    context = self.get_context_data(object=self.object)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py", line 113, in get_context_data
+    'bank_account': payment.bank_account,
+                    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SalesPayment' object has no attribute 'bank_account'
+"GET /customers/1/ledger/ HTTP/1.1" 500 90702
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /customers/1/ledger/ HTTP/1.1" 200 68628
+"GET /suppliers/1/ledger/ HTTP/1.1" 200 68859
+"GET /purchases/payments/ HTTP/1.1" 200 60450
+"GET /sales/orders/ HTTP/1.1" 200 62421
+"GET /stock/products/ HTTP/1.1" 200 64039
+"GET /reports/financial/ HTTP/1.1" 200 63420
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /customers/1/ledger/ HTTP/1.1" 200 68628
+"GET /suppliers/ HTTP/1.1" 200 69758
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /purchases/payments/ HTTP/1.1" 200 60450
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /purchases/orders/1/ HTTP/1.1" 200 56803
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /purchases/orders/1/ HTTP/1.1" 200 56803
+"GET /suppliers/1/ HTTP/1.1" 200 57907
+"GET /suppliers/1/ HTTP/1.1" 200 57907
+"GET /suppliers/1/ledger/ HTTP/1.1" 200 68859
+"GET /sales/orders/ HTTP/1.1" 200 62421
+"GET /sales/orders/1/ HTTP/1.1" 200 57007
+"GET /customers/4/ HTTP/1.1" 200 57108
+"GET /customers/4/ledger/ HTTP/1.1" 200 66722
+Internal Server Error: /customers/ledger/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 890, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 901, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomerLedger' object has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 907, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1075, in render
+    output = self.filter_expression.resolve(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 743, in resolve
+    arg_vals.append(arg.resolve(context))
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 854, in resolve
+    value = self._resolve_lookup(context)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in <CustomerLedger: ABC Construction Ltd - opening_balance - 5000.00>
+"GET /customers/ledger/ HTTP/1.1" 500 222025
+"GET /sales/orders/ HTTP/1.1" 200 62421
+Internal Server Error: /stock/dashboard/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/list.py", line 178, in get
+    context = self.get_context_data()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py", line 128, in get_context_data
+    for product in products:
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 384, in __iter__
+    self._fetch_all()
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 1951, in _fetch_all
+    self._prefetch_related_objects()
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 1328, in _prefetch_related_objects
+    prefetch_related_objects(self._result_cache, *self._prefetch_related_lookups)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 2372, in prefetch_related_objects
+    raise AttributeError(
+AttributeError: Cannot find 'stockmovement_set' on Product object, 'stockmovement_set' is an invalid parameter to prefetch_related()
+"GET /stock/dashboard/ HTTP/1.1" 500 110626
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /stock/dashboard/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'movement_list' not found. 'movement_list' is not a valid view function or pattern name.
+"GET /stock/dashboard/ HTTP/1.1" 500 222615
+"GET /stock/dashboard/ HTTP/1.1" 200 74170
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /customers/ HTTP/1.1" 200 73261
+"GET /suppliers/ HTTP/1.1" 200 69758
+"GET /stock/products/ HTTP/1.1" 200 64039
+"GET /sales/orders/ HTTP/1.1" 200 62421
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /reports/financial/ HTTP/1.1" 200 63420
+"GET /stock/dashboard/ HTTP/1.1" 200 74170
+"GET /customers/1/ledger/ HTTP/1.1" 200 68628
+"GET /sales/invoices/ HTTP/1.1" 200 60020
+"GET /purchases/invoices/ HTTP/1.1" 200 53710
+"GET /stock/alerts/ HTTP/1.1" 200 53704
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /stock/dashboard/ HTTP/1.1" 200 74170
+"GET /stock/products/ HTTP/1.1" 200 64039
+"GET /sales/payments/ HTTP/1.1" 200 53696
+"GET /sales/invoices/ HTTP/1.1" 200 60020
+Internal Server Error: /stock/stock/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'movement_create' not found. 'movement_create' is not a valid view function or pattern name.
+"GET /stock/stock/ HTTP/1.1" 500 171553
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 302 0
+"GET /customers/ HTTP/1.1" 200 73261
+"GET /customers/1/ HTTP/1.1" 200 57130
+"GET /customers/1/ledger/ HTTP/1.1" 200 68628
+"GET /suppliers/ HTTP/1.1" 200 69758
+"GET /suppliers/1/ HTTP/1.1" 200 57907
+"GET /suppliers/1/ledger/ HTTP/1.1" 200 68859
+"GET /stock/dashboard/ HTTP/1.1" 200 74170
+"GET /stock/products/ HTTP/1.1" 200 64039
+Internal Server Error: /stock/stock/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'movement_create' not found. 'movement_create' is not a valid view function or pattern name.
+"GET /stock/stock/ HTTP/1.1" 500 167792
+"GET /stock/alerts/ HTTP/1.1" 200 53704
+"GET /stock/stock/ HTTP/1.1" 200 65876
+"GET /sales/orders/ HTTP/1.1" 200 62421
+"GET /sales/invoices/ HTTP/1.1" 200 60020
+"GET /sales/returns/ HTTP/1.1" 200 53690
+"GET /sales/payments/ HTTP/1.1" 200 53696
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /purchases/invoices/ HTTP/1.1" 200 53710
+"GET /purchases/receipts/ HTTP/1.1" 200 53704
+"GET /purchases/payments/ HTTP/1.1" 200 60450
+"GET /reports/financial/ HTTP/1.1" 200 63420
+"GET /reports/inventory/ HTTP/1.1" 200 64427
+"GET /reports/sales/ HTTP/1.1" 200 64892
+Not Found: /reports/purchases/
+"GET /reports/purchases/ HTTP/1.1" 404 7257
+"GET /reports/purchase/ HTTP/1.1" 200 62861
+"GET /customers/1/ HTTP/1.1" 200 57130
+Internal Server Error: /stock/products/1/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'div'
+"GET /stock/products/1/ HTTP/1.1" 500 234096
+"GET /sales/orders/1/ HTTP/1.1" 200 57007
+"GET /stock/products/1/ HTTP/1.1" 200 57141
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /customers/ HTTP/1.1" 200 73261
+"GET /customers/1/ledger/ HTTP/1.1" 200 68628
+"GET /stock/dashboard/ HTTP/1.1" 200 74170
+"GET /stock/products/ HTTP/1.1" 200 64039
+"GET /stock/stock/ HTTP/1.1" 200 65876
+"GET /sales/orders/ HTTP/1.1" 200 62421
+"GET /sales/invoices/ HTTP/1.1" 200 60020
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /purchases/invoices/ HTTP/1.1" 200 53710
+"GET /reports/financial/ HTTP/1.1" 200 63420
+"GET /reports/inventory/ HTTP/1.1" 200 64427
+"GET /stock/stock/ HTTP/1.1" 200 65876
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /customers/ HTTP/1.1" 200 73261
+"GET /customers/commitment/ HTTP/1.1" 200 53724
+"GET /customers/commitment/create/ HTTP/1.1" 200 54393
+"POST /customers/commitment/create/ HTTP/1.1" 200 54393
+"GET /customers/commitment/ HTTP/1.1" 200 53724
+"GET /customers/commitment/create/ HTTP/1.1" 200 54393
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /suppliers/ HTTP/1.1" 200 69758

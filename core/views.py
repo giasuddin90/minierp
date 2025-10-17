@@ -33,7 +33,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         # Get low stock alerts
         context['low_stock_alerts'] = StockAlert.objects.filter(
             is_active=True
-        ).select_related('product', 'warehouse')[:5]
+        ).select_related('product')[:5]
         
         
         return context
@@ -48,5 +48,5 @@ def dashboard_redirect(request):
         'total_products': Product.objects.count(),
         'total_sales': SalesInvoice.objects.aggregate(total=Sum('total_amount'))['total'] or 0,
         'recent_orders': SalesOrder.objects.select_related('customer').order_by('-created_at')[:5],
-        'low_stock_alerts': StockAlert.objects.filter(is_active=True).select_related('product', 'warehouse')[:5],
+        'low_stock_alerts': StockAlert.objects.filter(is_active=True).select_related('product')[:5],
     })
