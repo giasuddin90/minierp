@@ -70,16 +70,14 @@ class SupplierLedgerListView(ListView):
 class SupplierLedgerCreateView(CreateView):
     model = SupplierLedger
     template_name = 'suppliers/ledger_form.html'
-    fields = ['transaction_type', 'amount', 'description', 'reference', 'transaction_date', 'payment_method', 'bank_account']
+    fields = ['transaction_type', 'amount', 'description', 'reference', 'transaction_date', 'payment_method']
     
     def get_success_url(self):
         return reverse_lazy('suppliers:supplier_ledger_detail', kwargs={'pk': self.kwargs['supplier_id']})
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        from accounting.models import BankAccount
         context['supplier_id'] = self.kwargs['supplier_id']
-        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
         return context
     
     def form_valid(self, form):
@@ -195,7 +193,6 @@ class SupplierLedgerDetailView(DetailView):
                 'status': 'manual',
                 'created_at': entry.created_at,
                 'payment_method': entry.payment_method,
-                'bank_account': entry.bank_account,
             })
         
         # Sort all transactions by date (newest first)

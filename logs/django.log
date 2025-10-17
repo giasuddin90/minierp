@@ -6989,3 +6989,225 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 /home/giasudin/PycharmProjects/djangoerp/building_materials_full/core/views.py changed, reloading.
 Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 56176
+"GET /dashboard/ HTTP/1.1" 200 56462
+"GET /dashboard/ HTTP/1.1" 200 56462
+"GET /accounting/expenses/ HTTP/1.1" 200 75694
+"GET /accounting/expenses/ HTTP/1.1" 200 75694
+"GET /dashboard/ HTTP/1.1" 200 57554
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 57554
+"GET /dashboard/ HTTP/1.1" 200 57609
+"GET /dashboard/ HTTP/1.1" 200 57838
+Watching for file changes with StatReloader
+"GET /accounting/dashboard/ HTTP/1.1" 200 82745
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /accounting/dashboard/ HTTP/1.1" 200 90224
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /accounting/expenses/ HTTP/1.1" 200 86839
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /dashboard/ HTTP/1.1" 200 68118
+"GET /accounting/expenses/ HTTP/1.1" 200 87157
+"GET /dashboard/ HTTP/1.1" 200 68760
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /accounting/dashboard/ HTTP/1.1" 200 90969
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /customers/create/ HTTP/1.1" 200 62927
+"GET /accounting/loans/ HTTP/1.1" 200 65184
+"GET /accounting/loans/1/ HTTP/1.1" 200 72660
+"GET /accounting/trial-balance/comprehensive/ HTTP/1.1" 200 109030
+"GET /customers/ HTTP/1.1" 200 86947
+"GET /customers/7/ HTTP/1.1" 200 62472
+"GET /customers/7/ledger/ HTTP/1.1" 200 77503
+"GET /customers/ HTTP/1.1" 200 86947
+"GET /customers/8/ledger/ HTTP/1.1" 200 67776
+"GET /suppliers/ HTTP/1.1" 200 91973
+"GET /suppliers/6/ledger/ HTTP/1.1" 200 70111
+"GET /stock/stock/ HTTP/1.1" 200 120376
+"GET /suppliers/ HTTP/1.1" 200 91973
+"GET /stock/products/ HTTP/1.1" 200 84467
+"GET /sales/orders/ HTTP/1.1" 200 76329
+"GET /sales/orders/6/ HTTP/1.1" 200 62409
+"GET /sales/orders/6/create-invoice/ HTTP/1.1" 302 0
+"GET /sales/invoices/7/ HTTP/1.1" 200 67450
+"GET /sales/invoices/ HTTP/1.1" 200 73350
+"GET /sales/invoices/3/ HTTP/1.1" 200 65793
+"GET /sales/payments/ HTTP/1.1" 200 59102
+"GET /purchases/orders/ HTTP/1.1" 200 67949
+"GET /reports/sales/ HTTP/1.1" 200 73396
+"GET /reports/customer/ HTTP/1.1" 200 75229
+"GET /reports/inventory/ HTTP/1.1" 200 92410
+"GET /reports/inventory/ HTTP/1.1" 200 92410
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /accounting/accounts/ HTTP/1.1" 200 91960
+"GET /accounting/accounts/1/edit/ HTTP/1.1" 200 74693
+"GET /accounting/opening-balance/ HTTP/1.1" 200 117031
+"GET /accounting/expenses/ HTTP/1.1" 200 87584
+"GET /accounting/daily-summary/ HTTP/1.1" 200 95149
+"GET /accounting/income/ HTTP/1.1" 200 80537
+"GET /accounting/daily-summary/ HTTP/1.1" 200 95149
+"GET /accounting/trial-balance/enhanced/ HTTP/1.1" 200 85416
+"GET /customers/ledger/ HTTP/1.1" 200 59118
+Internal Server Error: /customers/ledger/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 178, in get
+    return super().get(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 142, in get
+    return self.render_to_response(self.get_context_data())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/building_materials_full/customers/views.py", line 205, in get_context_data
+    context['customer_id'] = self.kwargs['customer_id']
+                             ~~~~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'customer_id'
+"GET /customers/ledger/create/ HTTP/1.1" 500 90906
+"GET /customers/commission/ HTTP/1.1" 200 61964
+"GET /customers/commitment/ HTTP/1.1" 200 59130
+"GET /customers/commitment/create/ HTTP/1.1" 200 59799
+"GET /accounting/trial-balance/comprehensive/ HTTP/1.1" 200 109030
+Watching for file changes with StatReloader
+"GET /reports/financial/ HTTP/1.1" 200 71763
+"GET /reports/ HTTP/1.1" 200 63833
+"GET /accounting/dashboard/ HTTP/1.1" 200 90969
+"GET /suppliers/ HTTP/1.1" 200 91973
+"GET /suppliers/6/ledger/ HTTP/1.1" 200 70111
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /accounting/expenses/ HTTP/1.1" 200 87584
+"GET /accounting/loans/ HTTP/1.1" 200 65184
+"GET /accounting/loans/1/ HTTP/1.1" 200 72660
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3934
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /customers/ledger/ HTTP/1.1" 200 59118
+"GET /customers/commission/ HTTP/1.1" 200 61964
+"GET /suppliers/ HTTP/1.1" 200 91973
+"GET /suppliers/6/ledger/ HTTP/1.1" 200 70111
+"GET /suppliers/6/ledger/create/ HTTP/1.1" 200 76980
+"GET /suppliers/6/ledger/ HTTP/1.1" 200 70111
+"GET /suppliers/ HTTP/1.1" 200 91973
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 68863
+"GET /accounting/dashboard/ HTTP/1.1" 200 90953
+"GET /suppliers/ HTTP/1.1" 200 91973
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/suppliers/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/core/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /suppliers/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'accounting'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'accounting' is not a registered namespace
+"GET /suppliers/ HTTP/1.1" 500 152082
+Watching for file changes with StatReloader
+"GET /suppliers/ HTTP/1.1" 200 57844
+"GET /suppliers/ HTTP/1.1" 200 57844
+"GET /suppliers/ HTTP/1.1" 200 57844
+"GET /sales/orders/ HTTP/1.1" 200 54568
+"GET /suppliers/ HTTP/1.1" 200 57844

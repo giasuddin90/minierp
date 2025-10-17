@@ -194,16 +194,14 @@ class CustomerLedgerDetailView(DetailView):
 class CustomerLedgerCreateView(CreateView):
     model = CustomerLedger
     template_name = 'customers/ledger_form.html'
-    fields = ['transaction_type', 'amount', 'description', 'reference', 'transaction_date', 'payment_method', 'bank_account']
+    fields = ['transaction_type', 'amount', 'description', 'reference', 'transaction_date', 'payment_method']
     
     def get_success_url(self):
         return reverse_lazy('customers:customer_ledger_detail', kwargs={'pk': self.kwargs['customer_id']})
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        from accounting.models import BankAccount
         context['customer_id'] = self.kwargs['customer_id']
-        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
         return context
     
     def form_valid(self, form):

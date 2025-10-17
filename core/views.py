@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.db.models import Sum, Count
-from accounting.models import BankAccount, TrialBalance
 from customers.models import Customer
 from suppliers.models import Supplier
 from stock.models import Product, Stock, StockAlert
@@ -36,11 +35,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             is_active=True
         ).select_related('product', 'warehouse')[:5]
         
-        # Get bank account balances
-        context['bank_accounts'] = BankAccount.objects.filter(is_active=True)
-        
-        # Get recent trial balance
-        context['latest_trial_balance'] = TrialBalance.objects.order_by('-date').first()
         
         return context
 
@@ -55,6 +49,4 @@ def dashboard_redirect(request):
         'total_sales': SalesInvoice.objects.aggregate(total=Sum('total_amount'))['total'] or 0,
         'recent_orders': SalesOrder.objects.select_related('customer').order_by('-created_at')[:5],
         'low_stock_alerts': StockAlert.objects.filter(is_active=True).select_related('product', 'warehouse')[:5],
-        'bank_accounts': BankAccount.objects.filter(is_active=True),
-        'latest_trial_balance': TrialBalance.objects.order_by('-date').first(),
     })

@@ -207,7 +207,6 @@ class PurchasePayment(models.Model):
     purchase_invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.CASCADE)
     payment_date = models.DateField()
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
-    bank_account = models.ForeignKey('accounting.BankAccount', on_delete=models.SET_NULL, null=True, blank=True)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     reference = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True)

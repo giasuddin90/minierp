@@ -67,7 +67,6 @@ class SupplierLedger(models.Model):
     reference = models.CharField(max_length=100, blank=True)
     transaction_date = models.DateTimeField()
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS, blank=True, null=True)
-    bank_account = models.ForeignKey('accounting.BankAccount', on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

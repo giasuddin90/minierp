@@ -11,7 +11,6 @@ from datetime import datetime, timedelta
 import json
 
 from .models import ReportTemplate, ReportSchedule, ReportLog
-from accounting.models import BankTransaction, Expense, Income, JournalEntry
 from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesInvoiceItem
 from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseInvoiceItem
 from stock.models import Product, Stock, StockMovement
@@ -101,36 +100,17 @@ class FinancialReportView(ListView):
             total=Sum('total_amount')
         )['total'] or Decimal('0')
         
-        income = Income.objects.filter(
-            income_date__range=[start_date, end_date]
-        ).aggregate(
-            total=Sum('amount')
-        )['total'] or Decimal('0')
-        
         return {
             'total_sales': total_sales,
-            'other_income': income,
-            'total_revenue': total_sales + income,
+            'other_income': Decimal('0'),
+            'total_revenue': total_sales,
         }
     
     def get_expense_data(self, start_date, end_date):
         """Get expense data for the period"""
-        expenses = Expense.objects.filter(
-            expense_date__range=[start_date, end_date]
-        )
-        
-        total_expenses = expenses.aggregate(
-            total=Sum('amount')
-        )['total'] or Decimal('0')
-        
-        # Get expenses by category
-        expenses_by_category = expenses.values('expense_category__name').annotate(
-            total=Sum('amount')
-        ).order_by('-total')
-        
         return {
-            'total_expenses': total_expenses,
-            'expenses_by_category': expenses_by_category,
+            'total_expenses': Decimal('0'),
+            'expenses_by_category': [],
         }
     
     def get_profit_loss(self, start_date, end_date):
@@ -147,17 +127,6 @@ class FinancialReportView(ListView):
     
     def get_cash_flow(self, start_date, end_date):
         """Get cash flow data"""
-        # Bank transactions
-        bank_inflows = BankTransaction.objects.filter(
-            transaction_date__range=[start_date, end_date],
-            transaction_type='deposit'
-        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
-        
-        bank_outflows = BankTransaction.objects.filter(
-            transaction_date__range=[start_date, end_date],
-            transaction_type='withdrawal'
-        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
-        
         # Customer payments
         customer_payments = SalesPayment.objects.filter(
             payment_date__range=[start_date, end_date]
@@ -168,11 +137,11 @@ class FinancialReportView(ListView):
             payment_date__range=[start_date, end_date]
         ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
         
-        net_cash_flow = bank_inflows + customer_payments - bank_outflows - supplier_payments
+        net_cash_flow = customer_payments - supplier_payments
         
         return {
-            'inflows': bank_inflows + customer_payments,
-            'outflows': bank_outflows + supplier_payments,
+            'inflows': customer_payments,
+            'outflows': supplier_payments,
             'net_cash_flow': net_cash_flow,
         }
 
@@ -557,19 +526,11 @@ def get_financial_report_data(request):
         invoice_date__range=[start_date, end_date]
     ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
     
-    total_income = Income.objects.filter(
-        income_date__range=[start_date, end_date]
-    ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
-    
-    total_expenses = Expense.objects.filter(
-        expense_date__range=[start_date, end_date]
-    ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
-    
     return {
         'total_sales': float(total_sales),
-        'total_income': float(total_income),
-        'total_expenses': float(total_expenses),
-        'net_profit': float(total_sales + total_income - total_expenses),
+        'total_income': 0.0,
+        'total_expenses': 0.0,
+        'net_profit': float(total_sales),
         'start_date': start_date,
         'end_date': end_date,
     }
