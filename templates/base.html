@@ -466,7 +466,79 @@
             font-weight: 700;
         }
         
-        /* Stats Cards */
+        /* Modular Card System */
+        .card-module {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .card-module:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+        
+        /* Card Header */
+        .card-module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-module-title {
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .card-module-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .card-module-icon {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Card Color Variants */
+        .card-module.primary .card-module-value,
+        .card-module.primary .card-module-icon {
+            color: var(--primary-color);
+        }
+        
+        .card-module.success .card-module-value,
+        .card-module.success .card-module-icon {
+            color: var(--success-color);
+        }
+        
+        .card-module.warning .card-module-value,
+        .card-module.warning .card-module-icon {
+            color: var(--warning-color);
+        }
+        
+        .card-module.danger .card-module-value,
+        .card-module.danger .card-module-icon {
+            color: var(--danger-color);
+        }
+        
+        .card-module.info .card-module-value,
+        .card-module.info .card-module-icon {
+            color: var(--info-color);
+        }
+        
+        /* Stats Cards (Legacy Support) */
         .stats-card {
             background: #f8f9fa !important;
             border-radius: var(--radius-lg);

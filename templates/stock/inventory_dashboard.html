@@ -22,64 +22,56 @@
 <!-- Summary Cards -->
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card" style="background-color: #ffffff;">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title" style="color: var(--text-primary);">Total Products</h6>
-                        <h3 class="mb-0" style="color: var(--primary-color);">{{ total_products }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-box-seam" style="font-size: 2rem; color: var(--primary-color);"></i>
-                    </div>
+        <div class="card-module primary">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Total Products</h6>
+                    <h3 class="card-module-value">{{ total_products }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-box-seam"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3">
-        <div class="card" style="background-color: #ffffff;">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title" style="color: var(--text-primary);">In Stock</h6>
-                        <h3 class="mb-0" style="color: var(--success-color);">{{ in_stock_products }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-check-circle" style="font-size: 2rem; color: var(--success-color);"></i>
-                    </div>
+        <div class="card-module success">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">In Stock</h6>
+                    <h3 class="card-module-value">{{ in_stock_products }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-check-circle"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3">
-        <div class="card" style="background-color: #ffffff;">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title" style="color: var(--text-primary);">Low Stock</h6>
-                        <h3 class="mb-0" style="color: var(--warning-color);">{{ low_stock_products }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color: var(--warning-color);"></i>
-                    </div>
+        <div class="card-module warning">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Low Stock</h6>
+                    <h3 class="card-module-value">{{ low_stock_products }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-exclamation-triangle"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3">
-        <div class="card" style="background-color: #ffffff;">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title" style="color: var(--text-primary);">Out of Stock</h6>
-                        <h3 class="mb-0" style="color: var(--danger-color);">{{ out_of_stock_products }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-x-circle" style="font-size: 2rem; color: var(--danger-color);"></i>
-                    </div>
+        <div class="card-module danger">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Out of Stock</h6>
+                    <h3 class="card-module-value">{{ out_of_stock_products }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-x-circle"></i>
                 </div>
             </div>
         </div>

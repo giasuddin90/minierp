@@ -23,64 +23,56 @@
 <!-- Summary Cards -->
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card bg-primary text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Opening Balance</h6>
-                        <h3 class="mb-0">৳{{ opening_balance|floatformat:2 }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-wallet2" style="font-size: 2rem;"></i>
-                    </div>
+        <div class="card-module primary">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Opening Balance</h6>
+                    <h3 class="card-module-value">৳{{ opening_balance|floatformat:2 }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-wallet2"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-info text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Total Sales</h6>
-                        <h3 class="mb-0">৳{{ total_debit|floatformat:2 }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-arrow-up-circle" style="font-size: 2rem;"></i>
-                    </div>
+        <div class="card-module info">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Total Sales</h6>
+                    <h3 class="card-module-value">৳{{ total_debit|floatformat:2 }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-arrow-up-circle"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-success text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Total Payments</h6>
-                        <h3 class="mb-0">৳{{ total_credit|floatformat:2 }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-arrow-down-circle" style="font-size: 2rem;"></i>
-                    </div>
+        <div class="card-module success">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Total Payments</h6>
+                    <h3 class="card-module-value">৳{{ total_credit|floatformat:2 }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-arrow-down-circle"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3">
-        <div class="card {% if current_balance >= 0 %}bg-danger{% else %}bg-success{% endif %} text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="card-title">Current Balance</h6>
-                        <h3 class="mb-0">৳{{ current_balance|floatformat:2 }}</h3>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-{% if current_balance >= 0 %}exclamation-triangle{% else %}check-circle{% endif %}" style="font-size: 2rem;"></i>
-                    </div>
+        <div class="card-module {% if current_balance >= 0 %}danger{% else %}success{% endif %}">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Current Balance</h6>
+                    <h3 class="card-module-value">৳{{ current_balance|floatformat:2 }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-{% if current_balance >= 0 %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
                 </div>
             </div>
         </div>
