@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Supplier, SupplierLedger, SupplierCommission
+from .models import Supplier, SupplierLedger
 
 
 @admin.register(Supplier)
@@ -18,9 +18,3 @@ class SupplierLedgerAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at']
 
 
-@admin.register(SupplierCommission)
-class SupplierCommissionAdmin(admin.ModelAdmin):
-    list_display = ['supplier', 'commission_rate', 'is_per_transaction', 'is_per_party', 'is_active']
-    list_filter = ['is_per_transaction', 'is_per_party', 'is_active', 'created_at']
-    search_fields = ['supplier__name']
-    readonly_fields = ['created_at']

@@ -11,7 +11,7 @@ from .models import (
     SalesReturn, SalesReturnItem, SalesPayment
 )
 from customers.models import Customer, CustomerLedger
-from stock.models import Product, Warehouse
+from stock.models import Product
 from django.contrib.auth.models import User
 import uuid
 import os
@@ -46,7 +46,6 @@ class SalesOrderCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['customers'] = Customer.objects.all()
         context['products'] = Product.objects.filter(is_active=True)
-        context['warehouses'] = Warehouse.objects.filter(is_active=True)
         return context
     
     def form_valid(self, form):
@@ -74,7 +73,6 @@ class SalesOrderCreateView(CreateView):
                         if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
-                                warehouse = Warehouse.objects.get(id=warehouses[i])
                                 quantity = float(quantities[i]) if quantities[i] else 0
                                 unit_price = float(prices[i]) if prices[i] else 0
                                 
@@ -91,7 +89,7 @@ class SalesOrderCreateView(CreateView):
                                     )
                                     total_amount += item_total
                                     items_created += 1
-                            except (Product.DoesNotExist, Warehouse.DoesNotExist, ValueError, IndexError) as e:
+                            except (Product.DoesNotExist, ValueError, IndexError) as e:
                                 messages.error(self.request, f"Invalid data for product {i+1}: {str(e)}")
                                 continue
                 
@@ -145,7 +143,6 @@ class SalesInvoiceCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['customers'] = Customer.objects.all()
         context['products'] = Product.objects.filter(is_active=True)
-        context['warehouses'] = Warehouse.objects.filter(is_active=True)
         context['sales_orders'] = SalesOrder.objects.filter(status='confirmed')
         return context
     
@@ -178,7 +175,6 @@ class SalesInvoiceCreateView(CreateView):
                         if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
-                                warehouse = Warehouse.objects.get(id=warehouses[i])
                                 quantity = float(quantities[i]) if quantities[i] else 0
                                 unit_price = float(prices[i]) if prices[i] else 0
                                 
@@ -195,7 +191,7 @@ class SalesInvoiceCreateView(CreateView):
                                     )
                                     subtotal += item_total
                                     items_created += 1
-                            except (Product.DoesNotExist, Warehouse.DoesNotExist, ValueError, IndexError) as e:
+                            except (Product.DoesNotExist, ValueError, IndexError) as e:
                                 messages.error(self.request, f"Invalid data for product {i+1}: {str(e)}")
                                 continue
                 
@@ -251,7 +247,6 @@ class SalesInvoiceUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['customers'] = Customer.objects.all()
         context['products'] = Product.objects.filter(is_active=True)
-        context['warehouses'] = Warehouse.objects.filter(is_active=True)
         context['sales_orders'] = SalesOrder.objects.filter(status='confirmed')
         return context
     
@@ -279,7 +274,6 @@ class SalesInvoiceUpdateView(UpdateView):
                         if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
-                                warehouse = Warehouse.objects.get(id=warehouses[i]) if warehouses[i] else None
                                 quantity = float(quantities[i]) if quantities[i] else 0
                                 unit_price = float(prices[i]) if prices[i] else 0
                                 
@@ -296,7 +290,7 @@ class SalesInvoiceUpdateView(UpdateView):
                                     )
                                     subtotal += item_total
                                     items_created += 1
-                            except (Product.DoesNotExist, Warehouse.DoesNotExist, ValueError, IndexError) as e:
+                            except (Product.DoesNotExist, ValueError, IndexError) as e:
                                 messages.error(self.request, f"Invalid data for product {i+1}: {str(e)}")
                                 continue
                 
@@ -589,11 +583,10 @@ def invoice_pdf(request, invoice_id):
         story.append(Spacer(1, 30))
         
         # Invoice items table
-        items_data = [["Product", "Warehouse", "Qty", "Unit Price", "Total"]]
+        items_data = [["Product", "Qty", "Unit Price", "Total"]]
         for item in invoice.items.all():
             items_data.append([
                 item.product.name,
-                item.warehouse.name if item.warehouse else "N/A",
                 str(item.quantity),
                 f"৳{item.unit_price:.2f}",
                 f"৳{item.total_price:.2f}"

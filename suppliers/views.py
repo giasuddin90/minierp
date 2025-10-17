@@ -5,7 +5,7 @@ from django.db.models import Q, Sum
 from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
-from .models import Supplier, SupplierLedger, SupplierCommission
+from .models import Supplier, SupplierLedger
 from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseReturn
 
 
@@ -86,17 +86,6 @@ class SupplierLedgerCreateView(CreateView):
         return super().form_valid(form)
 
 
-class SupplierCommissionListView(ListView):
-    model = SupplierCommission
-    template_name = 'suppliers/commission_list.html'
-    context_object_name = 'items'
-
-
-class SupplierCommissionCreateView(CreateView):
-    model = SupplierCommission
-    template_name = 'suppliers/commission_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('suppliers:commission_list')
 
 
 class SupplierLedgerDetailView(DetailView):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer, CustomerLedger, CustomerCommission, CustomerCommitment
+from .models import Customer, CustomerLedger, CustomerCommitment
 
 
 @admin.register(Customer)
@@ -18,12 +18,6 @@ class CustomerLedgerAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at']
 
 
-@admin.register(CustomerCommission)
-class CustomerCommissionAdmin(admin.ModelAdmin):
-    list_display = ['customer', 'commission_rate', 'is_per_transaction', 'is_per_party', 'is_active']
-    list_filter = ['is_per_transaction', 'is_per_party', 'is_active', 'created_at']
-    search_fields = ['customer__name']
-    readonly_fields = ['created_at']
 
 
 @admin.register(CustomerCommitment)

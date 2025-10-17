@@ -8,7 +8,7 @@ from .models import (
     PurchaseInvoice, PurchaseInvoiceItem, PurchaseReturn, PurchaseReturnItem, PurchasePayment
 )
 from suppliers.models import Supplier
-from stock.models import Product, Warehouse
+from stock.models import Product
 from django.contrib.auth.models import User
 import uuid
 
@@ -34,7 +34,6 @@ class PurchaseOrderCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['suppliers'] = Supplier.objects.all()
         context['products'] = Product.objects.filter(is_active=True)
-        context['warehouses'] = Warehouse.objects.filter(is_active=True)
         return context
     
     def form_valid(self, form):
@@ -79,7 +78,6 @@ class PurchaseOrderCreateView(CreateView):
                         try:
                             # Get objects
                             product = Product.objects.get(id=product_id)
-                            warehouse = Warehouse.objects.get(id=warehouse_id)
                             
                             # Convert to numbers
                             quantity = float(quantity_str)
@@ -102,7 +100,7 @@ class PurchaseOrderCreateView(CreateView):
                             total_amount += item_total
                             items_created += 1
                             
-                        except (Product.DoesNotExist, Warehouse.DoesNotExist, ValueError, IndexError):
+                        except (Product.DoesNotExist, ValueError, IndexError):
                             # Silently skip invalid items
                             continue
                 
@@ -130,7 +128,6 @@ class PurchaseOrderUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['suppliers'] = Supplier.objects.all()
         context['products'] = Product.objects.filter(is_active=True)
-        context['warehouses'] = Warehouse.objects.filter(is_active=True)
         return context
     
     def form_valid(self, form):
@@ -156,7 +153,6 @@ class PurchaseOrderUpdateView(UpdateView):
                         if product_id and i < len(warehouses) and i < len(quantities) and i < len(prices):
                             try:
                                 product = Product.objects.get(id=product_id)
-                                warehouse = Warehouse.objects.get(id=warehouses[i])
                                 quantity = float(quantities[i]) if quantities[i] else 0
                                 unit_price = float(prices[i]) if prices[i] else 0
                                 
@@ -173,7 +169,7 @@ class PurchaseOrderUpdateView(UpdateView):
                                     )
                                     total_amount += item_total
                                     items_created += 1
-                            except (Product.DoesNotExist, Warehouse.DoesNotExist, ValueError, IndexError) as e:
+                            except (Product.DoesNotExist, ValueError, IndexError) as e:
                                 messages.error(self.request, f"Invalid data for product {i+1}: {str(e)}")
                                 continue
                 

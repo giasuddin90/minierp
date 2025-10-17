@@ -5,40 +5,11 @@ from django.db import models
 from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from datetime import datetime, timedelta
-from .models import Warehouse, Product, Stock, StockMovement, StockAlert
+from .models import Product, Stock, StockMovement, StockAlert
 from sales.models import SalesOrderItem, SalesInvoiceItem
 from purchases.models import PurchaseOrderItem
 
 
-class WarehouseListView(ListView):
-    model = Warehouse
-    template_name = 'stock/warehouse_list.html'
-    context_object_name = 'warehouses'
-
-
-class WarehouseDetailView(DetailView):
-    model = Warehouse
-    template_name = 'stock/warehouse_detail.html'
-
-
-class WarehouseCreateView(CreateView):
-    model = Warehouse
-    template_name = 'stock/warehouse_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('stock:warehouse_list')
-
-
-class WarehouseUpdateView(UpdateView):
-    model = Warehouse
-    template_name = 'stock/warehouse_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('stock:warehouse_list')
-
-
-class WarehouseDeleteView(DeleteView):
-    model = Warehouse
-    template_name = 'stock/warehouse_confirm_delete.html'
-    success_url = reverse_lazy('stock:warehouse_list')
 
 
 

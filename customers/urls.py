@@ -16,9 +16,6 @@ urlpatterns = [
     path('<int:customer_id>/ledger/create/', views.CustomerLedgerCreateView.as_view(), name='customer_ledger_create'),
     path('<int:pk>/opening-balance/', views.set_opening_balance, name='customer_opening_balance'),
     
-    # Customer Commission
-    path('<int:customer_id>/commissions/', views.CustomerCommissionListView.as_view(), name='customer_commission_list'),
-    path('<int:customer_id>/commissions/create/', views.CustomerCommissionCreateView.as_view(), name='customer_commission_create'),
     
     # Customer Commitments
     path('<int:customer_id>/commitments/', views.CustomerCommitmentListView.as_view(), name='customer_commitment_list'),
@@ -27,8 +24,6 @@ urlpatterns = [
     # General views (without customer_id)
     path('ledger/', views.CustomerLedgerListView.as_view(), name='ledger_list'),
     path('ledger/create/', views.CustomerLedgerCreateView.as_view(), name='ledger_create'),
-    path('commission/', views.CustomerCommissionListView.as_view(), name='commission_list'),
-    path('commission/create/', views.CustomerCommissionCreateView.as_view(), name='commission_create'),
     path('commitment/', views.CustomerCommitmentListView.as_view(), name='commitment_list'),
     path('commitment/create/', views.CustomerCommitmentCreateView.as_view(), name='commitment_create'),
 ]

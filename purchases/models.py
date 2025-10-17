@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from decimal import Decimal
 from suppliers.models import Supplier
-from stock.models import Product, Warehouse
+from stock.models import Product
 
 
 class PurchaseOrder(models.Model):
@@ -40,7 +40,6 @@ class PurchaseOrder(models.Model):
                 # Increase stock (inward movement)
                 Stock.update_stock(
                     product=item.product,
-                    warehouse=item.warehouse,
                     quantity_change=item.quantity,
                     unit_cost=item.unit_price,
                     movement_type='inward',
@@ -57,7 +56,6 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderItem(models.Model):
     purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_price = models.DecimalField(max_digits=15, decimal_places=2)
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -97,7 +95,6 @@ class GoodsReceipt(models.Model):
 class GoodsReceiptItem(models.Model):
     goods_receipt = models.ForeignKey(GoodsReceipt, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_cost = models.DecimalField(max_digits=15, decimal_places=2)
     total_cost = models.DecimalField(max_digits=15, decimal_places=2)
@@ -143,7 +140,6 @@ class PurchaseInvoice(models.Model):
 class PurchaseInvoiceItem(models.Model):
     purchase_invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_cost = models.DecimalField(max_digits=15, decimal_places=2)
     total_cost = models.DecimalField(max_digits=15, decimal_places=2)
@@ -183,7 +179,6 @@ class PurchaseReturn(models.Model):
 class PurchaseReturnItem(models.Model):
     purchase_return = models.ForeignKey(PurchaseReturn, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_cost = models.DecimalField(max_digits=15, decimal_places=2)
     total_cost = models.DecimalField(max_digits=15, decimal_places=2)

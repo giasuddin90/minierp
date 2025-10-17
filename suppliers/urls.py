@@ -17,13 +17,8 @@ urlpatterns = [
     path('<int:supplier_id>/ledger/create/', views.SupplierLedgerCreateView.as_view(), name='supplier_ledger_create'),
     path('<int:pk>/opening-balance/', views.set_opening_balance, name='supplier_opening_balance'),
     
-    # Supplier Commission
-    path('<int:supplier_id>/commissions/', views.SupplierCommissionListView.as_view(), name='supplier_commission_list'),
-    path('<int:supplier_id>/commissions/create/', views.SupplierCommissionCreateView.as_view(), name='supplier_commission_create'),
     
     # General views (without supplier_id)
     path('ledger/', views.SupplierLedgerListView.as_view(), name='ledger_list'),
     path('ledger/create/', views.SupplierLedgerCreateView.as_view(), name='ledger_create'),
-    path('commission/', views.SupplierCommissionListView.as_view(), name='commission_list'),
-    path('commission/create/', views.SupplierCommissionCreateView.as_view(), name='commission_create'),
 ]

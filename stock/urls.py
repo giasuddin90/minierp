@@ -4,12 +4,6 @@ from . import views
 app_name = 'stock'
 
 urlpatterns = [
-    # Warehouse Management
-    path('warehouses/', views.WarehouseListView.as_view(), name='warehouse_list'),
-    path('warehouses/create/', views.WarehouseCreateView.as_view(), name='warehouse_create'),
-    path('warehouses/<int:pk>/', views.WarehouseDetailView.as_view(), name='warehouse_detail'),
-    path('warehouses/<int:pk>/edit/', views.WarehouseUpdateView.as_view(), name='warehouse_edit'),
-    path('warehouses/<int:pk>/delete/', views.WarehouseDeleteView.as_view(), name='warehouse_delete'),
     
     # Product Management
     path('products/', views.ProductListView.as_view(), name='product_list'),

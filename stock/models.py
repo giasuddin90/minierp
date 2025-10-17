@@ -4,18 +4,6 @@ from django.utils import timezone
 from decimal import Decimal
 
 
-class Warehouse(models.Model):
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=200)
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Warehouse"
-        verbose_name_plural = "Warehouses"
 
 
 class Product(models.Model):
@@ -68,20 +56,19 @@ class Product(models.Model):
 
 class Stock(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     unit_cost = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.product.name} - {self.warehouse.name} - {self.quantity}"
+        return f"{self.product.name} - {self.quantity}"
 
     @property
     def total_value(self):
         return self.quantity * self.unit_cost
 
     @classmethod
-    def update_stock(cls, product, warehouse, quantity_change, unit_cost=None, movement_type='adjustment', reference='', description='', user=None):
+    def update_stock(cls, product, quantity_change, unit_cost=None, movement_type='adjustment', reference='', description='', user=None):
         """Update stock quantity and create movement record"""
         from django.db import transaction
         
@@ -89,7 +76,6 @@ class Stock(models.Model):
             # Get or create stock record
             stock, created = cls.objects.get_or_create(
                 product=product,
-                warehouse=warehouse,
                 defaults={'quantity': 0, 'unit_cost': unit_cost or 0}
             )
             
@@ -110,7 +96,6 @@ class Stock(models.Model):
             # Create movement record
             StockMovement.objects.create(
                 product=product,
-                warehouse=warehouse,
                 movement_type=movement_type,
                 quantity=abs(quantity_change),
                 unit_cost=unit_cost or stock.unit_cost,
@@ -124,7 +109,6 @@ class Stock(models.Model):
             if stock.quantity <= product.min_stock_level:
                 StockAlert.objects.get_or_create(
                     product=product,
-                    warehouse=warehouse,
                     defaults={
                         'current_quantity': stock.quantity,
                         'min_quantity': product.min_stock_level,
@@ -137,7 +121,6 @@ class Stock(models.Model):
     class Meta:
         verbose_name = "Stock"
         verbose_name_plural = "Stocks"
-        unique_together = ['product', 'warehouse']
 
 
 class StockMovement(models.Model):
@@ -149,7 +132,6 @@ class StockMovement(models.Model):
     ]
     
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     movement_type = models.CharField(max_length=20, choices=MOVEMENT_TYPES)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_cost = models.DecimalField(max_digits=15, decimal_places=2)
@@ -169,7 +151,6 @@ class StockMovement(models.Model):
 
 class StockAlert(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     current_quantity = models.DecimalField(max_digits=10, decimal_places=2)
     min_quantity = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)

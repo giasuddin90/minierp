@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db.models import Q, Sum
 from decimal import Decimal
-from .models import Customer, CustomerLedger, CustomerCommission, CustomerCommitment
+from .models import Customer, CustomerLedger, CustomerCommitment
 from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesReturn
 
 
@@ -210,17 +210,6 @@ class CustomerLedgerCreateView(CreateView):
         return super().form_valid(form)
 
 
-class CustomerCommissionListView(ListView):
-    model = CustomerCommission
-    template_name = 'customers/commission_list.html'
-    context_object_name = 'items'
-
-
-class CustomerCommissionCreateView(CreateView):
-    model = CustomerCommission
-    template_name = 'customers/commission_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('customers:commission_list')
 
 
 class CustomerCommitmentListView(ListView):

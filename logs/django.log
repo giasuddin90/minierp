@@ -7211,3 +7211,201 @@ Watching for file changes with StatReloader
 "GET /suppliers/ HTTP/1.1" 200 57844
 "GET /sales/orders/ HTTP/1.1" 200 54568
 "GET /suppliers/ HTTP/1.1" 200 57844
+"GET /stock/warehouses/ HTTP/1.1" 200 54572
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/suppliers/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/suppliers/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/admin.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/admin.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/suppliers/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/suppliers/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /suppliers/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'commission_list' not found. 'commission_list' is not a valid view function or pattern name.
+"GET /suppliers/ HTTP/1.1" 500 146912
+Watching for file changes with StatReloader
+Internal Server Error: /suppliers/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'commission_list' not found. 'commission_list' is not a valid view function or pattern name.
+"GET /suppliers/ HTTP/1.1" 500 146912
+"GET / HTTP/1.1" 302 0
+/home/giasudin/PycharmProjects/djangoerp/miniErp/sales/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /stock/warehouses/
+"GET /stock/warehouses/ HTTP/1.1" 404 7548
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564

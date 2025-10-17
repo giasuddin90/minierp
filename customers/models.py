@@ -84,22 +84,6 @@ class CustomerLedger(models.Model):
         verbose_name_plural = "Customer Ledgers"
 
 
-class CustomerCommission(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    commission_rate = models.DecimalField(max_digits=5, decimal_places=2)
-    is_per_transaction = models.BooleanField(default=False)
-    is_per_party = models.BooleanField(default=True)
-    effective_from = models.DateField()
-    effective_to = models.DateField(null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.customer.name} - {self.commission_rate}%"
-
-    class Meta:
-        verbose_name = "Customer Commission"
-        verbose_name_plural = "Customer Commissions"
 
 
 class CustomerCommitment(models.Model):

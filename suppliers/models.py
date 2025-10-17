@@ -78,19 +78,3 @@ class SupplierLedger(models.Model):
         verbose_name_plural = "Supplier Ledgers"
 
 
-class SupplierCommission(models.Model):
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    commission_rate = models.DecimalField(max_digits=5, decimal_places=2)
-    is_per_transaction = models.BooleanField(default=False)
-    is_per_party = models.BooleanField(default=True)
-    effective_from = models.DateField()
-    effective_to = models.DateField(null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.supplier.name} - {self.commission_rate}%"
-
-    class Meta:
-        verbose_name = "Supplier Commission"
-        verbose_name_plural = "Supplier Commissions"
