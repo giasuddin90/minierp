@@ -15,60 +15,60 @@
 {% block content %}
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card bg-primary text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Total Products</h6>
-                        <h3>{{ total_products }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Total Products</h6>
+                        <h3 style="color: var(--primary-color);">{{ total_products }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-boxes fs-1"></i>
+                        <i class="bi bi-boxes fs-1" style="color: var(--primary-color);"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-success text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">In Stock</h6>
-                        <h3>{{ in_stock }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">In Stock</h6>
+                        <h3 style="color: var(--success-color);">{{ in_stock }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-check-circle fs-1"></i>
+                        <i class="bi bi-check-circle fs-1" style="color: var(--success-color);"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-warning text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Low Stock</h6>
-                        <h3>{{ low_stock }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Low Stock</h6>
+                        <h3 style="color: var(--warning-color);">{{ low_stock }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-exclamation-triangle fs-1"></i>
+                        <i class="bi bi-exclamation-triangle fs-1" style="color: var(--warning-color);"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-danger text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Out of Stock</h6>
-                        <h3>{{ out_of_stock }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Out of Stock</h6>
+                        <h3 style="color: var(--danger-color);">{{ out_of_stock }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-x-circle fs-1"></i>
+                        <i class="bi bi-x-circle fs-1" style="color: var(--danger-color);"></i>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,6 @@
                         <thead>
                             <tr>
                                 <th>Product</th>
-                                <th>Warehouse</th>
                                 <th>Quantity</th>
                                 <th>Unit Cost</th>
                                 <th>Total Value</th>
@@ -107,7 +106,6 @@
                                     <strong>{{ stock.product.name }}</strong>
                                     <br><small class="text-muted">{{ stock.product.brand|default:"" }}</small>
                                 </td>
-                                <td>{{ stock.warehouse.name }}</td>
                                 <td>
                                     {% if stock.quantity <= 0 %}
                                         <span class="badge bg-danger">

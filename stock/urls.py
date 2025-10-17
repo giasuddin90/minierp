@@ -1,9 +1,15 @@
 from django.urls import path
+from django.shortcuts import redirect
 from . import views
 
 app_name = 'stock'
 
+def stock_redirect(request):
+    return redirect('stock:product_list')
+
 urlpatterns = [
+    # Default redirect to products
+    path('', stock_redirect, name='stock_home'),
     
     # Product Management
     path('products/', views.ProductListView.as_view(), name='product_list'),

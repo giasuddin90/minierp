@@ -25,15 +25,15 @@
 <div class="row">
     <!-- Summary Cards -->
     <div class="col-md-3">
-        <div class="card bg-primary text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Opening Balance</h6>
-                        <h4 class="mb-0">৳{{ opening_balance|floatformat:2 }}</h4>
+                        <h6 class="card-title" style="color: var(--text-primary);">Opening Balance</h6>
+                        <h4 class="mb-0" style="color: var(--primary-color);">৳{{ opening_balance|floatformat:2 }}</h4>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-wallet2" style="font-size: 2rem;"></i>
+                        <i class="bi bi-wallet2" style="font-size: 2rem; color: var(--primary-color);"></i>
                     </div>
                 </div>
             </div>
@@ -41,15 +41,15 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-info text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Total Purchases</h6>
-                        <h4 class="mb-0">৳{{ total_debit|floatformat:2 }}</h4>
+                        <h6 class="card-title" style="color: var(--text-primary);">Total Purchases</h6>
+                        <h4 class="mb-0" style="color: var(--info-color);">৳{{ total_debit|floatformat:2 }}</h4>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-cart-plus" style="font-size: 2rem;"></i>
+                        <i class="bi bi-cart-plus" style="font-size: 2rem; color: var(--info-color);"></i>
                     </div>
                 </div>
             </div>
@@ -57,15 +57,15 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-success text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Total Payments</h6>
-                        <h4 class="mb-0">৳{{ total_credit|floatformat:2 }}</h4>
+                        <h6 class="card-title" style="color: var(--text-primary);">Total Payments</h6>
+                        <h4 class="mb-0" style="color: var(--success-color);">৳{{ total_credit|floatformat:2 }}</h4>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-credit-card" style="font-size: 2rem;"></i>
+                        <i class="bi bi-credit-card" style="font-size: 2rem; color: var(--success-color);"></i>
                     </div>
                 </div>
             </div>
@@ -73,15 +73,15 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card {% if current_balance >= 0 %}bg-warning{% else %}bg-danger{% endif %} text-white">
+        <div class="card" style="background-color: #ffffff;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Current Balance</h6>
-                        <h4 class="mb-0">৳{{ current_balance|floatformat:2 }}</h4>
+                        <h6 class="card-title" style="color: var(--text-primary);">Current Balance</h6>
+                        <h4 class="mb-0" style="color: {% if current_balance >= 0 %}var(--warning-color){% else %}var(--danger-color){% endif %};">৳{{ current_balance|floatformat:2 }}</h4>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-{% if current_balance >= 0 %}arrow-up{% else %}arrow-down{% endif %}" style="font-size: 2rem;"></i>
+                        <i class="bi bi-{% if current_balance >= 0 %}arrow-up{% else %}arrow-down{% endif %}" style="font-size: 2rem; color: {% if current_balance >= 0 %}var(--warning-color){% else %}var(--danger-color){% endif %};"></i>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,16 @@
 from django.urls import path
+from django.shortcuts import redirect
 from . import views
 
 app_name = 'sales'
 
+def sales_redirect(request):
+    return redirect('sales:order_list')
+
 urlpatterns = [
+    # Default redirect to orders
+    path('', sales_redirect, name='sales_home'),
+    
     # Sales Orders
     path('orders/', views.SalesOrderListView.as_view(), name='order_list'),
     path('orders/create/', views.SalesOrderCreateView.as_view(), name='order_create'),
