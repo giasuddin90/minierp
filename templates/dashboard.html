@@ -20,58 +20,46 @@
 <!-- Stats Cards -->
 <div class="row mb-4">
     <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-        <div class="stats-card">
+        <div class="stats-card primary">
             <div class="icon primary">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-people-fill"></i>
             </div>
-            <h3>{{ total_customers|default:0 }}</h3>
-            <p>Total Customers</p>
-            <div class="progress mt-3">
-                <div class="progress-bar" style="width: 75%"></div>
-            </div>
+            <h3 style="color: var(--primary-color);">{{ total_customers|default:0 }}</h3>
+            <p>Active Customers</p>
             <small class="text-success">+12% from last month</small>
         </div>
     </div>
     
     <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-        <div class="stats-card">
+        <div class="stats-card success">
             <div class="icon success">
-                <i class="bi bi-truck"></i>
+                <i class="bi bi-truck-fill"></i>
             </div>
-            <h3>{{ total_suppliers|default:0 }}</h3>
-            <p>Total Suppliers</p>
-            <div class="progress mt-3">
-                <div class="progress-bar" style="width: 85%"></div>
-            </div>
+            <h3 style="color: var(--success-color);">{{ total_suppliers|default:0 }}</h3>
+            <p>Trusted Suppliers</p>
             <small class="text-success">+8% from last month</small>
         </div>
     </div>
     
     <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-        <div class="stats-card">
+        <div class="stats-card warning">
             <div class="icon warning">
-                <i class="bi bi-box-seam"></i>
+                <i class="bi bi-box-seam-fill"></i>
             </div>
-            <h3>{{ total_products|default:0 }}</h3>
-            <p>Total Products</p>
-            <div class="progress mt-3">
-                <div class="progress-bar" style="width: 60%"></div>
-            </div>
+            <h3 style="color: var(--warning-color);">{{ total_products|default:0 }}</h3>
+            <p>Product Catalog</p>
             <small class="text-success">+15% from last month</small>
         </div>
     </div>
     
     <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
-        <div class="stats-card">
+        <div class="stats-card danger">
             <div class="icon danger">
-                <i class="bi bi-cash-coin"></i>
+                <i class="bi bi-currency-dollar"></i>
             </div>
-            <h3>৳{{ total_sales|default:0|floatformat:0 }}</h3>
-            <p>Total Sales</p>
-            <div class="progress mt-3">
-                <div class="progress-bar" style="width: 25%"></div>
-            </div>
-            <small class="text-warning">Needs attention</small>
+            <h3 style="color: var(--danger-color);">৳{{ total_sales|default:0|floatformat:0 }}</h3>
+            <p>Monthly Revenue</p>
+            <small class="text-warning">Track your growth</small>
         </div>
     </div>
 </div>

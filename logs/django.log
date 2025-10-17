@@ -8418,3 +8418,37 @@ Watching for file changes with StatReloader
 "GET /stock/products/create/ HTTP/1.1" 200 58630
 "GET /stock/products/ HTTP/1.1" 200 64039
 "GET /stock/products/1/edit/ HTTP/1.1" 200 58686
+"GET /suppliers/ HTTP/1.1" 200 69758
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /suppliers/ HTTP/1.1" 200 69758
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /purchases/orders/ HTTP/1.1" 200 60792
+"GET /purchases/orders/create/ HTTP/1.1" 200 73621
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 69625
+"GET /dashboard/ HTTP/1.1" 200 63150
+"GET /dashboard/ HTTP/1.1" 200 65442
+"GET /dashboard/ HTTP/1.1" 200 64885
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 64848
+"GET /dashboard/ HTTP/1.1" 200 64848
+"GET /dashboard/ HTTP/1.1" 200 64848
+"GET /dashboard/ HTTP/1.1" 200 64848
+"GET /dashboard/ HTTP/1.1" 200 64848
+"GET /dashboard/ HTTP/1.1" 200 64848
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 64395
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 65638
+"GET /dashboard/ HTTP/1.1" 200 65638
+"GET /dashboard/ HTTP/1.1" 200 65638
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 65671
+"GET /customers/ HTTP/1.1" 200 76081
+"GET /suppliers/ HTTP/1.1" 200 72578
+"GET /dashboard/ HTTP/1.1" 200 65671
