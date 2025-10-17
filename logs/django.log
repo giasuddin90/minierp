@@ -7409,3 +7409,31 @@ Not Found: /stock/warehouses/
 "POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
 "POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
 "POST /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/reports/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader

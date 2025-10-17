@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Stock, StockMovement, StockAlert
+from .models import Product, Stock, StockAlert
 
 
 
@@ -20,12 +20,6 @@ class StockAdmin(admin.ModelAdmin):
     readonly_fields = ['last_updated']
 
 
-@admin.register(StockMovement)
-class StockMovementAdmin(admin.ModelAdmin):
-    list_display = ['product', 'movement_type', 'quantity', 'movement_date', 'created_by']
-    list_filter = ['movement_type', 'movement_date', 'created_at']
-    search_fields = ['product__name', 'reference', 'description']
-    readonly_fields = ['created_at']
 
 
 @admin.register(StockAlert)
