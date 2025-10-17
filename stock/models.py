@@ -69,7 +69,7 @@ class Stock(models.Model):
 
     @classmethod
     def update_stock(cls, product, quantity_change, unit_cost=None, movement_type='adjustment', reference='', description='', user=None):
-        """Update stock quantity and create movement record"""
+        """Update stock quantity"""
         from django.db import transaction
         
         with transaction.atomic():
@@ -93,18 +93,6 @@ class Stock(models.Model):
             
             stock.save()
             
-            # Create movement record
-            StockMovement.objects.create(
-                product=product,
-                movement_type=movement_type,
-                quantity=abs(quantity_change),
-                unit_cost=unit_cost or stock.unit_cost,
-                reference=reference,
-                description=description,
-                movement_date=timezone.now(),
-                created_by=user
-            )
-            
             # Check for low stock alert
             if stock.quantity <= product.min_stock_level:
                 StockAlert.objects.get_or_create(
@@ -123,30 +111,6 @@ class Stock(models.Model):
         verbose_name_plural = "Stocks"
 
 
-class StockMovement(models.Model):
-    MOVEMENT_TYPES = [
-        ('inward', 'Inward'),
-        ('outward', 'Outward'),
-        ('transfer', 'Transfer'),
-        ('adjustment', 'Adjustment'),
-    ]
-    
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    movement_type = models.CharField(max_length=20, choices=MOVEMENT_TYPES)
-    quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    unit_cost = models.DecimalField(max_digits=15, decimal_places=2)
-    reference = models.CharField(max_length=100, blank=True)
-    description = models.TextField(blank=True)
-    movement_date = models.DateTimeField()
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.product.name} - {self.movement_type} - {self.quantity}"
-
-    class Meta:
-        verbose_name = "Stock Movement"
-        verbose_name_plural = "Stock Movements"
 
 
 class StockAlert(models.Model):

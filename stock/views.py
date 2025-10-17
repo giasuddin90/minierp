@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from datetime import datetime, timedelta
-from .models import Product, Stock, StockMovement, StockAlert
+from .models import Product, Stock, StockAlert
 from sales.models import SalesOrderItem, SalesInvoiceItem
 from purchases.models import PurchaseOrderItem
 
@@ -82,17 +82,6 @@ class StockUpdateView(UpdateView):
     success_url = reverse_lazy('stock:stock_list')
 
 
-class StockMovementListView(ListView):
-    model = StockMovement
-    template_name = 'stock/movement_list.html'
-    context_object_name = 'movements'
-
-
-class StockMovementCreateView(CreateView):
-    model = StockMovement
-    template_name = 'stock/movement_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('stock:movement_list')
 
 
 class StockAlertListView(ListView):
@@ -182,18 +171,15 @@ class InventoryDashboardView(ListView):
                 'stock_status': stock_status,
                 'min_stock_level': product.min_stock_level,
                 'stocks': stocks,
-                'last_movement': StockMovement.objects.filter(product=product).order_by('-movement_date').first()
             })
         
-        # Get recent stock movements
-        recent_movements = StockMovement.objects.select_related(
-            'product', 'warehouse', 'created_by'
-        ).order_by('-movement_date')[:10]
+        # Get recent stock movements - removed since StockMovement model is removed
+        recent_movements = []
         
         # Get low stock alerts
         low_stock_alerts = StockAlert.objects.filter(
             is_active=True
-        ).select_related('product', 'warehouse')
+        ).select_related('product')
         
         # Get top selling products (last 30 days)
         thirty_days_ago = timezone.now() - timedelta(days=30)

@@ -13,7 +13,7 @@ import json
 from .models import ReportTemplate, ReportSchedule, ReportLog
 from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesInvoiceItem
 from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseInvoiceItem
-from stock.models import Product, Stock, StockMovement
+from stock.models import Product, Stock
 from customers.models import Customer, CustomerLedger
 from suppliers.models import Supplier, SupplierLedger
 
@@ -162,10 +162,8 @@ class InventoryReportView(ListView):
         total_products = products.count()
         total_stock_value = sum(product.get_total_stock_value() for product in products)
         
-        # Get stock movements
-        recent_movements = StockMovement.objects.filter(
-            created_at__gte=timezone.now() - timedelta(days=30)
-        ).select_related('product', 'warehouse')
+        # Get stock movements - removed since StockMovement model is removed
+        recent_movements = []
         
         # Get low stock items
         low_stock_items = []
