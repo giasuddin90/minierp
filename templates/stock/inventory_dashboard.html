@@ -22,15 +22,15 @@
 <!-- Summary Cards -->
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card bg-primary text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Total Products</h6>
-                        <h3 class="mb-0">{{ total_products }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Total Products</h6>
+                        <h3 class="mb-0" style="color: var(--primary-color);">{{ total_products }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
+                        <i class="bi bi-box-seam" style="font-size: 2rem; color: var(--primary-color);"></i>
                     </div>
                 </div>
             </div>
@@ -38,15 +38,15 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-success text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">In Stock</h6>
-                        <h3 class="mb-0">{{ in_stock_products }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">In Stock</h6>
+                        <h3 class="mb-0" style="color: var(--success-color);">{{ in_stock_products }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                        <i class="bi bi-check-circle" style="font-size: 2rem; color: var(--success-color);"></i>
                     </div>
                 </div>
             </div>
@@ -54,15 +54,15 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-warning text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Low Stock</h6>
-                        <h3 class="mb-0">{{ low_stock_products }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Low Stock</h6>
+                        <h3 class="mb-0" style="color: var(--warning-color);">{{ low_stock_products }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem;"></i>
+                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color: var(--warning-color);"></i>
                     </div>
                 </div>
             </div>
@@ -70,15 +70,15 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card bg-danger text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Out of Stock</h6>
-                        <h3 class="mb-0">{{ out_of_stock_products }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Out of Stock</h6>
+                        <h3 class="mb-0" style="color: var(--danger-color);">{{ out_of_stock_products }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-x-circle" style="font-size: 2rem;"></i>
+                        <i class="bi bi-x-circle" style="font-size: 2rem; color: var(--danger-color);"></i>
                     </div>
                 </div>
             </div>

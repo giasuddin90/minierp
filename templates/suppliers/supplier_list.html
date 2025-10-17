@@ -24,15 +24,15 @@
 <!-- Summary Cards -->
 <div class="row mb-4">
     <div class="col-md-4">
-        <div class="card bg-primary text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Total Suppliers</h6>
-                        <h3 class="mb-0">{{ suppliers|length }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Total Suppliers</h6>
+                        <h3 class="mb-0" style="color: var(--primary-color);">{{ suppliers|length }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-truck" style="font-size: 2rem;"></i>
+                        <i class="bi bi-truck" style="font-size: 2rem; color: var(--primary-color);"></i>
                     </div>
                 </div>
             </div>
@@ -40,15 +40,15 @@
     </div>
     
     <div class="col-md-4">
-        <div class="card bg-success text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Active</h6>
-                        <h3 class="mb-0">{{ active_suppliers }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Active</h6>
+                        <h3 class="mb-0" style="color: var(--success-color);">{{ active_suppliers }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                        <i class="bi bi-check-circle" style="font-size: 2rem; color: var(--success-color);"></i>
                     </div>
                 </div>
             </div>
@@ -56,15 +56,15 @@
     </div>
     
     <div class="col-md-4">
-        <div class="card bg-danger text-white">
+        <div class="card" style="background-color: #f8f9fa;">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h6 class="card-title">Total Payable</h6>
-                        <h3 class="mb-0">৳{{ total_payable|floatformat:2 }}</h3>
+                        <h6 class="card-title" style="color: var(--text-primary);">Total Payable</h6>
+                        <h3 class="mb-0" style="color: var(--danger-color);">৳{{ total_payable|floatformat:2 }}</h3>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-arrow-up-circle" style="font-size: 2rem;"></i>
+                        <i class="bi bi-arrow-up-circle" style="font-size: 2rem; color: var(--danger-color);"></i>
                     </div>
                 </div>
             </div>
