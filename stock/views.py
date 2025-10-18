@@ -18,6 +18,44 @@ class ProductListView(ListView):
     model = Product
     template_name = 'stock/product_list.html'
     context_object_name = 'products'
+    paginate_by = 20
+    
+    def get_queryset(self):
+        queryset = Product.objects.select_related('category', 'brand').all()
+        
+        # Filter by category
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category_id=category)
+        
+        # Filter by brand
+        brand = self.request.GET.get('brand')
+        if brand:
+            queryset = queryset.filter(brand_id=brand)
+        
+        # Filter by status
+        status = self.request.GET.get('status')
+        if status == 'active':
+            queryset = queryset.filter(is_active=True)
+        elif status == 'inactive':
+            queryset = queryset.filter(is_active=False)
+        
+        # Search by name
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        
+        return queryset.order_by('name')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.filter(is_active=True).order_by('name')
+        context['brands'] = ProductBrand.objects.filter(is_active=True).order_by('name')
+        context['current_category'] = self.request.GET.get('category', '')
+        context['current_brand'] = self.request.GET.get('brand', '')
+        context['current_status'] = self.request.GET.get('status', '')
+        context['current_search'] = self.request.GET.get('search', '')
+        return context
 
 
 class ProductDetailView(DetailView):
