@@ -277,6 +277,11 @@
     color: var(--text-white);
 }
 
+.badge.bg-secondary {
+    background: var(--secondary-gradient) !important;
+    color: var(--text-white);
+}
+
 /* Stats Cards (Legacy Support) */
 .stats-card {
     background: var(--bg-secondary) !important;
