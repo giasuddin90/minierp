@@ -54,9 +54,15 @@
                                         <span class="text-muted">-</span>
                                     {% endif %}
                                 </td>
-                                <td>{{ product.brand|default:"-" }}</td>
                                 <td>
-                                    <span class="badge bg-info">{{ product.unit_name }}</span>
+                                    {% if product.brand %}
+                                        <span class="badge bg-secondary">{{ product.brand.name }}</span>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ product.get_unit_type_display }}</span>
                                 </td>
                                 <td>৳{{ product.cost_price|floatformat:2 }}</td>
                                 <td>৳{{ product.selling_price|floatformat:2 }}</td>

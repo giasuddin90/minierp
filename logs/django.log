@@ -10974,3 +10974,77 @@ Watching for file changes with StatReloader
 "GET /stock/stock/ HTTP/1.1" 200 28210
 "GET /stock/dashboard/ HTTP/1.1" 200 36675
 "GET /stock/stock/ HTTP/1.1" 200 28210
+"GET /stock/products/create/ HTTP/1.1" 200 22893
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /stock/products/create/ HTTP/1.1" 200 25263
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /stock/products/ HTTP/1.1" 200 34916
+"GET /stock/products/create/ HTTP/1.1" 200 23844
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /stock/stock/ HTTP/1.1" 200 18569
+"GET /stock/stock/ HTTP/1.1" 200 18569
+"GET /stock/products/create/ HTTP/1.1" 200 23844
+"GET /stock/products/ HTTP/1.1" 200 34916
+"GET /stock/products/1/edit/ HTTP/1.1" 200 23943
+"POST /stock/products/1/edit/ HTTP/1.1" 302 0
+"GET /stock/products/ HTTP/1.1" 200 34916
+"GET /stock/products/create/ HTTP/1.1" 200 23844
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /stock/products/ HTTP/1.1" 200 34919
+"GET /stock/products/create/ HTTP/1.1" 200 23546
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /stock/products/create/ HTTP/1.1" 200 23546
+"POST /stock/products/create/ HTTP/1.1" 302 0
+"GET /stock/products/ HTTP/1.1" 200 37004
+"GET /stock/products/1/edit/ HTTP/1.1" 200 23642

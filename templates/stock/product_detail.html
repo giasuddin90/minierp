@@ -38,12 +38,28 @@
                                 <td>{{ object.name }}</td>
                             </tr>
                             <tr>
+                                <td><strong>Category:</strong></td>
+                                <td>
+                                    {% if object.category %}
+                                        <span class="badge bg-primary">{{ object.category.name }}</span>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><strong>Brand:</strong></td>
-                                <td>{{ object.brand|default:"-" }}</td>
+                                <td>
+                                    {% if object.brand %}
+                                        <span class="badge bg-secondary">{{ object.brand.name }}</span>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Unit:</strong></td>
-                                <td><span class="badge bg-info">{{ object.unit_name }}</span></td>
+                                <td><span class="badge bg-info">{{ object.get_unit_type_display }}</span></td>
                             </tr>
                             <tr>
                                 <td><strong>Status:</strong></td>

@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from datetime import datetime, timedelta
-from .models import ProductCategory, Product, Stock, StockAlert
+from .models import ProductCategory, ProductBrand, Product, Stock, StockAlert
 from sales.models import SalesOrderItem, SalesInvoiceItem
 from purchases.models import PurchaseOrderItem
 
@@ -34,6 +34,7 @@ class ProductCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.filter(is_active=True)
+        context['brands'] = ProductBrand.objects.filter(is_active=True)
         return context
 
 
@@ -46,6 +47,7 @@ class ProductUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.filter(is_active=True)
+        context['brands'] = ProductBrand.objects.filter(is_active=True)
         return context
 
 

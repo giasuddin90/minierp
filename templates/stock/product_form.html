@@ -22,10 +22,6 @@
                             <label for="id_name" class="form-label">Product Name *</label>
                             <input type="text" class="form-control" id="id_name" name="name" value="{{ object.name|default:'' }}" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="id_brand" class="form-label">Brand</label>
-                            <input type="text" class="form-control" id="id_brand" name="brand" value="{{ object.brand|default:'' }}">
-                        </div>
                     </div>
                     
                     <div class="row">
@@ -35,6 +31,15 @@
                                 <option value="">Select Category</option>
                                 {% for category in categories %}
                                 <option value="{{ category.id }}" {% if object.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_brand" class="form-label">Brand</label>
+                            <select class="form-select" id="id_brand" name="brand">
+                                <option value="">Select Brand</option>
+                                {% for brand in brands %}
+                                <option value="{{ brand.id }}" {% if object.brand.id == brand.id %}selected{% endif %}>{{ brand.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -53,10 +58,6 @@
                                 <option value="liter" {% if object.unit_type == 'liter' %}selected{% endif %}>Liter</option>
                                 <option value="other" {% if object.unit_type == 'other' %}selected{% endif %}>Other</option>
                             </select>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="id_unit_name" class="form-label">Unit Name *</label>
-                            <input type="text" class="form-control" id="id_unit_name" name="unit_name" value="{{ object.unit_name|default:'' }}" required>
                         </div>
                     </div>
                     
@@ -131,4 +132,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
