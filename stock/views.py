@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from datetime import datetime, timedelta
-from .models import Product, Stock, StockAlert
+from .models import ProductCategory, Product, Stock, StockAlert
 from sales.models import SalesOrderItem, SalesInvoiceItem
 from purchases.models import PurchaseOrderItem
 
@@ -30,6 +30,11 @@ class ProductCreateView(CreateView):
     template_name = 'stock/product_form.html'
     fields = '__all__'
     success_url = reverse_lazy('stock:product_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.filter(is_active=True)
+        return context
 
 
 class ProductUpdateView(UpdateView):
@@ -37,6 +42,11 @@ class ProductUpdateView(UpdateView):
     template_name = 'stock/product_form.html'
     fields = '__all__'
     success_url = reverse_lazy('stock:product_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.filter(is_active=True)
+        return context
 
 
 class ProductDeleteView(DeleteView):

@@ -29,6 +29,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Category</th>
                                 <th>Brand</th>
                                 <th>Unit</th>
                                 <th>Cost Price</th>
@@ -44,6 +45,13 @@
                                     <strong>{{ product.name }}</strong>
                                     {% if product.description %}
                                     <br><small class="text-muted">{{ product.description|truncatechars:50 }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if product.category %}
+                                        <span class="badge bg-primary">{{ product.category.name }}</span>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
                                     {% endif %}
                                 </td>
                                 <td>{{ product.brand|default:"-" }}</td>

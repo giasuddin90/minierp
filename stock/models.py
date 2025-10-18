@@ -4,6 +4,20 @@ from django.utils import timezone
 from decimal import Decimal
 
 
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Product Category"
+        verbose_name_plural = "Product Categories"
+        ordering = ['name']
 
 
 class Product(models.Model):
@@ -18,6 +32,7 @@ class Product(models.Model):
     ]
     
     name = models.CharField(max_length=200)
+    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
     unit_type = models.CharField(max_length=20, choices=UNIT_TYPES)
     unit_name = models.CharField(max_length=50)
     brand = models.CharField(max_length=100, blank=True)

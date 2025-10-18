@@ -30,6 +30,18 @@
                     
                     <div class="row">
                         <div class="col-md-6 mb-3">
+                            <label for="id_category" class="form-label">Category</label>
+                            <select class="form-select" id="id_category" name="category">
+                                <option value="">Select Category</option>
+                                {% for category in categories %}
+                                <option value="{{ category.id }}" {% if object.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="id_unit_type" class="form-label">Unit Type *</label>
                             <select class="form-select" id="id_unit_type" name="unit_type" required>
                                 <option value="">Select Unit Type</option>

@@ -1,14 +1,22 @@
 from django.contrib import admin
-from .models import Product, Stock, StockAlert
+from .models import ProductCategory, Product, Stock, StockAlert
+
+
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'is_active', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['name', 'description']
+    readonly_fields = ['created_at', 'updated_at']
 
 
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'brand', 'unit_type', 'cost_price', 'selling_price', 'is_active']
-    list_filter = ['unit_type', 'is_active', 'created_at']
-    search_fields = ['name', 'brand', 'description']
+    list_display = ['name', 'category', 'brand', 'unit_type', 'cost_price', 'selling_price', 'is_active']
+    list_filter = ['category', 'unit_type', 'is_active', 'created_at']
+    search_fields = ['name', 'brand', 'description', 'category__name']
     readonly_fields = ['created_at', 'updated_at']
 
 
