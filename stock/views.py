@@ -156,6 +156,30 @@ class ProductCategoryListView(ListView):
     model = ProductCategory
     template_name = 'stock/category_list.html'
     context_object_name = 'categories'
+    paginate_by = 20
+    
+    def get_queryset(self):
+        queryset = ProductCategory.objects.all()
+        
+        # Filter by status
+        status = self.request.GET.get('status')
+        if status == 'active':
+            queryset = queryset.filter(is_active=True)
+        elif status == 'inactive':
+            queryset = queryset.filter(is_active=False)
+        
+        # Search by name
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        
+        return queryset.order_by('name')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_status'] = self.request.GET.get('status', '')
+        context['current_search'] = self.request.GET.get('search', '')
+        return context
 
 
 class ProductCategoryCreateView(CreateView):
@@ -191,6 +215,30 @@ class ProductBrandListView(ListView):
     model = ProductBrand
     template_name = 'stock/brand_list.html'
     context_object_name = 'brands'
+    paginate_by = 20
+    
+    def get_queryset(self):
+        queryset = ProductBrand.objects.all()
+        
+        # Filter by status
+        status = self.request.GET.get('status')
+        if status == 'active':
+            queryset = queryset.filter(is_active=True)
+        elif status == 'inactive':
+            queryset = queryset.filter(is_active=False)
+        
+        # Search by name
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        
+        return queryset.order_by('name')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_status'] = self.request.GET.get('status', '')
+        context['current_search'] = self.request.GET.get('search', '')
+        return context
 
 
 class ProductBrandCreateView(CreateView):

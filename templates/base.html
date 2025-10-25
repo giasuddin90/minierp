@@ -106,6 +106,7 @@
                 </a>
                 <div class="collapse" id="inventorySubmenu">
                     <ul class="nav flex-column ms-3">
+                        <!-- Products Section -->
                         <li class="nav-item">
                             <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}" href="{% url 'stock:product_list' %}">
                                 <i class="bi bi-box"></i> Products
@@ -116,6 +117,32 @@
                                 <i class="bi bi-plus-circle"></i> Add Product
                             </a>
                         </li>
+                        
+                        <!-- Categories Section -->
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}" href="{% url 'stock:category_list' %}">
+                                <i class="bi bi-tags"></i> Categories
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'category_create' %}active{% endif %}" href="{% url 'stock:category_create' %}">
+                                <i class="bi bi-tag"></i> Add Category
+                            </a>
+                        </li>
+                        
+                        <!-- Brands Section -->
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'brand_list' %}active{% endif %}" href="{% url 'stock:brand_list' %}">
+                                <i class="bi bi-award"></i> Brands
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'brand_create' %}active{% endif %}" href="{% url 'stock:brand_create' %}">
+                                <i class="bi bi-award-fill"></i> Add Brand
+                            </a>
+                        </li>
+                        
+                        <!-- Stock Management Section -->
                         <li class="nav-item">
                             <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'stock_list' %}active{% endif %}" href="{% url 'stock:stock_list' %}">
                                 <i class="bi bi-boxes"></i> Stock Levels
@@ -129,6 +156,18 @@
                         <li class="nav-item">
                             <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'inventory_dashboard' %}active{% endif %}" href="{% url 'stock:inventory_dashboard' %}">
                                 <i class="bi bi-speedometer2"></i> Inventory Dashboard
+                            </a>
+                        </li>
+                        
+                        <!-- Stock Reports Section -->
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'stock_report' %}active{% endif %}" href="{% url 'stock:stock_report' %}">
+                                <i class="bi bi-graph-up"></i> Stock Report
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'stock_valuation_report' %}active{% endif %}" href="{% url 'stock:stock_valuation_report' %}">
+                                <i class="bi bi-calculator"></i> Stock Valuation
                             </a>
                         </li>
                     </ul>
