@@ -75,7 +75,7 @@ class PurchaseOrderItem(models.Model):
 
 class GoodsReceipt(models.Model):
     receipt_number = models.CharField(max_length=50, unique=True)
-    purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE)
+    purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE, null=True, blank=True)
     receipt_date = models.DateField()
     invoice_id = models.CharField(max_length=100, blank=True, help_text="Invoice ID from supplier when goods are received")
     total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
@@ -84,7 +84,10 @@ class GoodsReceipt(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"GR-{self.receipt_number} - {self.purchase_order.supplier.name}"
+        if self.purchase_order:
+            return f"GR-{self.receipt_number} - {self.purchase_order.supplier.name}"
+        else:
+            return f"GR-{self.receipt_number} - Direct Receipt"
 
     class Meta:
         verbose_name = "Goods Receipt"

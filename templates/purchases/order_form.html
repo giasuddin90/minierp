@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
@@ -15,49 +15,47 @@
                 </h5>
             </div>
             <div class="card-body">
-                
-                <form method="post">
+                <form method="post" id="purchase-order-form">
                     {% csrf_token %}
+                    
+                    <!-- Main Form Fields -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="id_supplier" class="form-label">
-                                <i class="bi bi-building"></i> Supplier <span class="text-danger fw-bold">*</span>
+                            <label for="{{ form.supplier.id_for_label }}" class="form-label">
+                                <i class="bi bi-building"></i> {{ form.supplier.label }} <span class="text-danger fw-bold">*</span>
                             </label>
-                            <select class="form-select" id="id_supplier" name="supplier" required>
-                                <option value="">Select Supplier</option>
-                                {% for supplier in suppliers %}
-                                <option value="{{ supplier.id }}" {% if object.supplier.id == supplier.id %}selected{% endif %}>
-                                    {{ supplier.name }} {% if supplier.company_name %}({{ supplier.company_name }}){% endif %}
-                                </option>
-                                {% endfor %}
-                            </select>
-                            <div class="invalid-feedback">Please select a supplier.</div>
+                            {{ form.supplier }}
+                            {% if form.supplier.errors %}
+                                <div class="invalid-feedback d-block">{{ form.supplier.errors.0 }}</div>
+                            {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="id_order_date" class="form-label">
-                                <i class="bi bi-calendar"></i> Order Date <span class="text-danger fw-bold">*</span>
+                            <label for="{{ form.order_date.id_for_label }}" class="form-label">
+                                <i class="bi bi-calendar"></i> {{ form.order_date.label }} <span class="text-danger fw-bold">*</span>
                             </label>
-                            <input type="date" class="form-control" id="id_order_date" name="order_date" value="{{ object.order_date|date:'Y-m-d'|default:'' }}" required>
-                            <div class="invalid-feedback">Please select an order date.</div>
+                            {{ form.order_date }}
+                            {% if form.order_date.errors %}
+                                <div class="invalid-feedback d-block">{{ form.order_date.errors.0 }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="id_expected_delivery_date" class="form-label">
-                                <i class="bi bi-calendar-check"></i> Expected Delivery Date <span class="text-danger fw-bold">*</span>
+                            <label for="{{ form.expected_date.id_for_label }}" class="form-label">
+                                <i class="bi bi-calendar-check"></i> {{ form.expected_date.label }} <span class="text-danger fw-bold">*</span>
                             </label>
-                            <input type="date" class="form-control" id="id_expected_date" name="expected_date" value="{{ object.expected_date|date:'Y-m-d'|default:'' }}" required>
-                            <div class="invalid-feedback">Please select an expected delivery date.</div>
+                            {{ form.expected_date }}
+                            {% if form.expected_date.errors %}
+                                <div class="invalid-feedback d-block">{{ form.expected_date.errors.0 }}</div>
+                            {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="id_status" class="form-label">Status</label>
-                            <select class="form-select" id="id_status" name="status">
-                                <option value="draft" {% if object.status == 'draft' or not object %}selected{% endif %}>Draft</option>
-                                <option value="sent" {% if object.status == 'sent' %}selected{% endif %}>Sent</option>
-                                <option value="received" {% if object.status == 'received' %}selected{% endif %}>Received</option>
-                                <option value="cancelled" {% if object.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
-                            </select>
+                            <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                                <div class="invalid-feedback d-block">{{ form.status.errors.0 }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     
@@ -67,103 +65,109 @@
                             <i class="bi bi-box-seam"></i>
                             Products
                         </h6>
+                        
+                        {{ formset.management_form }}
+                        
                         <div id="products-container">
-                            {% if object and object.items.all %}
-                                {% for item in object.items.all %}
-                                <div class="product-row row mb-3 p-3 border rounded">
-                                    <div class="col-md-4">
-                                        <label class="form-label">
-                                            <i class="bi bi-box-seam"></i> Product <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <select class="form-select product-select" name="products[]">
-                                            <option value="">Select Product</option>
-                                            {% for product in products %}
-                                            <option value="{{ product.id }}" data-unit="{{ product.unit_name }}" data-price="{{ product.cost_price }}" {% if product.id == item.product.id %}selected{% endif %}>
-                                                {{ product.name }} ({{ product.unit_name }}) - ৳{{ product.cost_price }}
-                                            </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">
-                                            <i class="bi bi-building"></i> Warehouse <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <select class="form-select warehouse-select" name="warehouses[]">
-                                            <option value="">Select Warehouse</option>
-                                            {% for warehouse in warehouses %}
-                                            <option value="{{ warehouse.id }}" {% if warehouse.id == item.warehouse.id %}selected{% endif %}>{{ warehouse.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">
-                                            <i class="bi bi-hash"></i> Quantity <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <input type="number" class="form-control quantity-input" name="quantities[]" step="0.01" min="0" value="{{ item.quantity }}">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">
-                                            <i class="bi bi-currency-dollar"></i> Unit Price <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <input type="number" class="form-control price-input" name="prices[]" step="0.01" min="0" value="{{ item.unit_price }}">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">Total</label>
-                                        <input type="number" class="form-control total-input" readonly value="{{ item.total_price }}">
-                                        <button type="button" class="btn btn-danger btn-sm mt-1 remove-product">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                            {% for form in formset %}
+                            <div class="product-row row mb-3 p-3 border rounded formset-form" data-form-index="{{ forloop.counter0 }}">
+                                {{ form.id }}
+                                
+                                <!-- Category Selection -->
+                                <div class="col-md-3">
+                                    <label class="form-label">
+                                        <i class="bi bi-tags"></i> Category <span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    <select class="form-select category-select" name="category_{{ forloop.counter0 }}" required>
+                                        <option value="">Select Category</option>
+                                        {% for category in categories %}
+                                        <option value="{{ category.id }}" {% if form.product.value and form.product.value.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="invalid-feedback">Please select a category</div>
+                                </div>
+                                
+                                <!-- Brand Selection -->
+                                <div class="col-md-3">
+                                    <label class="form-label">
+                                        <i class="bi bi-award"></i> Brand <span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    <select class="form-select brand-select" name="brand_{{ forloop.counter0 }}" required>
+                                        <option value="">Select Brand</option>
+                                        {% for brand in brands %}
+                                        <option value="{{ brand.id }}" {% if form.product.value and form.product.value.brand.id == brand.id %}selected{% endif %}>{{ brand.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="invalid-feedback">Please select a brand</div>
+                                </div>
+                                
+                                <!-- Product Selection -->
+                                <div class="col-md-3">
+                                    <label class="form-label">
+                                        <i class="bi bi-box-seam"></i> Product <span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    {{ form.product }}
+                                    {% if form.product.errors %}
+                                        <div class="invalid-feedback d-block">{{ form.product.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Quantity -->
+                                <div class="col-md-2">
+                                    <label class="form-label">
+                                        <i class="bi bi-hash"></i> Quantity <span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    {{ form.quantity }}
+                                    {% if form.quantity.errors %}
+                                        <div class="invalid-feedback d-block">{{ form.quantity.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Unit Price -->
+                                <div class="col-md-2">
+                                    <label class="form-label">
+                                        <i class="bi bi-currency-dollar"></i> Unit Price <span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    {{ form.unit_price }}
+                                    {% if form.unit_price.errors %}
+                                        <div class="invalid-feedback d-block">{{ form.unit_price.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Total and Actions -->
+                                <div class="col-md-2">
+                                    <label class="form-label">Total</label>
+                                    {{ form.total_price }}
+                                    {% if form.total_price.errors %}
+                                        <div class="invalid-feedback d-block">{{ form.total_price.errors.0 }}</div>
+                                    {% endif %}
+                                    {% if not forloop.first %}
+                                    <button type="button" class="btn btn-danger btn-sm mt-1 remove-product">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- DELETE checkbox for existing items -->
+                                {% if form.DELETE %}
+                                <div class="col-12">
+                                    {{ form.DELETE }}
+                                </div>
+                                {% endif %}
+                                
+                                <!-- Product Info Display -->
+                                <div class="col-12 mt-2">
+                                    <div class="product-info" style="display: none;">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle"></i> 
+                                            <span class="product-details"></span>
+                                        </small>
                                     </div>
                                 </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="product-row row mb-3 p-3 border rounded">
-                                    <div class="col-md-4">
-                                        <label class="form-label">
-                                            <i class="bi bi-box-seam"></i> Product <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <select class="form-select product-select" name="products[]">
-                                            <option value="">Select Product</option>
-                                            {% for product in products %}
-                                            <option value="{{ product.id }}" data-unit="{{ product.unit_name }}" data-price="{{ product.cost_price }}">
-                                                {{ product.name }} ({{ product.unit_name }}) - ৳{{ product.cost_price }}
-                                            </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">
-                                            <i class="bi bi-building"></i> Warehouse <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <select class="form-select warehouse-select" name="warehouses[]">
-                                            <option value="">Select Warehouse</option>
-                                            {% for warehouse in warehouses %}
-                                            <option value="{{ warehouse.id }}">{{ warehouse.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">
-                                            <i class="bi bi-hash"></i> Quantity <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <input type="number" class="form-control quantity-input" name="quantities[]" step="0.01" min="0">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">
-                                            <i class="bi bi-currency-dollar"></i> Unit Price <span class="text-danger fw-bold">*</span>
-                                        </label>
-                                        <input type="number" class="form-control price-input" name="prices[]" step="0.01" min="0">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label">Total</label>
-                                        <input type="number" class="form-control total-input" readonly>
-                                        <button type="button" class="btn btn-danger btn-sm mt-1 remove-product" style="display: none;">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            {% endif %}
+                            </div>
+                            {% endfor %}
                         </div>
+                        
                         <button type="button" class="btn btn-outline-primary" id="add-product">
                             <i class="bi bi-plus-circle"></i> Add Product
                         </button>
@@ -176,288 +180,395 @@
                         </div>
                     </div>
                     
-        <div class="mb-3">
-            <label for="id_notes" class="form-label">Notes</label>
-            <textarea class="form-control" id="id_notes" name="notes" rows="3" placeholder="Enter any additional notes or comments...">{{ object.notes|default:'' }}</textarea>
-        </div>
+                    <div class="mb-3">
+                        <label for="{{ form.notes.id_for_label }}" class="form-label">{{ form.notes.label }}</label>
+                        {{ form.notes }}
+                        {% if form.notes.errors %}
+                            <div class="invalid-feedback d-block">{{ form.notes.errors.0 }}</div>
+                        {% endif %}
+                    </div>
         
-        <!-- Help Section -->
-        <div class="alert alert-info">
-            <h6><i class="bi bi-info-circle"></i> How to Add Products:</h6>
-            <ol class="mb-0">
-                <li>Select a product from the dropdown</li>
-                <li>Choose the warehouse where it will be stored</li>
-                <li>Enter the quantity you want to order</li>
-                <li>Enter the unit price (cost price)</li>
-                <li>Click "Add Product" to add more items</li>
-            </ol>
-        </div>
-        
-        <div class="d-flex justify-content-between">
-            <a href="{% url 'purchases:order_list' %}" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Back to Orders
-            </a>
-            <button type="submit" class="btn btn-primary" id="submit-btn">
-                <i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Create{% endif %} Order
-            </button>
-        </div>
+                    <!-- Help Section -->
+                    <div class="alert alert-info">
+                        <h6><i class="bi bi-info-circle"></i> How to Add Products:</h6>
+                        <ol class="mb-0">
+                            <li><strong>Select Category:</strong> Choose the product category first</li>
+                            <li><strong>Select Brand:</strong> Choose the brand (filtered by category)</li>
+                            <li><strong>Select Product:</strong> Choose the specific product (filtered by category and brand)</li>
+                            <li><strong>Enter Quantity:</strong> Enter the quantity you want to order</li>
+                            <li><strong>Enter Unit Price:</strong> Enter the unit price (cost price)</li>
+                            <li><strong>Add More:</strong> Click "Add Product" to add more items</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'purchases:order_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Orders
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">
+                            <i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Create{% endif %} Order
+                        </button>
+                    </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="mb-0">
-                    <i class="bi bi-info-circle"></i>
-                    Order Information
-                </h6>
-            </div>
-            <div class="card-body">
-                <p class="text-muted small">
-                    <strong>Supplier:</strong> Select the supplier for this order.
-                </p>
-                <p class="text-muted small">
-                    <strong>Expected Delivery:</strong> Expected delivery date from supplier.
-                </p>
-                <p class="text-muted small">
-                    <strong>Status:</strong> Track the progress of the order.
-                </p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current date as default
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('id_order_date').value = today;
+// Product data for filtering
+const productData = {
+    {% for product in products %}
+    {{ product.id }}: {
+        category: {{ product.category.id|default:"null" }},
+        brand: {{ product.brand.id|default:"null" }},
+        name: "{{ product.name|escapejs }}",
+        unit: "{{ product.unit_type }}",
+        price: {{ product.cost_price|default:"0" }}
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Set current date as default
+    const today = new Date().toISOString().split('T')[0];
+    const orderDateField = document.getElementById('id_order_date');
+    if (orderDateField && !orderDateField.value) {
+        orderDateField.value = today;
+    }
+    
+    // Set expected date to 7 days from today
+    const expectedDateField = document.getElementById('id_expected_date');
+    if (expectedDateField && !expectedDateField.value) {
+        const expectedDate = new Date();
+        expectedDate.setDate(expectedDate.getDate() + 7);
+        expectedDateField.value = expectedDate.toISOString().split('T')[0];
+    }
+    
+    // Initialize existing products
+    initializeExistingProducts();
+    
+    // Add product row functionality
+    document.getElementById('add-product').addEventListener('click', function() {
+        addProductRow();
+    });
+    
+    // Remove product row functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-product') || e.target.closest('.remove-product')) {
+            const productRow = e.target.closest('.product-row');
+            if (productRow) {
+                productRow.remove();
+                updateTotalAmount();
+                validateForm();
+            }
+        }
+    });
+    
+    // Category selection change
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('category-select')) {
+            const row = e.target.closest('.product-row');
+            const categoryId = e.target.value;
             
-            // Product selection functionality
-            let productRowIndex = 0;
+            // Filter brands by category
+            filterBrandsByCategory(row, categoryId);
             
-            // Add product row
-            document.getElementById('add-product').addEventListener('click', function() {
-                addProductRow();
-            });
+            // Reset product and brand selections
+            const brandSelect = row.querySelector('.brand-select');
+            const productSelect = row.querySelector('select[name$="-product"]');
+            if (brandSelect) brandSelect.value = '';
+            if (productSelect) productSelect.value = '';
             
-            // Remove product row
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-product')) {
-                    e.target.closest('.product-row').remove();
-                    updateTotalAmount();
-                    validateForm();
-                }
-            });
+            // Hide product info
+            hideProductInfo(row);
             
-            // Product selection change
-            document.addEventListener('change', function(e) {
-                if (e.target.classList.contains('product-select')) {
-                    const option = e.target.selectedOptions[0];
-                    const row = e.target.closest('.product-row');
-                    
-                    if (option.dataset.price) {
-                        const priceInput = row.querySelector('.price-input');
-                        priceInput.value = option.dataset.price;
+            validateForm();
+        }
+    });
+    
+    // Brand selection change
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('brand-select')) {
+            const row = e.target.closest('.product-row');
+            const categoryId = row.querySelector('.category-select').value;
+            const brandId = e.target.value;
+            
+            // Filter products by category and brand
+            filterProductsByCategoryAndBrand(row, categoryId, brandId);
+            
+            // Reset product selection
+            const productSelect = row.querySelector('select[name$="-product"]');
+            if (productSelect) productSelect.value = '';
+            
+            // Hide product info
+            hideProductInfo(row);
+            
+            validateForm();
+        }
+    });
+    
+    // Product selection change
+    document.addEventListener('change', function(e) {
+        if (e.target.name && e.target.name.includes('-product')) {
+            const option = e.target.selectedOptions[0];
+            const row = e.target.closest('.product-row');
+            
+            if (option && option.value) {
+                const productId = option.value;
+                const product = productData[productId];
+                
+                if (product) {
+                    // Auto-fill unit price
+                    const priceInput = row.querySelector('input[name$="-unit_price"]');
+                    if (priceInput) {
+                        priceInput.value = product.price;
                         calculateRowTotal(row);
                     }
                     
                     // Show product info
-                    if (option.value) {
-                        showProductInfo(row, option);
+                    showProductInfo(row, product);
+                }
+            } else {
+                hideProductInfo(row);
+            }
+            
+            validateForm();
+        }
+    });
+    
+    // Quantity or price change
+    document.addEventListener('input', function(e) {
+        if (e.target.name && (e.target.name.includes('-quantity') || e.target.name.includes('-unit_price'))) {
+            const row = e.target.closest('.product-row');
+            calculateRowTotal(row);
+            validateForm();
+        }
+    });
+    
+    // Form submission validation
+    document.getElementById('purchase-order-form').addEventListener('submit', function(e) {
+        if (!validateForm()) {
+            e.preventDefault();
+            showValidationErrors();
+        }
+    });
+    
+    function initializeExistingProducts() {
+        // Initialize existing product rows
+        document.querySelectorAll('.product-row').forEach(row => {
+            calculateRowTotal(row);
+        });
+        updateTotalAmount();
+        validateForm();
+    }
+    
+    function addProductRow() {
+        const container = document.getElementById('products-container');
+        const firstRow = container.querySelector('.product-row');
+        const newRow = firstRow.cloneNode(true);
+        
+        // Clear values and reset form index
+        const formIndex = container.querySelectorAll('.product-row').length;
+        newRow.setAttribute('data-form-index', formIndex);
+        
+        // Clear all inputs
+        newRow.querySelectorAll('select, input').forEach(input => {
+            if (input.type !== 'button' && !input.name.includes('id')) {
+                input.value = '';
+            }
+        });
+        
+        // Update form field names
+        newRow.querySelectorAll('select, input').forEach(input => {
+            if (input.name && input.name.includes('-')) {
+                const parts = input.name.split('-');
+                parts[0] = 'form-' + formIndex;
+                input.name = parts.join('-');
+            }
+        });
+        
+        // Reset all dropdowns
+        resetAllDropdowns(newRow);
+        
+        // Show remove button for additional rows
+        const removeBtn = newRow.querySelector('.remove-product');
+        if (removeBtn) {
+            removeBtn.style.display = 'block';
+        }
+        
+        // Hide product info
+        hideProductInfo(newRow);
+        
+        container.appendChild(newRow);
+        
+        // Focus on the new category select
+        newRow.querySelector('.category-select').focus();
+    }
+    
+    function filterBrandsByCategory(row, categoryId) {
+        const brandSelect = row.querySelector('.brand-select');
+        if (!brandSelect) return;
+        
+        // For now, show all brands since brands don't have categories
+        // In the future, you could implement brand-category relationships
+        const allBrandOptions = brandSelect.querySelectorAll('option');
+        
+        allBrandOptions.forEach(option => {
+            option.style.display = 'block';
+        });
+    }
+    
+    function filterProductsByCategoryAndBrand(row, categoryId, brandId) {
+        const productSelect = row.querySelector('select[name$="-product"]');
+        if (!productSelect) return;
+        
+        const allProductOptions = productSelect.querySelectorAll('option');
+        
+        allProductOptions.forEach(option => {
+            if (option.value === '') {
+                option.style.display = 'block';
+            } else {
+                const productId = option.value;
+                const product = productData[productId];
+                
+                if (product) {
+                    const productCategoryId = product.category;
+                    const productBrandId = product.brand;
+                    
+                    // Show product if it matches the selected category and brand
+                    if (productCategoryId == categoryId && productBrandId == brandId) {
+                        option.style.display = 'block';
                     } else {
-                        hideProductInfo(row);
+                        option.style.display = 'none';
                     }
-                    
-                    validateForm();
-                }
-            });
-            
-            // Quantity or price change
-            document.addEventListener('input', function(e) {
-                if (e.target.classList.contains('quantity-input') || e.target.classList.contains('price-input')) {
-                    const row = e.target.closest('.product-row');
-                    calculateRowTotal(row);
-                    validateForm();
-                }
-            });
-            
-            // Form submission validation
-            document.querySelector('form').addEventListener('submit', function(e) {
-                if (!validateForm()) {
-                    e.preventDefault();
-                    showValidationErrors();
-                }
-            });
-            
-            // Real-time validation for required fields
-            document.addEventListener('input', function(e) {
-                if (e.target.hasAttribute('required')) {
-                    validateField(e.target);
-                }
-            });
-            
-            document.addEventListener('change', function(e) {
-                if (e.target.hasAttribute('required')) {
-                    validateField(e.target);
-                }
-            });
-            
-            function addProductRow() {
-                const container = document.getElementById('products-container');
-                const firstRow = container.querySelector('.product-row');
-                const newRow = firstRow.cloneNode(true);
-                
-                // Clear values
-                newRow.querySelectorAll('select, input').forEach(input => {
-                    if (input.type !== 'button') {
-                        input.value = '';
-                    }
-                });
-                
-                // Show remove button for additional rows
-                const removeBtn = newRow.querySelector('.remove-product');
-                if (removeBtn) {
-                    removeBtn.style.display = 'block';
-                }
-                
-                // Add product info div
-                const productInfo = document.createElement('div');
-                productInfo.className = 'product-info mt-2';
-                productInfo.style.display = 'none';
-                newRow.appendChild(productInfo);
-                
-                container.appendChild(newRow);
-                productRowIndex++;
-                
-                // Focus on the new product select
-                newRow.querySelector('.product-select').focus();
-            }
-            
-            function showProductInfo(row, option) {
-                let infoDiv = row.querySelector('.product-info');
-                if (!infoDiv) {
-                    infoDiv = document.createElement('div');
-                    infoDiv.className = 'product-info mt-2';
-                    row.appendChild(infoDiv);
-                }
-                
-                const unit = option.dataset.unit || 'units';
-                const price = option.dataset.price || '0';
-                
-                infoDiv.innerHTML = `
-                    <small class="text-muted">
-                        <i class="bi bi-info-circle"></i> 
-                        Unit: ${unit} | Suggested Price: ৳${price}
-                    </small>
-                `;
-                infoDiv.style.display = 'block';
-            }
-            
-            function hideProductInfo(row) {
-                const infoDiv = row.querySelector('.product-info');
-                if (infoDiv) {
-                    infoDiv.style.display = 'none';
+                } else {
+                    option.style.display = 'none';
                 }
             }
+        });
+    }
+    
+    function resetAllDropdowns(row) {
+        // Reset category dropdown
+        const categorySelect = row.querySelector('.category-select');
+        if (categorySelect) categorySelect.value = '';
+        
+        // Reset brand dropdown and show all options
+        const brandSelect = row.querySelector('.brand-select');
+        if (brandSelect) {
+            brandSelect.value = '';
+            brandSelect.querySelectorAll('option').forEach(option => {
+                option.style.display = 'block';
+            });
+        }
+        
+        // Reset product dropdown and show all options
+        const productSelect = row.querySelector('select[name$="-product"]');
+        if (productSelect) {
+            productSelect.value = '';
+            productSelect.querySelectorAll('option').forEach(option => {
+                option.style.display = 'block';
+            });
+        }
+    }
+    
+    function showProductInfo(row, product) {
+        const infoDiv = row.querySelector('.product-info');
+        if (!infoDiv) return;
+        
+        const unit = product.unit || 'units';
+        const price = product.price || '0';
+        const details = `Unit: ${unit} | Suggested Price: ৳${price}`;
+        
+        infoDiv.querySelector('.product-details').textContent = details;
+        infoDiv.style.display = 'block';
+    }
+    
+    function hideProductInfo(row) {
+        const infoDiv = row.querySelector('.product-info');
+        if (infoDiv) {
+            infoDiv.style.display = 'none';
+        }
+    }
+    
+    function calculateRowTotal(row) {
+        const quantityInput = row.querySelector('input[name$="-quantity"]');
+        const priceInput = row.querySelector('input[name$="-unit_price"]');
+        const totalInput = row.querySelector('input[name$="-total_price"]');
+        
+        if (!quantityInput || !priceInput || !totalInput) return;
+        
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const price = parseFloat(priceInput.value) || 0;
+        const total = quantity * price;
+        
+        totalInput.value = total.toFixed(2);
+        updateTotalAmount();
+    }
+    
+    function updateTotalAmount() {
+        let total = 0;
+        document.querySelectorAll('input[name$="-total_price"]').forEach(input => {
+            total += parseFloat(input.value) || 0;
+        });
+        
+        document.getElementById('id_total_amount').value = total.toFixed(2);
+    }
+    
+    function validateForm() {
+        let isValid = true;
+        const errors = [];
+        
+        // Check if at least one product is selected
+        const productRows = document.querySelectorAll('.product-row');
+        let hasValidProduct = false;
+        
+        productRows.forEach((row, index) => {
+            const category = row.querySelector('.category-select').value;
+            const brand = row.querySelector('.brand-select').value;
+            const product = row.querySelector('select[name$="-product"]').value;
+            const quantity = row.querySelector('input[name$="-quantity"]').value;
+            const price = row.querySelector('input[name$="-unit_price"]').value;
             
-            function calculateRowTotal(row) {
-                const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
-                const price = parseFloat(row.querySelector('.price-input').value) || 0;
-                const total = quantity * price;
+            if (product && quantity && price) {
+                const qty = parseFloat(quantity);
+                const prc = parseFloat(price);
                 
-                row.querySelector('.total-input').value = total.toFixed(2);
-                updateTotalAmount();
-            }
-            
-            function updateTotalAmount() {
-                let total = 0;
-                document.querySelectorAll('.total-input').forEach(input => {
-                    total += parseFloat(input.value) || 0;
-                });
-                
-                document.getElementById('id_total_amount').value = total.toFixed(2);
-            }
-            
-            function validateForm() {
-                let isValid = true;
-                const errors = [];
-                
-                // Check if at least one product is selected
-                const productRows = document.querySelectorAll('.product-row');
-                let hasValidProduct = false;
-                
-                productRows.forEach((row, index) => {
-                    const product = row.querySelector('.product-select').value;
-                    const warehouse = row.querySelector('.warehouse-select').value;
-                    const quantity = row.querySelector('.quantity-input').value;
-                    const price = row.querySelector('.price-input').value;
-                    
-                    if (product && warehouse && quantity && price) {
-                        const qty = parseFloat(quantity);
-                        const prc = parseFloat(price);
-                        
-                        if (qty > 0 && prc > 0) {
-                            hasValidProduct = true;
-                        } else {
-                            errors.push(`Product ${index + 1}: Quantity and price must be greater than 0`);
-                            isValid = false;
-                        }
-                    } else if (product || warehouse || quantity || price) {
-                        errors.push(`Product ${index + 1}: Please fill all fields (product, warehouse, quantity, price)`);
-                        isValid = false;
-                    }
-                });
-                
-                if (!hasValidProduct) {
-                    errors.push('Please add at least one product to the order');
+                if (qty > 0 && prc > 0) {
+                    hasValidProduct = true;
+                } else {
+                    errors.push(`Product ${index + 1}: Quantity and price must be greater than 0`);
                     isValid = false;
                 }
-                
-                // Update submit button
-                const submitBtn = document.getElementById('submit-btn');
-                if (isValid) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="bi bi-check-circle"></i> Create Order';
-                } else {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Fix Errors First';
-                }
-                
-                return isValid;
+            } else if (category || brand || product || quantity || price) {
+                errors.push(`Product ${index + 1}: Please fill all required fields`);
+                isValid = false;
             }
-            
-            function showValidationErrors() {
-                // This will be handled by Django's form validation
-                console.log('Form validation failed');
-            }
-            
-            function validateField(field) {
-                const isValid = field.value.trim() !== '';
-                
-                if (isValid) {
-                    field.classList.remove('is-invalid');
-                    field.classList.add('is-valid');
-                } else {
-                    field.classList.remove('is-valid');
-                    field.classList.add('is-invalid');
-                }
-                
-                return isValid;
-            }
-
-            // Initialize existing products if editing
-            if (document.querySelectorAll('.product-row').length > 0) {
-                document.querySelectorAll('.product-row').forEach(row => {
-                    calculateRowTotal(row);
-                });
-                updateTotalAmount();
-            }
-            
-            // Initial validation
-            validateForm();
         });
+        
+        if (!hasValidProduct) {
+            errors.push('Please add at least one product to the order');
+            isValid = false;
+        }
+        
+        // Update submit button
+        const submitBtn = document.getElementById('submit-btn');
+        if (isValid) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bi bi-check-circle"></i> {% if object %}Update{% else %}Create{% endif %} Order';
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Fix Errors First';
+        }
+        
+        return isValid;
+    }
+    
+    function showValidationErrors() {
+        // This will be handled by Django's form validation
+        console.log('Form validation failed');
+    }
+});
 </script>
 {% endblock %}

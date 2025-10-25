@@ -44,28 +44,28 @@
 
             <!-- Customers -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#customersSubmenu" aria-expanded="false">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'customers' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#customersSubmenu" aria-expanded="false">
                     <i class="bi bi-people"></i> Customers
                 </a>
                 <div class="collapse" id="customersSubmenu">
                     <ul class="nav flex-column ms-3">
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'customer_list' %}active{% endif %}" href="{% url 'customers:customer_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'customers' and request.resolver_match.url_name == 'customer_list' %}active{% endif %}" href="{% url 'customers:customer_list' %}">
                                 <i class="bi bi-list-ul"></i> All Customers
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'customer_create' %}active{% endif %}" href="{% url 'customers:customer_create' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'customers' and request.resolver_match.url_name == 'customer_create' %}active{% endif %}" href="{% url 'customers:customer_create' %}">
                                 <i class="bi bi-person-plus"></i> Add Customer
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'ledger_list' %}active{% endif %}" href="{% url 'customers:ledger_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'customers' and request.resolver_match.url_name == 'ledger_list' %}active{% endif %}" href="{% url 'customers:ledger_list' %}">
                                 <i class="bi bi-journal-text"></i> Customer Ledgers
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'commitment_list' %}active{% endif %}" href="{% url 'customers:commitment_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'customers' and request.resolver_match.url_name == 'commitment_list' %}active{% endif %}" href="{% url 'customers:commitment_list' %}">
                                 <i class="bi bi-calendar-check"></i> Commitments
                             </a>
                         </li>
@@ -75,23 +75,23 @@
 
             <!-- Suppliers -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#suppliersSubmenu" aria-expanded="false">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'suppliers' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#suppliersSubmenu" aria-expanded="false">
                     <i class="bi bi-truck"></i> Suppliers
                 </a>
                 <div class="collapse" id="suppliersSubmenu">
                     <ul class="nav flex-column ms-3">
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'supplier_list' %}active{% endif %}" href="{% url 'suppliers:supplier_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'suppliers' and request.resolver_match.url_name == 'supplier_list' %}active{% endif %}" href="{% url 'suppliers:supplier_list' %}">
                                 <i class="bi bi-list-ul"></i> All Suppliers
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'supplier_create' %}active{% endif %}" href="{% url 'suppliers:supplier_create' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'suppliers' and request.resolver_match.url_name == 'supplier_create' %}active{% endif %}" href="{% url 'suppliers:supplier_create' %}">
                                 <i class="bi bi-person-plus"></i> Add Supplier
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'ledger_list' %}active{% endif %}" href="{% url 'suppliers:ledger_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'suppliers' and request.resolver_match.url_name == 'ledger_list' %}active{% endif %}" href="{% url 'suppliers:ledger_list' %}">
                                 <i class="bi bi-journal-text"></i> Supplier Ledgers
                             </a>
                         </li>
@@ -101,45 +101,45 @@
 
             <!-- Inventory -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#inventorySubmenu" aria-expanded="false">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'stock' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#inventorySubmenu" aria-expanded="false">
                     <i class="bi bi-box-seam"></i> Inventory
                 </a>
                 <div class="collapse" id="inventorySubmenu">
                     <ul class="nav flex-column ms-3">
                         <!-- Products Section -->
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}" href="{% url 'stock:product_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'product_list' %}active{% endif %}" href="{% url 'stock:product_list' %}">
                                 <i class="bi bi-box"></i> Products
                             </a>
                         </li>
                         
                         <!-- Categories Section -->
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}" href="{% url 'stock:category_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'category_list' %}active{% endif %}" href="{% url 'stock:category_list' %}">
                                 <i class="bi bi-tags"></i> Categories
                             </a>
                         </li>
                         
                         <!-- Brands Section -->
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'brand_list' %}active{% endif %}" href="{% url 'stock:brand_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'brand_list' %}active{% endif %}" href="{% url 'stock:brand_list' %}">
                                 <i class="bi bi-award"></i> Brands
                             </a>
                         </li>
                         
                         <!-- Stock Management Section -->
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'stock_list' %}active{% endif %}" href="{% url 'stock:stock_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'stock_list' %}active{% endif %}" href="{% url 'stock:stock_list' %}">
                                 <i class="bi bi-boxes"></i> Stock Levels
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'alert_list' %}active{% endif %}" href="{% url 'stock:alert_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'alert_list' %}active{% endif %}" href="{% url 'stock:alert_list' %}">
                                 <i class="bi bi-exclamation-triangle"></i> Stock Alerts
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'inventory_dashboard' %}active{% endif %}" href="{% url 'stock:inventory_dashboard' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'inventory_dashboard' %}active{% endif %}" href="{% url 'stock:inventory_dashboard' %}">
                                 <i class="bi bi-speedometer2"></i> Inventory Dashboard
                             </a>
                         </li>
@@ -149,33 +149,33 @@
 
             <!-- Sales -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#salesSubmenu" aria-expanded="false">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'sales' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#salesSubmenu" aria-expanded="false">
                     <i class="bi bi-cart-check"></i> Sales
                 </a>
                 <div class="collapse" id="salesSubmenu">
                     <ul class="nav flex-column ms-3">
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'order_list' %}active{% endif %}" href="{% url 'sales:order_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'order_list' %}active{% endif %}" href="{% url 'sales:order_list' %}">
                                 <i class="bi bi-list-ul"></i> Sales Orders
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'order_create' %}active{% endif %}" href="{% url 'sales:order_create' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'order_create' %}active{% endif %}" href="{% url 'sales:order_create' %}">
                                 <i class="bi bi-plus-circle"></i> New Order
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'invoice_list' %}active{% endif %}" href="{% url 'sales:invoice_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'invoice_list' %}active{% endif %}" href="{% url 'sales:invoice_list' %}">
                                 <i class="bi bi-receipt"></i> Invoices
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'payment_list' %}active{% endif %}" href="{% url 'sales:payment_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'payment_list' %}active{% endif %}" href="{% url 'sales:payment_list' %}">
                                 <i class="bi bi-credit-card"></i> Payments
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'return_list' %}active{% endif %}" href="{% url 'sales:return_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'return_list' %}active{% endif %}" href="{% url 'sales:return_list' %}">
                                 <i class="bi bi-arrow-return-left"></i> Returns
                             </a>
                         </li>
@@ -185,23 +185,23 @@
 
             <!-- Purchases -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#purchasesSubmenu" aria-expanded="false">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'purchases' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#purchasesSubmenu" aria-expanded="false">
                     <i class="bi bi-cart-plus"></i> Purchases
                 </a>
                 <div class="collapse" id="purchasesSubmenu">
                     <ul class="nav flex-column ms-3">
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'order_list' %}active{% endif %}" href="{% url 'purchases:order_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'purchases' and request.resolver_match.url_name == 'order_list' %}active{% endif %}" href="{% url 'purchases:order_list' %}">
                                 <i class="bi bi-list-ul"></i> Purchase Orders
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'order_create' %}active{% endif %}" href="{% url 'purchases:order_create' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'purchases' and request.resolver_match.url_name == 'order_create' %}active{% endif %}" href="{% url 'purchases:order_create' %}">
                                 <i class="bi bi-plus-circle"></i> New Order
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'receipt_list' %}active{% endif %}" href="{% url 'purchases:receipt_list' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'purchases' and request.resolver_match.url_name == 'receipt_list' %}active{% endif %}" href="{% url 'purchases:receipt_list' %}">
                                 <i class="bi bi-box-seam"></i> Goods Receipts
                             </a>
                         </li>

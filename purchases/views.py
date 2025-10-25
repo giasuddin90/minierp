@@ -1,11 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db import transaction
+from django.http import JsonResponse
+from django.utils import timezone
 from .models import PurchaseOrder, PurchaseOrderItem, GoodsReceipt
+from .forms import (
+    PurchaseOrderForm, PurchaseOrderItemFormSet, GoodsReceiptForm, 
+    DirectGoodsReceiptForm, GoodsReceiptItemForm, PurchaseOrderSearchForm
+)
 from suppliers.models import Supplier
-from stock.models import Product
+from stock.models import Product, ProductCategory, ProductBrand, Stock
 from django.contrib.auth.models import User
 import uuid
 
@@ -23,158 +29,92 @@ class PurchaseOrderDetailView(DetailView):
 
 class PurchaseOrderCreateView(CreateView):
     model = PurchaseOrder
+    form_class = PurchaseOrderForm
     template_name = 'purchases/order_form.html'
-    fields = ['supplier', 'order_date', 'expected_date', 'status', 'notes', 'total_amount']
     success_url = reverse_lazy('purchases:order_list')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['suppliers'] = Supplier.objects.all()
-        context['products'] = Product.objects.filter(is_active=True)
+        if self.request.POST:
+            context['formset'] = PurchaseOrderItemFormSet(self.request.POST)
+        else:
+            context['formset'] = PurchaseOrderItemFormSet()
+        
+        context['categories'] = ProductCategory.objects.filter(is_active=True)
+        context['brands'] = ProductBrand.objects.filter(is_active=True)
+        context['products'] = Product.objects.filter(is_active=True).select_related('category', 'brand')
         return context
     
     def form_valid(self, form):
-        try:
+        context = self.get_context_data()
+        formset = context['formset']
+        
+        if formset.is_valid():
             with transaction.atomic():
                 # Generate unique order number
                 order_number = f"PO-{uuid.uuid4().hex[:8].upper()}"
                 form.instance.order_number = order_number
                 form.instance.created_by = self.request.user
-                
-                # Ensure status is valid (default to draft if invalid)
-                if form.instance.status not in ['draft', 'sent', 'received', 'cancelled']:
-                    form.instance.status = 'draft'
+                form.instance.status = 'purchase-order'
                 
                 # Save the order first
                 response = super().form_valid(form)
                 
-                # Handle products - simplified approach
-                products = self.request.POST.getlist('products[]')
-                quantities = self.request.POST.getlist('quantities[]')
-                prices = self.request.POST.getlist('prices[]')
+                # Save formset
+                formset.instance = self.object
+                formset.save()
                 
-                total_amount = 0
-                items_created = 0
-                
-                # Simple validation - just check if we have products
-                if products and products[0] and products[0].strip():
-                    for i, product_id in enumerate(products):
-                        if not product_id or not product_id.strip():
-                            continue
-                            
-                        # Get corresponding data
-                        quantity_str = quantities[i] if i < len(quantities) else ''
-                        price_str = prices[i] if i < len(prices) else ''
-                        
-                        # Skip if any required data is missing
-                        if not quantity_str or not price_str:
-                            continue
-                            
-                        try:
-                            # Get objects
-                            product = Product.objects.get(id=product_id)
-                            
-                            # Convert to numbers
-                            quantity = float(quantity_str)
-                            unit_price = float(price_str)
-                            
-                            # Skip if invalid numbers
-                            if quantity <= 0 or unit_price <= 0:
-                                continue
-                            
-                            # Create item
-                            item_total = quantity * unit_price
-                            PurchaseOrderItem.objects.create(
-                                purchase_order=self.object,
-                                product=product,
-                                quantity=quantity,
-                                unit_price=unit_price,
-                                total_price=item_total
-                            )
-                            total_amount += item_total
-                            items_created += 1
-                            
-                        except (Product.DoesNotExist, ValueError, IndexError):
-                            # Silently skip invalid items
-                            continue
-                
-                # Update total amount
+                # Calculate total amount
+                total_amount = sum(item.total_price for item in self.object.items.all())
                 self.object.total_amount = total_amount
                 self.object.save()
                 
-                # Order created successfully - no message needed
-                
+                messages.success(self.request, f'✅ Purchase Order {self.object.order_number} created successfully!')
                 return response
-                
-        except Exception as e:
-            # Simple error message
-            messages.error(self.request, f"❌ Failed to create order. Please try again.")
+        else:
+            messages.error(self.request, '❌ Please correct the errors below.')
             return self.form_invalid(form)
 
 
 class PurchaseOrderUpdateView(UpdateView):
     model = PurchaseOrder
+    form_class = PurchaseOrderForm
     template_name = 'purchases/order_form.html'
-    fields = ['supplier', 'order_date', 'expected_date', 'status', 'notes', 'total_amount']
     success_url = reverse_lazy('purchases:order_list')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['suppliers'] = Supplier.objects.all()
-        context['products'] = Product.objects.filter(is_active=True)
+        if self.request.POST:
+            context['formset'] = PurchaseOrderItemFormSet(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = PurchaseOrderItemFormSet(instance=self.object)
+        
+        context['categories'] = ProductCategory.objects.filter(is_active=True)
+        context['brands'] = ProductBrand.objects.filter(is_active=True)
+        context['products'] = Product.objects.filter(is_active=True).select_related('category', 'brand')
         return context
     
     def form_valid(self, form):
-        try:
+        context = self.get_context_data()
+        formset = context['formset']
+        
+        if formset.is_valid():
             with transaction.atomic():
                 # Save the order first
                 response = super().form_valid(form)
                 
-                # Handle multiple products
-                products = self.request.POST.getlist('products[]')
-                quantities = self.request.POST.getlist('quantities[]')
-                prices = self.request.POST.getlist('prices[]')
+                # Save formset
+                formset.save()
                 
-                # Clear existing items
-                self.object.items.all().delete()
-                
-                total_amount = 0
-                items_created = 0
-                
-                if products and products[0]:  # Check if at least one product is selected
-                    for i, product_id in enumerate(products):
-                        if product_id and i < len(quantities) and i < len(prices):
-                            try:
-                                product = Product.objects.get(id=product_id)
-                                quantity = float(quantities[i]) if quantities[i] else 0
-                                unit_price = float(prices[i]) if prices[i] else 0
-                                
-                                if quantity > 0 and unit_price > 0:
-                                    # Create order item
-                                    item_total = quantity * unit_price
-                                    PurchaseOrderItem.objects.create(
-                                        purchase_order=self.object,
-                                        product=product,
-                                        quantity=quantity,
-                                        unit_price=unit_price,
-                                        total_price=item_total
-                                    )
-                                    total_amount += item_total
-                                    items_created += 1
-                            except (Product.DoesNotExist, ValueError, IndexError) as e:
-                                messages.error(self.request, f"Invalid data for product {i+1}: {str(e)}")
-                                continue
-                
-                # Update total amount
+                # Calculate total amount
+                total_amount = sum(item.total_price for item in self.object.items.all())
                 self.object.total_amount = total_amount
                 self.object.save()
                 
-                # Order updated successfully - no message needed
-                
+                messages.success(self.request, f'✅ Purchase Order {self.object.order_number} updated successfully!')
                 return response
-                
-        except Exception as e:
-            messages.error(self.request, f"Error updating purchase order: {str(e)}")
+        else:
+            messages.error(self.request, '❌ Please correct the errors below.')
             return self.form_invalid(form)
 
 
@@ -197,9 +137,88 @@ class GoodsReceiptDetailView(DetailView):
 
 class GoodsReceiptCreateView(CreateView):
     model = GoodsReceipt
+    form_class = GoodsReceiptForm
     template_name = 'purchases/receipt_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('purchases:receipt_list')
+    
+    def form_valid(self, form):
+        with transaction.atomic():
+            # Generate unique receipt number
+            receipt_number = f"GR-{uuid.uuid4().hex[:8].upper()}"
+            form.instance.receipt_number = receipt_number
+            form.instance.created_by = self.request.user
+            
+            # If linked to purchase order, update its status
+            if form.instance.purchase_order:
+                form.instance.purchase_order.receive_goods(user=self.request.user)
+            
+            response = super().form_valid(form)
+            messages.success(self.request, f'✅ Goods Receipt {form.instance.receipt_number} created successfully!')
+            return response
+
+
+class DirectGoodsReceiptCreateView(CreateView):
+    """Create goods receipt directly without purchase order"""
+    model = GoodsReceipt
+    form_class = DirectGoodsReceiptForm
+    template_name = 'purchases/direct_receipt_form.html'
+    success_url = reverse_lazy('purchases:receipt_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.filter(is_active=True)
+        context['brands'] = ProductBrand.objects.filter(is_active=True)
+        context['products'] = Product.objects.filter(is_active=True)
+        return context
+    
+    def form_valid(self, form):
+        with transaction.atomic():
+            # Generate unique receipt number
+            receipt_number = f"GR-{uuid.uuid4().hex[:8].upper()}"
+            form.instance.receipt_number = receipt_number
+            form.instance.created_by = self.request.user
+            
+            # Save the receipt first
+            response = super().form_valid(form)
+            
+            # Handle direct items
+            products = self.request.POST.getlist('products[]')
+            quantities = self.request.POST.getlist('quantities[]')
+            unit_costs = self.request.POST.getlist('unit_costs[]')
+            
+            total_amount = 0
+            
+            if products and products[0]:
+                for i, product_id in enumerate(products):
+                    if product_id and i < len(quantities) and i < len(unit_costs):
+                        try:
+                            product = Product.objects.get(id=product_id)
+                            quantity = float(quantities[i]) if quantities[i] else 0
+                            unit_cost = float(unit_costs[i]) if unit_costs[i] else 0
+                            
+                            if quantity > 0 and unit_cost > 0:
+                                # Update stock directly
+                                Stock.update_stock(
+                                    product=product,
+                                    quantity_change=quantity,
+                                    unit_cost=unit_cost,
+                                    movement_type='inward',
+                                    reference=f"GR-{receipt_number}",
+                                    description=f"Direct goods receipt - {form.cleaned_data['supplier'].name}",
+                                    user=self.request.user
+                                )
+                                
+                                total_amount += quantity * unit_cost
+                                
+                        except (Product.DoesNotExist, ValueError, IndexError):
+                            continue
+            
+            # Update total amount
+            self.object.total_amount = total_amount
+            self.object.save()
+            
+            messages.success(self.request, f'✅ Direct Goods Receipt {form.instance.receipt_number} created successfully!')
+            return response
 
 
 class GoodsReceiptUpdateView(UpdateView):
