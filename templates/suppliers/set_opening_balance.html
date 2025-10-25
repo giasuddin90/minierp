@@ -32,19 +32,19 @@
                     {% csrf_token %}
                     
                     <div class="mb-4">
-                        <label for="amount" class="form-label fw-bold">
-                            <i class="bi bi-currency-dollar me-1"></i>Opening Balance Amount *
+                        <label for="{{ form.amount.id_for_label }}" class="form-label fw-bold">
+                            <i class="bi bi-currency-dollar me-1"></i>{{ form.amount.label }} *
                         </label>
                         <div class="input-group input-group-lg">
                             <span class="input-group-text">৳</span>
-                            <input type="number" name="amount" id="amount" 
-                                   class="form-control" step="0.01" required
-                                   placeholder="Enter opening balance amount">
+                            {{ form.amount }}
                         </div>
-                        <div class="form-text">
-                            <strong>Positive amount:</strong> Supplier owes you money (debit balance)<br>
-                            <strong>Negative amount:</strong> You owe supplier money (credit balance)
-                        </div>
+                        {% if form.amount.help_text %}
+                            <div class="form-text">{{ form.amount.help_text }}</div>
+                        {% endif %}
+                        {% if form.amount.errors %}
+                            <div class="text-danger small">{{ form.amount.errors.0 }}</div>
+                        {% endif %}
                     </div>
                     
                     <div class="alert alert-warning">

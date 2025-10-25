@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib import messages
 from decimal import Decimal
 from .models import Supplier, SupplierLedger
+from .forms import SupplierForm, SupplierLedgerForm, SetOpeningBalanceForm
 from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseReturn
 
 
@@ -43,15 +44,15 @@ class SupplierDetailView(DetailView):
 
 class SupplierCreateView(CreateView):
     model = Supplier
+    form_class = SupplierForm
     template_name = 'suppliers/supplier_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('suppliers:supplier_list')
 
 
 class SupplierUpdateView(UpdateView):
     model = Supplier
+    form_class = SupplierForm
     template_name = 'suppliers/supplier_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('suppliers:supplier_list')
 
 
@@ -69,8 +70,8 @@ class SupplierLedgerListView(ListView):
 
 class SupplierLedgerCreateView(CreateView):
     model = SupplierLedger
+    form_class = SupplierLedgerForm
     template_name = 'suppliers/ledger_form.html'
-    fields = ['transaction_type', 'amount', 'description', 'reference', 'transaction_date', 'payment_method']
     
     def get_success_url(self):
         return reverse_lazy('suppliers:supplier_ledger_detail', kwargs={'pk': self.kwargs['supplier_id']})
@@ -233,12 +234,16 @@ def set_opening_balance(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     
     if request.method == 'POST':
-        try:
-            amount = Decimal(request.POST.get('amount', 0))
+        form = SetOpeningBalanceForm(request.POST)
+        if form.is_valid():
+            amount = form.cleaned_data['amount']
             supplier.set_opening_balance(amount, user=request.user)
             messages.success(request, f'Opening balance set to ৳{amount} for {supplier.name}')
             return redirect('suppliers:supplier_ledger_detail', pk=supplier.pk)
-        except (ValueError, TypeError):
-            messages.error(request, 'Invalid amount entered')
+    else:
+        form = SetOpeningBalanceForm()
     
-    return render(request, 'suppliers/set_opening_balance.html', {'supplier': supplier})
+    return render(request, 'suppliers/set_opening_balance.html', {
+        'supplier': supplier,
+        'form': form
+    })
