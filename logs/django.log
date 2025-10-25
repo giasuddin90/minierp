@@ -11447,3 +11447,17 @@ Watching for file changes with StatReloader
 "GET /customers/ HTTP/1.1" 200 23413
 "GET /customers/ HTTP/1.1" 200 23413
 "GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/ledger/ HTTP/1.1" 200 19575
+"GET /customers/commitment/ HTTP/1.1" 200 16693
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /suppliers/ HTTP/1.1" 200 29588
