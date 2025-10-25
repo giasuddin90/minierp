@@ -7,7 +7,7 @@ from customers.models import Customer
 from suppliers.models import Supplier
 from stock.models import Product, Stock, StockAlert
 from sales.models import SalesOrder, SalesInvoice
-from purchases.models import PurchaseOrder, PurchaseInvoice
+from purchases.models import PurchaseOrder
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

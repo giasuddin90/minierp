@@ -25,25 +25,7 @@ urlpatterns = [
     path('receipts/<int:pk>/edit/', views.GoodsReceiptUpdateView.as_view(), name='receipt_edit'),
     path('receipts/<int:pk>/delete/', views.GoodsReceiptDeleteView.as_view(), name='receipt_delete'),
     
-    # Purchase Invoices
-    path('invoices/', views.PurchaseInvoiceListView.as_view(), name='invoice_list'),
-    path('invoices/create/', views.PurchaseInvoiceCreateView.as_view(), name='invoice_create'),
-    path('invoices/<int:pk>/', views.PurchaseInvoiceDetailView.as_view(), name='invoice_detail'),
-    path('invoices/<int:pk>/edit/', views.PurchaseInvoiceUpdateView.as_view(), name='invoice_edit'),
-    path('invoices/<int:pk>/delete/', views.PurchaseInvoiceDeleteView.as_view(), name='invoice_delete'),
-    
-    # Purchase Returns
-    path('returns/', views.PurchaseReturnListView.as_view(), name='return_list'),
-    path('returns/create/', views.PurchaseReturnCreateView.as_view(), name='return_create'),
-    path('returns/<int:pk>/', views.PurchaseReturnDetailView.as_view(), name='return_detail'),
-    path('returns/<int:pk>/edit/', views.PurchaseReturnUpdateView.as_view(), name='return_edit'),
-    path('returns/<int:pk>/delete/', views.PurchaseReturnDeleteView.as_view(), name='return_delete'),
-    
-    # Purchase Payments
-    path('payments/', views.PurchasePaymentListView.as_view(), name='payment_list'),
-    path('payments/create/', views.PurchasePaymentCreateView.as_view(), name='payment_create'),
-    path('payments/<int:pk>/edit/', views.PurchasePaymentUpdateView.as_view(), name='payment_edit'),
-    path('payments/<int:pk>/delete/', views.PurchasePaymentDeleteView.as_view(), name='payment_delete'),
+    # Removed unnecessary URLs for simplified purchase flow
     
     # Reports
     path('reports/daily/', views.PurchaseDailyReportView.as_view(), name='purchase_daily_report'),

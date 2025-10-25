@@ -3,10 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db import transaction
-from .models import (
-    PurchaseOrder, PurchaseOrderItem, GoodsReceipt, GoodsReceiptItem,
-    PurchaseInvoice, PurchaseInvoiceItem, PurchaseReturn, PurchaseReturnItem, PurchasePayment
-)
+from .models import PurchaseOrder, PurchaseOrderItem, GoodsReceipt
 from suppliers.models import Supplier
 from stock.models import Product
 from django.contrib.auth.models import User
@@ -218,106 +215,7 @@ class GoodsReceiptDeleteView(DeleteView):
     success_url = reverse_lazy('purchases:receipt_list')
 
 
-class PurchaseInvoiceListView(ListView):
-    model = PurchaseInvoice
-    template_name = 'purchases/invoice_list.html'
-    context_object_name = 'invoices'
-
-
-class PurchaseInvoiceDetailView(DetailView):
-    model = PurchaseInvoice
-    template_name = 'purchases/invoice_detail.html'
-
-
-class PurchaseInvoiceCreateView(CreateView):
-    model = PurchaseInvoice
-    template_name = 'purchases/invoice_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('purchases:invoice_list')
-
-
-class PurchaseInvoiceUpdateView(UpdateView):
-    model = PurchaseInvoice
-    template_name = 'purchases/invoice_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('purchases:invoice_list')
-
-
-class PurchaseInvoiceDeleteView(DeleteView):
-    model = PurchaseInvoice
-    template_name = 'purchases/invoice_confirm_delete.html'
-    success_url = reverse_lazy('purchases:invoice_list')
-
-
-class PurchaseReturnListView(ListView):
-    model = PurchaseReturn
-    template_name = 'purchases/return_list.html'
-    context_object_name = 'returns'
-
-
-class PurchaseReturnDetailView(DetailView):
-    model = PurchaseReturn
-    template_name = 'purchases/return_detail.html'
-
-
-class PurchaseReturnCreateView(CreateView):
-    model = PurchaseReturn
-    template_name = 'purchases/return_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('purchases:return_list')
-
-
-class PurchaseReturnUpdateView(UpdateView):
-    model = PurchaseReturn
-    template_name = 'purchases/return_form.html'
-    fields = '__all__'
-    success_url = reverse_lazy('purchases:return_list')
-
-
-class PurchaseReturnDeleteView(DeleteView):
-    model = PurchaseReturn
-    template_name = 'purchases/return_confirm_delete.html'
-    success_url = reverse_lazy('purchases:return_list')
-
-
-class PurchasePaymentListView(ListView):
-    model = PurchasePayment
-    template_name = 'purchases/payment_list.html'
-    context_object_name = 'payments'
-
-
-class PurchasePaymentCreateView(CreateView):
-    model = PurchasePayment
-    template_name = 'purchases/payment_form.html'
-    fields = ['purchase_invoice', 'payment_date', 'payment_method', 'amount', 'reference', 'notes']
-    success_url = reverse_lazy('purchases:payment_list')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['invoices'] = PurchaseInvoice.objects.filter(is_paid=False)
-        return context
-    
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
-
-
-class PurchasePaymentUpdateView(UpdateView):
-    model = PurchasePayment
-    template_name = 'purchases/payment_form.html'
-    fields = ['purchase_invoice', 'payment_date', 'payment_method', 'amount', 'reference', 'notes']
-    success_url = reverse_lazy('purchases:payment_list')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['invoices'] = PurchaseInvoice.objects.all()
-        return context
-
-
-class PurchasePaymentDeleteView(DeleteView):
-    model = PurchasePayment
-    template_name = 'purchases/payment_confirm_delete.html'
-    success_url = reverse_lazy('purchases:payment_list')
+# Removed unnecessary models and views for simplified purchase flow
 
 
 class PurchaseDailyReportView(ListView):

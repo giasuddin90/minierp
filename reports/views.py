@@ -12,7 +12,7 @@ import json
 
 from .models import ReportTemplate, ReportSchedule, ReportLog
 from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesInvoiceItem
-from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseInvoiceItem
+from purchases.models import PurchaseOrder
 from stock.models import Product, Stock
 from customers.models import Customer, CustomerLedger
 from suppliers.models import Supplier, SupplierLedger
@@ -132,10 +132,8 @@ class FinancialReportView(ListView):
             payment_date__range=[start_date, end_date]
         ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
         
-        # Supplier payments
-        supplier_payments = PurchasePayment.objects.filter(
-            payment_date__range=[start_date, end_date]
-        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        # No supplier payments in simplified model
+        supplier_payments = Decimal('0')
         
         net_cash_flow = customer_payments - supplier_payments
         
@@ -260,8 +258,8 @@ class SalesReportView(ListView):
 
 
 class PurchaseReportView(ListView):
-    """Purchase reports including orders, invoices, and payments"""
-    model = PurchaseInvoice
+    """Purchase reports including orders and receipts"""
+    model = PurchaseOrder
     template_name = 'reports/purchase_report.html'
     context_object_name = 'purchase_data'
     
@@ -277,34 +275,39 @@ class PurchaseReportView(ListView):
             order_date__range=[start_date, end_date]
         )
         
-        purchase_invoices = PurchaseInvoice.objects.filter(
-            invoice_date__range=[start_date, end_date]
-        )
-        
-        purchase_payments = PurchasePayment.objects.filter(
-            payment_date__range=[start_date, end_date]
-        )
-        
         # Calculate metrics
         total_orders = purchase_orders.count()
-        total_invoices = purchase_invoices.count()
-        total_purchases = purchase_invoices.aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
-        total_payments = purchase_payments.aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        total_purchases = purchase_orders.aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+        
+        # Get orders by status
+        orders_by_status = purchase_orders.values('status').annotate(
+            count=Count('id')
+        ).order_by('status')
         
         # Get top suppliers
-        top_suppliers = purchase_invoices.values('supplier__name').annotate(
+        top_suppliers = purchase_orders.values('supplier__name').annotate(
             total_purchases=Sum('total_amount'),
             order_count=Count('id')
         ).order_by('-total_purchases')[:10]
         
         # Get purchases by product
         try:
-            purchases_by_product = PurchaseInvoiceItem.objects.filter(
-                purchase_invoice__invoice_date__range=[start_date, end_date]
-            ).values('product__name').annotate(
-                total_quantity=Sum('quantity'),
-                total_value=Sum('total_cost')
-            ).order_by('-total_value')[:10]
+            purchases_by_product = []
+            for order in purchase_orders:
+                for item in order.items.all():
+                    product_name = item.product.name
+                    existing = next((p for p in purchases_by_product if p['product'] == product_name), None)
+                    if existing:
+                        existing['total_quantity'] += float(item.quantity)
+                        existing['total_value'] += float(item.total_price)
+                    else:
+                        purchases_by_product.append({
+                            'product': product_name,
+                            'total_quantity': float(item.quantity),
+                            'total_value': float(item.total_price),
+                        })
+            purchases_by_product.sort(key=lambda x: x['total_value'], reverse=True)
+            purchases_by_product = purchases_by_product[:10]
         except:
             purchases_by_product = []
         
@@ -312,9 +315,8 @@ class PurchaseReportView(ListView):
             'start_date': start_date,
             'end_date': end_date,
             'total_orders': total_orders,
-            'total_invoices': total_invoices,
             'total_purchases': total_purchases,
-            'total_payments': total_payments,
+            'orders_by_status': orders_by_status,
             'top_suppliers': top_suppliers,
             'purchases_by_product': purchases_by_product,
         })
@@ -394,30 +396,24 @@ class SupplierReportView(ListView):
         # Calculate supplier balances
         supplier_balances = []
         for supplier in suppliers:
-            total_purchases = PurchaseInvoice.objects.filter(supplier=supplier).aggregate(
+            total_purchases = PurchaseOrder.objects.filter(supplier=supplier).aggregate(
                 total=Sum('total_amount')
             )['total'] or Decimal('0')
-            
-            total_payments = PurchasePayment.objects.filter(
-                purchase_invoice__supplier=supplier
-            ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
-            
-            balance = total_purchases - total_payments
             
             supplier_balances.append({
                 'supplier': supplier,
                 'total_purchases': total_purchases,
-                'total_payments': total_payments,
-                'balance': balance,
+                'total_payments': Decimal('0'),
+                'balance': total_purchases,
             })
         
         # Sort by balance (highest first)
         supplier_balances.sort(key=lambda x: x['balance'], reverse=True)
         
         # Get top suppliers by purchases
-        top_suppliers = PurchaseInvoice.objects.values('supplier__name').annotate(
+        top_suppliers = PurchaseOrder.objects.values('supplier__name').annotate(
             total_purchases=Sum('total_amount'),
-            invoice_count=Count('id')
+            order_count=Count('id')
         ).order_by('-total_purchases')[:10]
         
         context.update({
@@ -584,8 +580,8 @@ def get_purchase_report_data(request):
     start_date = request.GET.get('start_date', (timezone.now() - timedelta(days=30)).date())
     end_date = request.GET.get('end_date', timezone.now().date())
     
-    total_purchases = PurchaseInvoice.objects.filter(
-        invoice_date__range=[start_date, end_date]
+    total_purchases = PurchaseOrder.objects.filter(
+        order_date__range=[start_date, end_date]
     ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
     
     total_orders = PurchaseOrder.objects.filter(
@@ -637,19 +633,15 @@ def get_supplier_report_data(request):
     
     supplier_data = []
     for supplier in suppliers:
-        total_purchases = PurchaseInvoice.objects.filter(supplier=supplier).aggregate(
+        total_purchases = PurchaseOrder.objects.filter(supplier=supplier).aggregate(
             total=Sum('total_amount')
         )['total'] or Decimal('0')
-        
-        total_payments = PurchasePayment.objects.filter(
-            purchase_invoice__supplier=supplier
-        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
         
         supplier_data.append({
             'name': supplier.name,
             'total_purchases': float(total_purchases),
-            'total_payments': float(total_payments),
-            'balance': float(total_purchases - total_payments),
+            'total_payments': 0.0,
+            'balance': float(total_purchases),
         })
     
     return {

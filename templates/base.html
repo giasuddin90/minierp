@@ -205,21 +205,9 @@
                                 <i class="bi bi-box-seam"></i> Goods Receipts
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'invoice_list' %}active{% endif %}" href="{% url 'purchases:invoice_list' %}">
-                                <i class="bi bi-receipt"></i> Purchase Invoices
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'payment_list' %}active{% endif %}" href="{% url 'purchases:payment_list' %}">
-                                <i class="bi bi-credit-card"></i> Payments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'return_list' %}active{% endif %}" href="{% url 'purchases:return_list' %}">
-                                <i class="bi bi-arrow-return-left"></i> Returns
-                            </a>
-                        </li>
+                        <!-- Purchase Invoices removed - simplified to Purchase Orders only -->
+                        <!-- Purchase Payments removed - simplified flow -->
+                        <!-- Purchase Returns removed - simplified flow -->
                     </ul>
                 </div>
             </li>

@@ -7,7 +7,7 @@ from django.contrib import messages
 from decimal import Decimal
 from .models import Supplier, SupplierLedger
 from .forms import SupplierForm, SupplierLedgerForm, SetOpeningBalanceForm
-from purchases.models import PurchaseOrder, PurchaseInvoice, PurchasePayment, PurchaseReturn
+from purchases.models import PurchaseOrder
 
 
 class SupplierListView(ListView):
@@ -115,47 +115,7 @@ class SupplierLedgerDetailView(DetailView):
                 'created_at': po.created_at,
             })
         
-        # Purchase Invoices
-        purchase_invoices = PurchaseInvoice.objects.filter(supplier=supplier).order_by('-invoice_date')
-        for inv in purchase_invoices:
-            transactions.append({
-                'date': inv.invoice_date,
-                'type': 'Purchase Invoice',
-                'reference': f"PINV-{inv.invoice_number}",
-                'description': f"Purchase Invoice - {inv.supplier.name}",
-                'debit': inv.total_amount,
-                'credit': Decimal('0.00'),
-                'status': 'invoiced',
-                'created_at': inv.created_at,
-            })
-        
-        # Purchase Payments
-        purchase_payments = PurchasePayment.objects.filter(purchase_invoice__supplier=supplier).order_by('-payment_date')
-        for payment in purchase_payments:
-            transactions.append({
-                'date': payment.payment_date,
-                'type': 'Payment',
-                'reference': payment.reference or f"PAY-{payment.id}",
-                'description': f"Payment - {payment.purchase_invoice.invoice_number}",
-                'debit': Decimal('0.00'),
-                'credit': payment.amount,
-                'status': 'paid',
-                'created_at': payment.created_at,
-            })
-        
-        # Purchase Returns
-        purchase_returns = PurchaseReturn.objects.filter(purchase_invoice__supplier=supplier).order_by('-return_date')
-        for ret in purchase_returns:
-            transactions.append({
-                'date': ret.return_date,
-                'type': 'Return',
-                'reference': f"PRET-{ret.return_number}",
-                'description': f"Purchase Return - {ret.purchase_invoice.supplier.name}",
-                'debit': Decimal('0.00'),
-                'credit': ret.total_amount,
-                'status': ret.status,
-                'created_at': ret.created_at,
-            })
+        # No purchase invoices, payments, or returns in simplified model
         
         # Manual Ledger Entries
         ledger_entries = SupplierLedger.objects.filter(supplier=supplier).order_by('-transaction_date')
