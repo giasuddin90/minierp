@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.db.models import Q, Sum
 from decimal import Decimal
 from .models import Customer, CustomerLedger, CustomerCommitment
+from .forms import CustomerForm, CustomerLedgerForm, CustomerCommitmentForm, SetOpeningBalanceForm
 from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesReturn
 
 
@@ -36,15 +37,15 @@ class CustomerDetailView(DetailView):
 
 class CustomerCreateView(CreateView):
     model = Customer
+    form_class = CustomerForm
     template_name = 'customers/customer_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('customers:customer_list')
 
 
 class CustomerUpdateView(UpdateView):
     model = Customer
+    form_class = CustomerForm
     template_name = 'customers/customer_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('customers:customer_list')
 
 
@@ -58,6 +59,7 @@ class CustomerLedgerListView(ListView):
     model = CustomerLedger
     template_name = 'customers/ledger_list.html'
     context_object_name = 'items'
+    paginate_by = 20
 
 
 class CustomerLedgerDetailView(DetailView):
@@ -191,21 +193,59 @@ class CustomerLedgerDetailView(DetailView):
 
 class CustomerLedgerCreateView(CreateView):
     model = CustomerLedger
+    form_class = CustomerLedgerForm
     template_name = 'customers/ledger_form.html'
-    fields = ['transaction_type', 'amount', 'description', 'reference', 'transaction_date', 'payment_method']
     
     def get_success_url(self):
-        return reverse_lazy('customers:customer_ledger_detail', kwargs={'pk': self.kwargs['customer_id']})
+        return reverse_lazy('customers:customer_ledger_detail', kwargs={'pk': self.kwargs['pk']})
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['customer_id'] = self.kwargs['customer_id']
+        context['customer_id'] = self.kwargs['pk']
         return context
     
     def form_valid(self, form):
-        form.instance.customer_id = self.kwargs['customer_id']
+        form.instance.customer_id = self.kwargs['pk']
         form.instance.created_by = self.request.user
-        return super().form_valid(form)
+        
+        # Save the ledger entry first
+        response = super().form_valid(form)
+        
+        # Update customer balance
+        customer = form.instance.customer
+        self.update_customer_balance(customer)
+        
+        # Add success message
+        messages.success(
+            self.request, 
+            f'Ledger entry created successfully for {customer.name}. '
+            f'New balance: ৳{customer.current_balance}'
+        )
+        
+        return response
+    
+    def update_customer_balance(self, customer):
+        """Update customer current balance based on all ledger entries"""
+        from decimal import Decimal
+        
+        # Get all ledger entries for this customer
+        ledger_entries = CustomerLedger.objects.filter(customer=customer)
+        
+        total_balance = Decimal('0.00')
+        for entry in ledger_entries:
+            if entry.transaction_type in ['sale', 'opening_balance']:
+                # These increase the balance (debit)
+                total_balance += entry.amount
+            elif entry.transaction_type in ['payment', 'return']:
+                # These decrease the balance (credit)
+                total_balance -= entry.amount
+            elif entry.transaction_type == 'adjustment':
+                # Adjustments can be positive or negative
+                total_balance += entry.amount
+        
+        # Update customer balance
+        customer.current_balance = total_balance
+        customer.save()
 
 
 
@@ -218,8 +258,8 @@ class CustomerCommitmentListView(ListView):
 
 class CustomerCommitmentCreateView(CreateView):
     model = CustomerCommitment
+    form_class = CustomerCommitmentForm
     template_name = 'customers/commitment_form.html'
-    fields = ['customer', 'commitment_date', 'amount', 'description', 'is_reminded', 'is_fulfilled']
     success_url = reverse_lazy('customers:commitment_list')
     
     def get_context_data(self, **kwargs):
@@ -230,8 +270,8 @@ class CustomerCommitmentCreateView(CreateView):
 
 class CustomerCommitmentUpdateView(UpdateView):
     model = CustomerCommitment
+    form_class = CustomerCommitmentForm
     template_name = 'customers/commitment_form.html'
-    fields = ['customer', 'commitment_date', 'amount', 'description', 'is_reminded', 'is_fulfilled']
     success_url = reverse_lazy('customers:commitment_list')
     
     def get_context_data(self, **kwargs):
@@ -251,12 +291,16 @@ def set_opening_balance(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     
     if request.method == 'POST':
-        try:
-            amount = Decimal(request.POST.get('amount', 0))
+        form = SetOpeningBalanceForm(request.POST)
+        if form.is_valid():
+            amount = form.cleaned_data['amount']
             customer.set_opening_balance(amount, user=request.user)
             messages.success(request, f'Opening balance set to ৳{amount} for {customer.name}')
             return redirect('customers:customer_ledger_detail', pk=customer.pk)
-        except (ValueError, TypeError):
-            messages.error(request, 'Invalid amount entered')
+    else:
+        form = SetOpeningBalanceForm()
     
-    return render(request, 'customers/set_opening_balance.html', {'customer': customer})
+    return render(request, 'customers/set_opening_balance.html', {
+        'customer': customer,
+        'form': form
+    })

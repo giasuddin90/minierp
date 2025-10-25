@@ -30,13 +30,9 @@
                         <div class="col-md-6">
                             <div class="mb-4">
                                 <label for="{{ form.transaction_type.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-tag me-1"></i>Transaction Type *
+                                    <i class="bi bi-tag me-1"></i>{{ form.transaction_type.label }} *
                                 </label>
-                                <select name="{{ form.transaction_type.name }}" id="{{ form.transaction_type.id_for_label }}" class="form-select form-select-lg">
-                                    {% for value, label in form.transaction_type.field.choices %}
-                                        <option value="{{ value }}" {% if form.transaction_type.value == value %}selected{% endif %}>{{ label }}</option>
-                                    {% endfor %}
-                                </select>
+                                {{ form.transaction_type }}
                                 {% if form.transaction_type.errors %}
                                     <div class="invalid-feedback d-block">{{ form.transaction_type.errors.0 }}</div>
                                 {% endif %}
@@ -47,13 +43,11 @@
                         <div class="col-md-6">
                             <div class="mb-4">
                                 <label for="{{ form.amount.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-currency-dollar me-1"></i>Amount *
+                                    <i class="bi bi-currency-dollar me-1"></i>{{ form.amount.label }} *
                                 </label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text">৳</span>
-                                    <input type="number" name="{{ form.amount.name }}" id="{{ form.amount.id_for_label }}" 
-                                           value="{{ form.amount.value|default:'' }}" 
-                                           class="form-control" step="0.01" min="0" required>
+                                    {{ form.amount }}
                                 </div>
                                 {% if form.amount.errors %}
                                     <div class="invalid-feedback d-block">{{ form.amount.errors.0 }}</div>
@@ -68,15 +62,9 @@
                         <div class="col-md-6">
                             <div class="mb-4">
                                 <label for="{{ form.payment_method.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-wallet2 me-1"></i>Payment Method *
+                                    <i class="bi bi-wallet2 me-1"></i>{{ form.payment_method.label }} *
                                 </label>
-                                <select name="{{ form.payment_method.name }}" id="{{ form.payment_method.id_for_label }}" 
-                                        class="form-select form-select-lg">
-                                    <option value="">Select Payment Method</option>
-                                    {% for value, label in form.payment_method.field.choices %}
-                                        <option value="{{ value }}" {% if form.payment_method.value == value %}selected{% endif %}>{{ label }}</option>
-                                    {% endfor %}
-                                </select>
+                                {{ form.payment_method }}
                                 {% if form.payment_method.errors %}
                                     <div class="invalid-feedback d-block">{{ form.payment_method.errors.0 }}</div>
                                 {% endif %}
@@ -90,11 +78,9 @@
                         <div class="col-md-6">
                             <div class="mb-4">
                                 <label for="{{ form.transaction_date.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-calendar3 me-1"></i>Transaction Date *
+                                    <i class="bi bi-calendar3 me-1"></i>{{ form.transaction_date.label }} *
                                 </label>
-                                <input type="date" name="{{ form.transaction_date.name }}" id="{{ form.transaction_date.id_for_label }}" 
-                                       value="{{ form.transaction_date.value|default:'' }}" 
-                                       class="form-control form-control-lg" required>
+                                {{ form.transaction_date }}
                                 {% if form.transaction_date.errors %}
                                     <div class="invalid-feedback d-block">{{ form.transaction_date.errors.0 }}</div>
                                 {% endif %}
@@ -105,11 +91,9 @@
                         <div class="col-md-6">
                             <div class="mb-4">
                                 <label for="{{ form.reference.id_for_label }}" class="form-label fw-bold">
-                                    <i class="bi bi-hash me-1"></i>Reference
+                                    <i class="bi bi-hash me-1"></i>{{ form.reference.label }}
                                 </label>
-                                <input type="text" name="{{ form.reference.name }}" id="{{ form.reference.id_for_label }}" 
-                                       value="{{ form.reference.value|default:'' }}" 
-                                       class="form-control form-control-lg" maxlength="100">
+                                {{ form.reference }}
                                 {% if form.reference.errors %}
                                     <div class="invalid-feedback d-block">{{ form.reference.errors.0 }}</div>
                                 {% endif %}
@@ -120,10 +104,9 @@
                     
                     <div class="mb-4">
                         <label for="{{ form.description.id_for_label }}" class="form-label fw-bold">
-                            <i class="bi bi-chat-text me-1"></i>Description *
+                            <i class="bi bi-chat-text me-1"></i>{{ form.description.label }} *
                         </label>
-                        <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" 
-                                  class="form-control" rows="3" required>{{ form.description.value|default:'' }}</textarea>
+                        {{ form.description }}
                         {% if form.description.errors %}
                             <div class="invalid-feedback d-block">{{ form.description.errors.0 }}</div>
                         {% endif %}
@@ -273,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const transactionTypeField = document.querySelector('select[name="transaction_type"]');
     const paymentMethodSection = document.getElementById('payment-method-section');
     const paymentMethodField = document.querySelector('select[name="payment_method"]');
-    const bankAccountSection = document.getElementById('bank-account-section');
     
     // Set default date to today
     const dateField = document.querySelector('input[type="date"]');
@@ -291,31 +273,14 @@ document.addEventListener('DOMContentLoaded', function() {
             paymentMethodSection.style.display = 'none';
             paymentMethodField.required = false;
             paymentMethodField.value = '';
-            bankAccountSection.style.display = 'none';
-            bankAccountField.required = false;
-            bankAccountField.value = '';
-        }
-    }
-    
-    // Show/hide bank account selection based on payment method
-    function toggleBankAccount() {
-        if (paymentMethodField.value === 'bank_transfer') {
-            bankAccountSection.style.display = 'block';
-            bankAccountField.required = true;
-        } else {
-            bankAccountSection.style.display = 'none';
-            bankAccountField.required = false;
-            bankAccountField.value = '';
         }
     }
     
     // Initial checks
     togglePaymentMethod();
-    toggleBankAccount();
     
     // Listen for changes
     transactionTypeField.addEventListener('change', togglePaymentMethod);
-    paymentMethodField.addEventListener('change', toggleBankAccount);
     
     // Form validation
     const form = document.querySelector('.needs-validation');

@@ -13,7 +13,7 @@ urlpatterns = [
     
     # Customer Ledger
     path('<int:pk>/ledger/', views.CustomerLedgerDetailView.as_view(), name='customer_ledger_detail'),
-    path('<int:customer_id>/ledger/create/', views.CustomerLedgerCreateView.as_view(), name='customer_ledger_create'),
+    path('<int:pk>/ledger/create/', views.CustomerLedgerCreateView.as_view(), name='customer_ledger_create'),
     path('<int:pk>/opening-balance/', views.set_opening_balance, name='customer_opening_balance'),
     
     

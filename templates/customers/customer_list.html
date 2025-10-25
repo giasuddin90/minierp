@@ -132,29 +132,21 @@
                                         <a href="{% url 'customers:customer_detail' customer.pk %}" class="btn btn-outline-primary btn-sm" title="View Details">
                                             <i class="bi bi-eye"></i>
                                         </a>
+                                        <a href="{% url 'customers:customer_edit' customer.pk %}" class="btn btn-outline-warning btn-sm" title="Edit Customer">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
                                         <a href="{% url 'customers:customer_ledger_detail' customer.pk %}" class="btn btn-outline-info btn-sm" title="View Ledger">
                                             <i class="bi bi-journal-text"></i>
                                         </a>
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" title="More Actions">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'customers:customer_edit' customer.pk %}">
-                                                    <i class="bi bi-pencil me-2"></i>Edit
-                                                </a></li>
-                                                <li><a class="dropdown-item" href="{% url 'customers:customer_opening_balance' customer.pk %}">
-                                                    <i class="bi bi-wallet2 me-2"></i>Set Opening Balance
-                                                </a></li>
-                                                <li><a class="dropdown-item" href="{% url 'sales:order_create' %}">
-                                                    <i class="bi bi-cart-plus me-2"></i>New Sales Order
-                                                </a></li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'customers:customer_delete' customer.pk %}">
-                                                    <i class="bi bi-trash me-2"></i>Delete
-                                                </a></li>
-                                            </ul>
-                                        </div>
+                                        <a href="{% url 'customers:customer_opening_balance' customer.pk %}" class="btn btn-outline-success btn-sm" title="Set Opening Balance">
+                                            <i class="bi bi-wallet2"></i>
+                                        </a>
+                                        <a href="{% url 'sales:order_create' %}" class="btn btn-outline-secondary btn-sm" title="New Sales Order">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </a>
+                                        <a href="{% url 'customers:customer_delete' customer.pk %}" class="btn btn-outline-danger btn-sm" title="Delete Customer">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

@@ -11281,3 +11281,169 @@ Not Found: /favicon.ico
 "GET /suppliers/ledger/ HTTP/1.1" 200 17738
 "GET /customers/ HTTP/1.1" 200 19800
 "GET /suppliers/ HTTP/1.1" 200 29588
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /suppliers/1/ HTTP/1.1" 200 20427
+"GET /suppliers/1/ HTTP/1.1" 200 20427
+"GET /suppliers/1/ledger/ HTTP/1.1" 200 20710
+"GET /suppliers/1/ledger/ HTTP/1.1" 200 20710
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /suppliers/2/ledger/ HTTP/1.1" 200 25225
+"GET /dashboard/ HTTP/1.1" 200 22946
+"GET /customers/ HTTP/1.1" 200 19800
+"GET /customers/ledger/ HTTP/1.1" 200 16687
+"GET /customers/ HTTP/1.1" 200 19800
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /customers/ HTTP/1.1" 200 19800
+"GET /customers/create/ HTTP/1.1" 200 20830
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /customers/create/ HTTP/1.1" 200 20502
+"GET /customers/create/ HTTP/1.1" 200 20502
+"POST /customers/create/ HTTP/1.1" 302 0
+"GET /customers/ HTTP/1.1" 200 24081
+"GET /customers/ HTTP/1.1" 200 24081
+"GET /customers/1/ HTTP/1.1" 200 20029
+"GET /customers/1/edit/ HTTP/1.1" 200 20585
+"POST /customers/1/edit/ HTTP/1.1" 302 0
+"GET /customers/ HTTP/1.1" 200 24086
+"GET /customers/ HTTP/1.1" 200 24086
+"GET /customers/ HTTP/1.1" 200 24086
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /customers/ HTTP/1.1" 200 24086
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"GET /suppliers/ HTTP/1.1" 200 32920
+"GET /suppliers/ HTTP/1.1" 200 32920
+"GET /suppliers/ HTTP/1.1" 200 32920
+"GET /customers/ HTTP/1.1" 200 24086
+"GET /suppliers/ HTTP/1.1" 200 32920
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /customers/ HTTP/1.1" 200 24086
+"GET /customers/ HTTP/1.1" 200 23407
+"GET /customers/1/edit/ HTTP/1.1" 200 20590
+"GET /customers/ HTTP/1.1" 200 23407
+"GET /customers/ HTTP/1.1" 200 23407
+"GET /dashboard/ HTTP/1.1" 200 22946
+"GET /dashboard/ HTTP/1.1" 200 22946
+"GET /dashboard/ HTTP/1.1" 200 22946
+"GET /customers/ HTTP/1.1" 200 23407
+"GET /customers/ledger/ HTTP/1.1" 200 16687
+Internal Server Error: /customers/ledger/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 178, in get
+    return super().get(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 142, in get
+    return self.render_to_response(self.get_context_data())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py", line 203, in get_context_data
+    context['customer_id'] = self.kwargs['customer_id']
+                             ~~~~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'customer_id'
+"GET /customers/ledger/create/ HTTP/1.1" 500 91855
+"GET /customers/ HTTP/1.1" 200 23407
+"GET /customers/create/ HTTP/1.1" 200 20502
+"GET /customers/ HTTP/1.1" 200 23407
+"GET /customers/1/ HTTP/1.1" 200 20044
+"GET /customers/1/edit/ HTTP/1.1" 200 20590
+"GET /customers/1/ledger/ HTTP/1.1" 200 21008
+"GET /customers/1/opening-balance/ HTTP/1.1" 200 19942
+"POST /customers/1/opening-balance/ HTTP/1.1" 302 0
+"GET /customers/1/ledger/ HTTP/1.1" 200 22991
+"GET /customers/1/ledger/create/ HTTP/1.1" 200 31880
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 32031
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 31916
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 31916
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 31916
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 31317
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/1/ledger/ HTTP/1.1" 200 22991
+"GET /customers/1/ledger/create/ HTTP/1.1" 200 30523
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30416
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30416
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30416
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30416
+Watching for file changes with StatReloader
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30416
+"GET /customers/ledger/ HTTP/1.1" 200 17740
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/1/ledger/ HTTP/1.1" 200 22991
+"GET /customers/1/ledger/create/ HTTP/1.1" 200 30394
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30418
+"POST /customers/1/ledger/create/ HTTP/1.1" 200 30418
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/customers/views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /customers/1/ledger/create/ HTTP/1.1" 302 0
+"GET /customers/1/ledger/ HTTP/1.1" 200 25153
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/1/ledger/ HTTP/1.1" 200 25153
+"GET /customers/1/ledger/create/ HTTP/1.1" 200 29634
+"POST /customers/1/ledger/create/ HTTP/1.1" 302 0
+"GET /customers/1/ledger/ HTTP/1.1" 200 27308
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /suppliers/ HTTP/1.1" 200 29588
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/ HTTP/1.1" 200 23413
+"GET /customers/ HTTP/1.1" 200 23413
