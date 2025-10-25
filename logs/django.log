@@ -13279,3 +13279,36 @@ Watching for file changes with StatReloader
 "GET /purchases/orders/33/edit/ HTTP/1.1" 200 65878
 /home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
 Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/33/edit/ HTTP/1.1" 200 57625
+"GET /purchases/orders/33/edit/ HTTP/1.1" 200 57625
+"POST /purchases/orders/33/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51361
+"GET /purchases/orders/33/edit/ HTTP/1.1" 200 66200
+"GET /purchases/orders/33/edit/ HTTP/1.1" 200 66200
+"GET /purchases/orders/ HTTP/1.1" 200 51361
+"GET /purchases/orders/33/edit/ HTTP/1.1" 200 66200
+"POST /purchases/orders/33/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51361
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 57620
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 63268
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 63268
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 63268
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 63268
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 63268
+"POST /purchases/orders/32/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51361
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 54683
+"GET /purchases/orders/ HTTP/1.1" 200 51361
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 54683
+"POST /purchases/orders/31/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51361

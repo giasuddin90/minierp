@@ -199,6 +199,11 @@
                         <button type="button" class="btn btn-outline-primary" id="add-product">
                             <i class="bi bi-plus-circle"></i> Add Product
                         </button>
+                        {% if object %}
+                        <div class="alert alert-info mt-2">
+                            <small><i class="bi bi-info-circle"></i> To add more products, click "Add Product" above.</small>
+                        </div>
+                        {% endif %}
                     </div>
                     
                     <div class="row">
@@ -242,6 +247,101 @@
         </div>
     </div>
 </div>
+
+<!-- Status Change Confirmation Modal -->
+<div class="modal fade" id="statusChangeModal" tabindex="-1" aria-labelledby="statusChangeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+            <div class="modal-header bg-gradient text-white">
+                <h5 class="modal-title" id="statusChangeModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Confirm Status Change
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="statusChangeContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="confirmStatusChange">
+                    <i class="bi bi-check-circle"></i> Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Custom modal styling */
+#statusChangeModal .modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#statusChangeModal .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+#statusChangeModal .modal-body {
+    background-color: #f8f9fa;
+}
+
+#statusChangeModal .modal-footer {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+}
+
+#statusChangeModal .alert {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#statusChangeModal .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#statusChangeModal .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Animation for modal content */
+#statusChangeContent {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icon animation */
+#statusChangeModal .bi {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+</style>
 
 <script>
 // Product data for filtering
@@ -394,20 +494,100 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Status change confirmation
+    // Status change confirmation with beautiful modal
+    let statusChangeModal;
+    let currentStatusField;
+    let originalStatusValue;
+    let selectedNewStatus;
+    
     document.addEventListener('change', function(e) {
         if (e.target.name === 'status') {
             if (e.target.value === 'goods-received') {
-                if (!confirm('Are you sure you want to mark this order as "Goods Received"? This will:\n\n• Update inventory levels (increase stock)\n• Mark order as received\n\nClick OK to continue or Cancel to keep the current status.')) {
-                    e.target.value = '';
-                    return;
-                }
+                selectedNewStatus = 'goods-received';
+                showStatusChangeModal(e.target, {
+                    title: 'Mark as Goods Received',
+                    icon: 'bi-truck',
+                    iconColor: 'text-success',
+                    message: 'Are you sure you want to mark this order as "Goods Received"?',
+                    details: [
+                        '✅ Update inventory levels (increase stock)',
+                        '✅ Mark order as received',
+                        '✅ Complete the purchase process'
+                    ],
+                    confirmText: 'Mark as Received',
+                    confirmClass: 'btn-success'
+                });
             } else if (e.target.value === 'canceled') {
-                if (!confirm('Are you sure you want to cancel this order? This will:\n\n• Reverse inventory changes (decrease stock)\n• Mark order as cancelled\n\nClick OK to continue or Cancel to keep the current status.')) {
-                    e.target.value = '';
-                    return;
-                }
+                selectedNewStatus = 'canceled';
+                showStatusChangeModal(e.target, {
+                    title: 'Cancel Purchase Order',
+                    icon: 'bi-x-octagon',
+                    iconColor: 'text-danger',
+                    message: 'Are you sure you want to cancel this order?',
+                    details: [
+                        '⚠️ Reverse inventory changes (decrease stock)',
+                        '⚠️ Mark order as cancelled',
+                        '⚠️ This action cannot be easily undone'
+                    ],
+                    confirmText: 'Cancel Order',
+                    confirmClass: 'btn-danger'
+                });
             }
+        }
+    });
+    
+    function showStatusChangeModal(field, config) {
+        currentStatusField = field;
+        originalStatusValue = field.value;
+        
+        // Reset field to original value
+        field.value = originalStatusValue;
+        
+        // Populate modal content
+        const content = `
+            <div class="text-center mb-3">
+                <i class="bi ${config.icon} ${config.iconColor}" style="font-size: 3rem;"></i>
+            </div>
+            <h6 class="text-center mb-3">${config.message}</h6>
+            <div class="alert alert-info">
+                <strong>This will:</strong>
+                <ul class="mb-0 mt-2">
+                    ${config.details.map(detail => `<li>${detail}</li>`).join('')}
+                </ul>
+            </div>
+            <div class="text-center">
+                <small class="text-muted">
+                    <i class="bi bi-info-circle"></i>
+                    Click "Confirm" to proceed or "Cancel" to keep the current status.
+                </small>
+            </div>
+        `;
+        
+        document.getElementById('statusChangeContent').innerHTML = content;
+        document.getElementById('confirmStatusChange').textContent = config.confirmText;
+        document.getElementById('confirmStatusChange').className = `btn ${config.confirmClass}`;
+        
+        // Show modal
+        statusChangeModal = new bootstrap.Modal(document.getElementById('statusChangeModal'));
+        statusChangeModal.show();
+    }
+    
+    // Handle modal confirmation
+    document.getElementById('confirmStatusChange').addEventListener('click', function() {
+        if (currentStatusField && selectedNewStatus) {
+            // Set the new status
+            currentStatusField.value = selectedNewStatus;
+            
+            // Close modal
+            statusChangeModal.hide();
+        }
+    });
+    
+    // Handle modal cancellation
+    document.getElementById('statusChangeModal').addEventListener('hidden.bs.modal', function() {
+        // Reset field to original value if modal was closed without confirmation
+        if (currentStatusField) {
+            currentStatusField.value = originalStatusValue;
         }
     });
     

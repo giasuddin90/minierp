@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from .models import PurchaseOrder, PurchaseOrderItem
 from .forms import (
-    PurchaseOrderForm, PurchaseOrderItemFormSet, PurchaseOrderSearchForm
+    PurchaseOrderForm, PurchaseOrderItemFormSet, PurchaseOrderSearchForm, PurchaseOrderItemForm
 )
 from suppliers.models import Supplier
 from stock.models import Product, ProductCategory, ProductBrand, Stock
@@ -58,11 +58,6 @@ class PurchaseOrderCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['formset'] = PurchaseOrderItemFormSet(self.request.POST)
-            # Debug POST data
-            print(f"DEBUG: POST data keys: {list(self.request.POST.keys())}")
-            for key, value in self.request.POST.items():
-                if 'form-' in key:
-                    print(f"DEBUG: {key} = {value}")
         else:
             context['formset'] = PurchaseOrderItemFormSet()
         
@@ -75,29 +70,19 @@ class PurchaseOrderCreateView(CreateView):
         context = self.get_context_data()
         formset = context['formset']
         
-        # Debug logging
-        print(f"DEBUG: Formset total forms: {formset.total_form_count()}")
-        print(f"DEBUG: Formset initial forms: {formset.initial_form_count()}")
-        print(f"DEBUG: Formset management form data: {formset.management_form.cleaned_data if formset.management_form.is_valid() else formset.management_form.errors}")
-        
         if formset.is_valid():
-            print(f"DEBUG: Formset is valid, processing {len(formset)} forms")
             with transaction.atomic():
                 # Set created_by
                 form.instance.created_by = self.request.user
                 
                 # Save the order first
                 self.object = form.save()
-                print(f"DEBUG: Purchase order saved with ID: {self.object.id}")
                 
                 # Set the instance for the formset
                 formset.instance = self.object
                 
                 # Save formset
-                saved_instances = formset.save()
-                print(f"DEBUG: Saved {len(saved_instances)} formset instances")
-                for i, instance in enumerate(saved_instances):
-                    print(f"DEBUG: Instance {i}: {instance.product.name} - Qty: {instance.quantity}, Price: {instance.unit_price}")
+                formset.save()
                 
                 # Calculate total amount and round to 2 decimal places
                 total_amount = sum(item.total_price for item in self.object.items.all())
@@ -107,8 +92,6 @@ class PurchaseOrderCreateView(CreateView):
                 messages.success(self.request, f'✅ Purchase Order {self.object.order_number} created successfully!')
                 return redirect(self.success_url)
         else:
-            print(f"DEBUG: Formset is invalid. Errors: {formset.errors}")
-            print(f"DEBUG: Non-form errors: {formset.non_form_errors()}")
             messages.error(self.request, '❌ Please correct the errors below.')
             return self.form_invalid(form)
 
@@ -124,7 +107,19 @@ class PurchaseOrderUpdateView(UpdateView):
         if self.request.POST:
             context['formset'] = PurchaseOrderItemFormSet(self.request.POST, instance=self.object)
         else:
-            context['formset'] = PurchaseOrderItemFormSet(instance=self.object)
+            # For edit view, don't show extra empty forms
+            from .forms import inlineformset_factory
+            EditFormSet = inlineformset_factory(
+                PurchaseOrder,
+                PurchaseOrderItem,
+                form=PurchaseOrderItemForm,
+                fields=['product', 'quantity', 'unit_price', 'total_price'],
+                extra=0,  # No extra forms for edit
+                can_delete=True,
+                min_num=0,
+                validate_min=False,
+            )
+            context['formset'] = EditFormSet(instance=self.object)
         
         context['categories'] = ProductCategory.objects.filter(is_active=True)
         context['brands'] = ProductBrand.objects.filter(is_active=True)
