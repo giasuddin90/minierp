@@ -17,12 +17,24 @@ urlpatterns = [
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('products/<int:pk>/edit/', views.ProductUpdateView.as_view(), name='product_edit'),
     path('products/<int:pk>/delete/', views.ProductDeleteView.as_view(), name='product_delete'),
+    path('products/<int:pk>/adjust-stock/', views.stock_adjustment, name='stock_adjustment'),
+    
+    # Category Management
+    path('categories/', views.ProductCategoryListView.as_view(), name='category_list'),
+    path('categories/create/', views.ProductCategoryCreateView.as_view(), name='category_create'),
+    path('categories/<int:pk>/edit/', views.ProductCategoryUpdateView.as_view(), name='category_edit'),
+    path('categories/<int:pk>/delete/', views.ProductCategoryDeleteView.as_view(), name='category_delete'),
+    
+    # Brand Management
+    path('brands/', views.ProductBrandListView.as_view(), name='brand_list'),
+    path('brands/create/', views.ProductBrandCreateView.as_view(), name='brand_create'),
+    path('brands/<int:pk>/edit/', views.ProductBrandUpdateView.as_view(), name='brand_edit'),
+    path('brands/<int:pk>/delete/', views.ProductBrandDeleteView.as_view(), name='brand_delete'),
     
     # Stock Management
     path('stock/', views.StockListView.as_view(), name='stock_list'),
     path('stock/<int:pk>/', views.StockDetailView.as_view(), name='stock_detail'),
     path('stock/<int:pk>/edit/', views.StockUpdateView.as_view(), name='stock_edit'),
-    
     
     # Stock Alerts
     path('alerts/', views.StockAlertListView.as_view(), name='alert_list'),

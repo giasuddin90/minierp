@@ -1,11 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db import models
 from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
+from django.contrib import messages
 from datetime import datetime, timedelta
 from .models import ProductCategory, ProductBrand, Product, Stock, StockAlert
+from .forms import (
+    ProductForm, ProductCategoryForm, ProductBrandForm, StockForm, 
+    StockAdjustmentForm, StockAlertForm, ProductSearchForm, StockReportForm
+)
 from sales.models import SalesOrderItem, SalesInvoiceItem
 from purchases.models import PurchaseOrderItem
 
@@ -65,8 +70,8 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
+    form_class = ProductForm
     template_name = 'stock/product_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('stock:product_list')
     
     def get_context_data(self, **kwargs):
@@ -74,12 +79,16 @@ class ProductCreateView(CreateView):
         context['categories'] = ProductCategory.objects.filter(is_active=True)
         context['brands'] = ProductBrand.objects.filter(is_active=True)
         return context
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Product "{form.instance.name}" created successfully.')
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):
     model = Product
+    form_class = ProductForm
     template_name = 'stock/product_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('stock:product_list')
     
     def get_context_data(self, **kwargs):
@@ -87,6 +96,10 @@ class ProductUpdateView(UpdateView):
         context['categories'] = ProductCategory.objects.filter(is_active=True)
         context['brands'] = ProductBrand.objects.filter(is_active=True)
         return context
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Product "{form.instance.name}" updated successfully.')
+        return super().form_valid(form)
 
 
 class ProductDeleteView(DeleteView):
@@ -127,11 +140,125 @@ class StockDetailView(DetailView):
 
 class StockUpdateView(UpdateView):
     model = Stock
+    form_class = StockForm
     template_name = 'stock/stock_form.html'
-    fields = '__all__'
     success_url = reverse_lazy('stock:stock_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Stock updated successfully for {form.instance.product.name}.')
+        return super().form_valid(form)
 
 
+
+
+# Category Management Views
+class ProductCategoryListView(ListView):
+    model = ProductCategory
+    template_name = 'stock/category_list.html'
+    context_object_name = 'categories'
+
+
+class ProductCategoryCreateView(CreateView):
+    model = ProductCategory
+    form_class = ProductCategoryForm
+    template_name = 'stock/category_form.html'
+    success_url = reverse_lazy('stock:category_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Category "{form.instance.name}" created successfully.')
+        return super().form_valid(form)
+
+
+class ProductCategoryUpdateView(UpdateView):
+    model = ProductCategory
+    form_class = ProductCategoryForm
+    template_name = 'stock/category_form.html'
+    success_url = reverse_lazy('stock:category_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Category "{form.instance.name}" updated successfully.')
+        return super().form_valid(form)
+
+
+class ProductCategoryDeleteView(DeleteView):
+    model = ProductCategory
+    template_name = 'stock/category_confirm_delete.html'
+    success_url = reverse_lazy('stock:category_list')
+
+
+# Brand Management Views
+class ProductBrandListView(ListView):
+    model = ProductBrand
+    template_name = 'stock/brand_list.html'
+    context_object_name = 'brands'
+
+
+class ProductBrandCreateView(CreateView):
+    model = ProductBrand
+    form_class = ProductBrandForm
+    template_name = 'stock/brand_form.html'
+    success_url = reverse_lazy('stock:brand_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Brand "{form.instance.name}" created successfully.')
+        return super().form_valid(form)
+
+
+class ProductBrandUpdateView(UpdateView):
+    model = ProductBrand
+    form_class = ProductBrandForm
+    template_name = 'stock/brand_form.html'
+    success_url = reverse_lazy('stock:brand_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Brand "{form.instance.name}" updated successfully.')
+        return super().form_valid(form)
+
+
+class ProductBrandDeleteView(DeleteView):
+    model = ProductBrand
+    template_name = 'stock/brand_confirm_delete.html'
+    success_url = reverse_lazy('stock:brand_list')
+
+
+# Stock Adjustment View
+def stock_adjustment(request, pk):
+    """Handle stock adjustments"""
+    product = get_object_or_404(Product, pk=pk)
+    
+    if request.method == 'POST':
+        form = StockAdjustmentForm(request.POST)
+        if form.is_valid():
+            adjustment_type = form.cleaned_data['adjustment_type']
+            quantity = form.cleaned_data['quantity']
+            unit_cost = form.cleaned_data['unit_cost']
+            reference = form.cleaned_data['reference']
+            description = form.cleaned_data['description']
+            
+            # Update stock using the model method
+            stock = Stock.update_stock(
+                product=product,
+                quantity_change=quantity,
+                unit_cost=unit_cost,
+                movement_type=adjustment_type,
+                reference=reference,
+                description=description,
+                user=request.user
+            )
+            
+            messages.success(
+                request, 
+                f'Stock {adjustment_type} completed for {product.name}. '
+                f'New quantity: {stock.quantity}'
+            )
+            return redirect('stock:product_detail', pk=product.pk)
+    else:
+        form = StockAdjustmentForm()
+    
+    return render(request, 'stock/stock_adjustment.html', {
+        'product': product,
+        'form': form
+    })
 
 
 class StockAlertListView(ListView):
