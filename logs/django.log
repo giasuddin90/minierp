@@ -13106,3 +13106,176 @@ Watching for file changes with StatReloader
 /home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 44377
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/base.css HTTP/1.1" 200 3151
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"GET /purchases/orders/ HTTP/1.1" 200 44377
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 46116
+"GET /purchases/orders/26/edit/ HTTP/1.1" 200 56390
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/26/edit/ HTTP/1.1" 200 99606
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /purchases/orders/26/edit/ HTTP/1.1" 200 99606
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /purchases/orders/26/edit/ HTTP/1.1" 200 99606
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"GET /purchases/orders/26/edit/ HTTP/1.1" 200 99606
+"GET /purchases/orders/ HTTP/1.1" 200 51318
+"GET /purchases/orders/create/ HTTP/1.1" 200 90986
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /purchases/orders/ HTTP/1.1" 200 51318
+"GET /purchases/orders/21/edit/ HTTP/1.1" 200 56392
+"POST /purchases/orders/21/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51318
+"GET /purchases/orders/21/edit/ HTTP/1.1" 200 64969
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51332
+"GET /purchases/orders/30/edit/ HTTP/1.1" 200 56400
+Watching for file changes with StatReloader
+"GET /purchases/orders/30/edit/ HTTP/1.1" 200 56950
+"GET /purchases/orders/ HTTP/1.1" 200 51332
+"GET /purchases/orders/30/edit/ HTTP/1.1" 200 56950
+"POST /purchases/orders/30/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51332
+"GET /purchases/orders/create/ HTTP/1.1" 200 48320
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51331
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 56937
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 56937
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 56937
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 56937
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 56937
+"GET /static/css/animations.css HTTP/1.1" 200 4692
+"GET /static/css/variables.css HTTP/1.1" 200 2557
+"GET /static/css/responsive.css HTTP/1.1" 200 5221
+"GET /static/css/components.css HTTP/1.1" 200 8408
+"GET /static/css/base.css HTTP/1.1" 200 3151
+"GET /static/css/layout.css HTTP/1.1" 200 4268
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3780
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 57288
+"GET /purchases/orders/31/edit/ HTTP/1.1" 200 57288
+"GET /purchases/orders/ HTTP/1.1" 200 51331
+"GET /purchases/orders/create/ HTTP/1.1" 200 48671
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51346
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 65873
+"GET /purchases/orders/ HTTP/1.1" 200 51346
+"GET /purchases/orders/32/edit/ HTTP/1.1" 200 65873
+"GET /purchases/orders/create/ HTTP/1.1" 200 48671
+"GET /purchases/orders/create/ HTTP/1.1" 200 48671
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 51361
+"GET /purchases/orders/33/edit/ HTTP/1.1" 200 65878
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader

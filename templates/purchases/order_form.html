@@ -287,6 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const productRow = e.target.closest('.product-row');
             if (productRow) {
                 productRow.remove();
+                updateFormsetManagement();
                 updateTotalAmount();
                 validateForm();
             }
@@ -423,8 +424,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.product-row').forEach(row => {
             calculateRowTotal(row);
         });
+        updateFormsetManagement();
         updateTotalAmount();
         validateForm();
+    }
+    
+    function updateFormsetManagement() {
+        // Update the TOTAL_FORMS field in the formset management form
+        const totalFormsInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
+        if (totalFormsInput) {
+            const productRows = document.querySelectorAll('.product-row');
+            totalFormsInput.value = productRows.length;
+        }
     }
     
     function addProductRow() {
@@ -446,9 +457,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update form field names
         newRow.querySelectorAll('select, input').forEach(input => {
             if (input.name && input.name.includes('-')) {
-                const parts = input.name.split('-');
-                parts[0] = 'form-' + formIndex;
-                input.name = parts.join('-');
+                // Handle Django formset naming: form-{index}-{field_name}
+                const nameParts = input.name.split('-');
+                if (nameParts.length >= 3) {
+                    const oldName = input.name;
+                    // Replace the form index (second part)
+                    nameParts[1] = formIndex;
+                    input.name = nameParts.join('-');
+                    console.log(`DEBUG: Updated field name from ${oldName} to ${input.name}`);
+                }
             }
         });
         
@@ -465,6 +482,9 @@ document.addEventListener('DOMContentLoaded', function() {
         hideProductInfo(newRow);
         
         container.appendChild(newRow);
+        
+        // Update the formset management form
+        updateFormsetManagement();
         
         // Focus on the new category select
         newRow.querySelector('.category-select').focus();
