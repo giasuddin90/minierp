@@ -200,11 +200,7 @@
                                 <i class="bi bi-plus-circle"></i> New Order
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'purchases' and request.resolver_match.url_name == 'receipt_list' %}active{% endif %}" href="{% url 'purchases:receipt_list' %}">
-                                <i class="bi bi-box-seam"></i> Goods Receipts
-                            </a>
-                        </li>
+                        <!-- Goods Receipts removed - simplified to use only Purchase Orders -->
                         <!-- Purchase Invoices removed - simplified to Purchase Orders only -->
                         <!-- Purchase Payments removed - simplified flow -->
                         <!-- Purchase Returns removed - simplified flow -->

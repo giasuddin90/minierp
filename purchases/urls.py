@@ -18,13 +18,7 @@ urlpatterns = [
     path('orders/<int:pk>/edit/', views.PurchaseOrderUpdateView.as_view(), name='order_edit'),
     path('orders/<int:pk>/delete/', views.PurchaseOrderDeleteView.as_view(), name='order_delete'),
     
-    # Goods Receipts
-    path('receipts/', views.GoodsReceiptListView.as_view(), name='receipt_list'),
-    path('receipts/create/', views.GoodsReceiptCreateView.as_view(), name='receipt_create'),
-    path('receipts/direct/', views.DirectGoodsReceiptCreateView.as_view(), name='direct_receipt_create'),
-    path('receipts/<int:pk>/', views.GoodsReceiptDetailView.as_view(), name='receipt_detail'),
-    path('receipts/<int:pk>/edit/', views.GoodsReceiptUpdateView.as_view(), name='receipt_edit'),
-    path('receipts/<int:pk>/delete/', views.GoodsReceiptDeleteView.as_view(), name='receipt_delete'),
+    # Simplified flow - no separate goods receipts needed
     
     # Removed unnecessary URLs for simplified purchase flow
     

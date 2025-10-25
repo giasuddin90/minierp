@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from decimal import Decimal
 from suppliers.models import Supplier
 from stock.models import Product
+import uuid
+from datetime import datetime
 
 
 class PurchaseOrder(models.Model):
@@ -17,6 +19,7 @@ class PurchaseOrder(models.Model):
     order_date = models.DateField()
     expected_date = models.DateField()
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='purchase-order')
+    invoice_id = models.CharField(max_length=100, blank=True, help_text="Invoice ID from supplier when goods are received")
     total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     notes = models.TextField(blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -26,32 +29,64 @@ class PurchaseOrder(models.Model):
     def __str__(self):
         return f"PO-{self.order_number} - {self.supplier.name}"
 
-    def receive_goods(self, user=None):
-        """Receive goods and update inventory"""
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            # Generate unique order number
+            while True:
+                # Create order number with timestamp and random component
+                timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                random_part = str(uuid.uuid4().hex[:6].upper())
+                self.order_number = f"PO-{timestamp}-{random_part}"
+                
+                # Check if this order number already exists
+                if not PurchaseOrder.objects.filter(order_number=self.order_number).exists():
+                    break
+        
+        super().save(*args, **kwargs)
+
+    def update_inventory_on_status_change(self, old_status, new_status, user=None):
+        """Update inventory based on status change"""
         from stock.models import Stock
         
-        if self.status != 'goods-received':
-            self.status = 'goods-received'
-            self.save()
-            
-            # Update inventory for each item
+        # If changing to goods-received, increase inventory
+        if old_status != 'goods-received' and new_status == 'goods-received':
             for item in self.items.all():
-                # Increase stock (inward movement)
                 Stock.update_stock(
                     product=item.product,
                     quantity_change=item.quantity,
                     unit_cost=item.unit_price,
                     movement_type='inward',
                     reference=f"PO-{self.order_number}",
-                    description=f"Purchase order receipt - {self.supplier.name}",
+                    description=f"Purchase order received - {self.supplier.name}",
+                    user=user
+                )
+        
+        # If changing from goods-received to cancelled, decrease inventory
+        elif old_status == 'goods-received' and new_status == 'canceled':
+            for item in self.items.all():
+                Stock.update_stock(
+                    product=item.product,
+                    quantity_change=-item.quantity,  # Negative to decrease
+                    unit_cost=item.unit_price,
+                    movement_type='outward',
+                    reference=f"PO-{self.order_number}",
+                    description=f"Purchase order cancelled - {self.supplier.name}",
                     user=user
                 )
     
+    def receive_goods(self, user=None):
+        """Receive goods and update inventory (legacy method for compatibility)"""
+        old_status = self.status
+        self.status = 'goods-received'
+        self.save()
+        self.update_inventory_on_status_change(old_status, 'goods-received', user)
+    
     def cancel_order(self, user=None):
         """Cancel the purchase order"""
-        if self.status == 'purchase-order':
-            self.status = 'canceled'
-            self.save()
+        old_status = self.status
+        self.status = 'canceled'
+        self.save()
+        self.update_inventory_on_status_change(old_status, 'canceled', user)
 
     class Meta:
         verbose_name = "Purchase Order"
@@ -73,22 +108,4 @@ class PurchaseOrderItem(models.Model):
         verbose_name_plural = "Purchase Order Items"
 
 
-class GoodsReceipt(models.Model):
-    receipt_number = models.CharField(max_length=50, unique=True)
-    purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE, null=True, blank=True)
-    receipt_date = models.DateField()
-    invoice_id = models.CharField(max_length=100, blank=True, help_text="Invoice ID from supplier when goods are received")
-    total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    notes = models.TextField(blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        if self.purchase_order:
-            return f"GR-{self.receipt_number} - {self.purchase_order.supplier.name}"
-        else:
-            return f"GR-{self.receipt_number} - Direct Receipt"
-
-    class Meta:
-        verbose_name = "Goods Receipt"
-        verbose_name_plural = "Goods Receipts"
+# GoodsReceipt model removed - simplified to use only PurchaseOrder

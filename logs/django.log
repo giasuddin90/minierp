@@ -12484,3 +12484,625 @@ Not Found: /favicon.ico
 "GET /favicon.ico HTTP/1.1" 404 3780
 "GET /purchases/orders/3/edit/ HTTP/1.1" 200 59852
 "GET /purchases/orders/3/edit/ HTTP/1.1" 200 59852
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 60226
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 61354
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 61354
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 60710
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 60870
+"POST /purchases/orders/3/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 60360
+"GET /purchases/orders/create/ HTTP/1.1" 200 52270
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/receipts/create/ HTTP/1.1" 200 17300
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61304
+"POST /purchases/orders/3/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/create/ HTTP/1.1" 200 53214
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61304
+"POST /purchases/orders/3/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61304
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 61939
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61304
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 61939
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61304
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 18573
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/apps.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/create/ HTTP/1.1" 200 53535
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /stock/stock/ HTTP/1.1" 200 18526
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /purchases/orders/4/edit/ HTTP/1.1" 200 53576
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61685
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 62320
+"POST /purchases/orders/3/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+Watching for file changes with StatReloader
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61685
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 62320
+"POST /purchases/orders/3/edit/ HTTP/1.1" 200 62320
+"POST /purchases/orders/3/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 23748
+"GET /purchases/orders/3/edit/ HTTP/1.1" 200 61685
+"GET /purchases/receipts/ HTTP/1.1" 200 16630
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/receipts/ HTTP/1.1" 200 26867
+"GET /purchases/receipts/ HTTP/1.1" 200 26867
+"GET /purchases/orders/ HTTP/1.1" 200 27205
+"GET /purchases/orders/4/edit/ HTTP/1.1" 200 53824
+"GET /purchases/orders/ HTTP/1.1" 200 27205
+"GET /purchases/receipts/ HTTP/1.1" 200 26867
+"GET /purchases/orders/ HTTP/1.1" 200 27205
+"GET /purchases/orders/3/delete/ HTTP/1.1" 200 17662
+"POST /purchases/orders/3/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 25486
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+Internal Server Error: /purchases/receipts/9/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 890, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 901, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GoodsReceipt' object has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 907, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1075, in render
+    output = self.filter_expression.resolve(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 743, in resolve
+    arg_vals.append(arg.resolve(context))
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 854, in resolve
+    value = self._resolve_lookup(context)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 914, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in <GoodsReceipt: GR-GR-CE76F0A0 - Test Supplier for Flow>
+"GET /purchases/receipts/9/ HTTP/1.1" 500 181993
+"GET /purchases/orders/ HTTP/1.1" 200 25486
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+"GET /purchases/receipts/9/edit/ HTTP/1.1" 200 17302
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+"GET /purchases/receipts/9/edit/ HTTP/1.1" 200 17302
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+"GET /stock/stock/ HTTP/1.1" 200 18526
+"GET /stock/products/ HTTP/1.1" 200 42838
+"GET /purchases/orders/ HTTP/1.1" 200 25486
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+"GET /purchases/orders/ HTTP/1.1" 200 25486
+"GET /sales/orders/ HTTP/1.1" 200 16639
+"GET /sales/invoices/ HTTP/1.1" 200 16628
+"GET /sales/payments/ HTTP/1.1" 200 16622
+"GET /sales/returns/ HTTP/1.1" 200 16616
+"GET /sales/payments/ HTTP/1.1" 200 16622
+"GET /sales/invoices/ HTTP/1.1" 200 16628
+"GET /suppliers/ HTTP/1.1" 200 36706
+"GET /suppliers/1/ledger/ HTTP/1.1" 200 25185
+"GET /purchases/orders/ HTTP/1.1" 200 25486
+"GET /purchases/orders/4/ HTTP/1.1" 200 19737
+"GET /purchases/orders/5/edit/ HTTP/1.1" 200 53824
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+"GET /admin/ HTTP/1.1" 200 20827
+"GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+"GET /static/admin/css/base.css HTTP/1.1" 200 22120
+"GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+"GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+"GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+"GET /admin/ HTTP/1.1" 200 18618
+"GET /admin/purchases/goodsreceipt/ HTTP/1.1" 200 23408
+"GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+"GET /static/admin/js/core.js HTTP/1.1" 200 6208
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+"GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+"GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+"GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+"GET /static/admin/img/search.svg HTTP/1.1" 200 458
+"GET /static/admin/js/filters.js HTTP/1.1" 200 978
+"GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+"GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+"GET /admin/ HTTP/1.1" 200 18618
+"GET /admin/purchases/purchaseorder/ HTTP/1.1" 200 24749
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /purchases/receipts/ HTTP/1.1" 200 25216
+"GET /purchases/orders/ HTTP/1.1" 200 25486
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/signals.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/admin.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /purchases/orders/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'receipt_list' not found. 'receipt_list' is not a valid view function or pattern name.
+"GET /purchases/orders/ HTTP/1.1" 500 162740
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 32198
+"GET /stock/stock/ HTTP/1.1" 200 21678
+"GET /stock/stock/6/edit/ HTTP/1.1" 200 18591
+"GET /stock/alerts/ HTTP/1.1" 200 19131
+"GET /stock/stock/ HTTP/1.1" 200 21678
+"GET /stock/dashboard/ HTTP/1.1" 200 47279
+"GET /purchases/orders/ HTTP/1.1" 200 32198
+"GET /purchases/orders/4/delete/ HTTP/1.1" 200 17484
+"POST /purchases/orders/4/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 30476
+"GET /purchases/orders/create/ HTTP/1.1" 200 56290
+Internal Server Error: /purchases/orders/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 182, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 151, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py", line 82, in form_valid
+    formset.save()
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/forms/models.py", line 796, in save
+    return self.save_existing_objects(commit) + self.save_new_objects(commit)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/forms/models.py", line 959, in save_new_objects
+    self.new_objects.append(self.save_new(form, commit=commit))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/forms/models.py", line 1157, in save_new
+    return super().save_new(form, commit=commit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/forms/models.py", line 769, in save_new
+    return form.save(commit=commit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py", line 144, in save
+    instance.save()
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 857, in save
+    self._prepare_related_fields_for_save(operation_name="save")
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 1242, in _prepare_related_fields_for_save
+    raise ValueError(
+ValueError: save() prohibited to prevent data loss due to unsaved related object 'purchase_order'.
+"POST /purchases/orders/create/ HTTP/1.1" 500 129165
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 32188
+"GET /purchases/orders/13/delete/ HTTP/1.1" 200 17472
+"POST /purchases/orders/13/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 30476
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /purchases/orders/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 182, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 151, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py", line 76, in form_valid
+    if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
+       ^^^^^^^^^^^^^^^^^
+AttributeError: 'PurchaseOrderItemForm' object has no attribute 'cleaned_data'. Did you mean: 'changed_data'?
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/forms.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /purchases/orders/ HTTP/1.1" 200 32185
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+Internal Server Error: /purchases/orders/create/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: purchases_purchaseorder.order_number
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 182, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 151, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py", line 79, in form_valid
+    self.object = form.save()
+                  ^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/forms/models.py", line 554, in save
+    self.instance.save()
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 902, in save
+    self.save_base(
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 1868, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: purchases_purchaseorder.order_number
+"POST /purchases/orders/create/ HTTP/1.1" 500 190866
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 40855
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 42591
+"GET /purchases/orders/20/edit/ HTTP/1.1" 200 56403
+"POST /purchases/orders/20/edit/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 42591
+"GET /purchases/orders/20/edit/ HTTP/1.1" 200 56403
+"GET /purchases/orders/ HTTP/1.1" 200 42591
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"POST /purchases/orders/create/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 44328
+"GET /purchases/orders/21/edit/ HTTP/1.1" 200 56392
+"GET /admin/purchases/purchaseorder/ HTTP/1.1" 200 31902
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/purchases/purchaseorder/ HTTP/1.1" 200 31283
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /purchases/orders/21/edit/ HTTP/1.1" 200 56392
+"GET /dashboard/ HTTP/1.1" 200 23143
+"GET /suppliers/ HTTP/1.1" 200 36525
+"GET /stock/products/ HTTP/1.1" 200 47497
+"GET /purchases/orders/ HTTP/1.1" 200 44328
+"GET /dashboard/ HTTP/1.1" 200 23143
+"GET /reports/inventory/ HTTP/1.1" 200 33618
+"GET /reports/sales/ HTTP/1.1" 200 21648
+"GET /reports/customer/ HTTP/1.1" 200 22137
+"GET /reports/supplier/ HTTP/1.1" 200 26915
+"GET /reports/inventory/ HTTP/1.1" 200 33618
+"GET /reports/supplier/ HTTP/1.1" 200 26915
+"GET /reports/customer/ HTTP/1.1" 200 22137
+"GET /reports/sales/ HTTP/1.1" 200 21648
+"GET /reports/inventory/ HTTP/1.1" 200 33618
+"GET /reports/sales/ HTTP/1.1" 200 21648
+"GET /dashboard/ HTTP/1.1" 200 23143
+"GET /stock/products/ HTTP/1.1" 200 47497
+"GET /sales/orders/ HTTP/1.1" 200 16458
+"GET /purchases/orders/ HTTP/1.1" 200 44328
+"GET /stock/stock/ HTTP/1.1" 200 21677
+"GET /purchases/orders/ HTTP/1.1" 200 44328
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /purchases/orders/ HTTP/1.1" 200 44328
+"GET /purchases/orders/create/ HTTP/1.1" 200 47770
+"GET /purchases/orders/ HTTP/1.1" 200 44328
+"GET /purchases/orders/14/delete/ HTTP/1.1" 200 17469
+"POST /purchases/orders/14/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 42619
+"GET /purchases/orders/5/delete/ HTTP/1.1" 200 17484
+"POST /purchases/orders/5/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 40897
+"GET /purchases/orders/6/delete/ HTTP/1.1" 200 17493
+"POST /purchases/orders/6/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 39166
+"GET /purchases/orders/10/delete/ HTTP/1.1" 200 17490
+"POST /purchases/orders/10/delete/ HTTP/1.1" 302 0
+"GET /purchases/orders/ HTTP/1.1" 200 37442
+"GET /dashboard/ HTTP/1.1" 200 23143
+"GET /customers/ HTTP/1.1" 200 23189
+"GET /customers/create/ HTTP/1.1" 200 20278
+"GET /customers/ledger/ HTTP/1.1" 200 19345
+"GET /customers/commitment/ HTTP/1.1" 200 16469
+"GET /purchases/orders/ HTTP/1.1" 200 37442
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+/home/giasudin/PycharmProjects/djangoerp/miniErp/purchases/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

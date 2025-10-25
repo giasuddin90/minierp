@@ -23,7 +23,6 @@ class PurchaseOrderListView(ListView):
     ordering = ['-order_date', '-created_at']
     
     def get_queryset(self):
-        from django.db import models
         queryset = super().get_queryset()
         search_query = self.request.GET.get('search')
         
@@ -76,10 +75,7 @@ class PurchaseOrderCreateView(CreateView):
                 form.instance.created_by = self.request.user
                 
                 # Save the order first
-                self.object = form.save()
-                
-                # Set the instance for the formset
-                formset.instance = self.object
+                response = super().form_valid(form)
                 
                 # Save formset
                 formset.save()
@@ -90,7 +86,7 @@ class PurchaseOrderCreateView(CreateView):
                 self.object.save()
                 
                 messages.success(self.request, f'✅ Purchase Order {self.object.order_number} created successfully!')
-                return redirect(self.success_url)
+                return response
         else:
             messages.error(self.request, '❌ Please correct the errors below.')
             return self.form_invalid(form)

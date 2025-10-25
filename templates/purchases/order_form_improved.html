@@ -56,36 +56,6 @@
                             {% if form.status.errors %}
                                 <div class="invalid-feedback d-block">{{ form.status.errors.0 }}</div>
                             {% endif %}
-                            <div class="form-text">
-                                <small class="text-muted">
-                                    <i class="bi bi-info-circle"></i> 
-                                    Changing status to "Goods Received" will automatically update inventory. Cancelling will reverse inventory changes.
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Invoice ID Section -->
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.invoice_id.id_for_label }}" class="form-label">{{ form.invoice_id.label }}</label>
-                            {{ form.invoice_id }}
-                            {% if form.invoice_id.errors %}
-                                <div class="invalid-feedback d-block">{{ form.invoice_id.errors.0 }}</div>
-                            {% endif %}
-                            <div class="form-text">
-                                <small class="text-muted">
-                                    <i class="bi bi-receipt"></i> 
-                                    Enter the invoice ID from the supplier when goods are received.
-                                </small>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.notes.id_for_label }}" class="form-label">{{ form.notes.label }}</label>
-                            {{ form.notes }}
-                            {% if form.notes.errors %}
-                                <div class="invalid-feedback d-block">{{ form.notes.errors.0 }}</div>
-                            {% endif %}
                         </div>
                     </div>
                     
@@ -106,27 +76,29 @@
                                 <!-- Category Selection -->
                                 <div class="col-md-3">
                                     <label class="form-label">
-                                        <i class="bi bi-tags"></i> Category <small class="text-muted">(Filter)</small>
+                                        <i class="bi bi-tags"></i> Category <span class="text-danger fw-bold">*</span>
                                     </label>
-                                    <select class="form-select category-select" name="category_{{ forloop.counter0 }}">
-                                        <option value="">All Categories</option>
+                                    <select class="form-select category-select" name="category_{{ forloop.counter0 }}" required>
+                                        <option value="">Select Category</option>
                                         {% for category in categories %}
                                         <option value="{{ category.id }}" {% if form.product.value and form.product.value.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
                                         {% endfor %}
                                     </select>
+                                    <div class="invalid-feedback">Please select a category</div>
                                 </div>
                                 
                                 <!-- Brand Selection -->
                                 <div class="col-md-3">
                                     <label class="form-label">
-                                        <i class="bi bi-award"></i> Brand <small class="text-muted">(Filter)</small>
+                                        <i class="bi bi-award"></i> Brand <span class="text-danger fw-bold">*</span>
                                     </label>
-                                    <select class="form-select brand-select" name="brand_{{ forloop.counter0 }}">
-                                        <option value="">All Brands</option>
+                                    <select class="form-select brand-select" name="brand_{{ forloop.counter0 }}" required>
+                                        <option value="">Select Brand</option>
                                         {% for brand in brands %}
-                                        <option value="{{ brand.id }}" {% if form.product.value and form.product.value.brand.id == brand.id %}selected{% endif %}>{{ brand.name }}</option>
+                                        <option value="{{ brand.id }}" data-category="{{ brand.category.id }}" {% if form.product.value and form.product.value.brand.id == brand.id %}selected{% endif %}>{{ brand.name }}</option>
                                         {% endfor %}
                                     </select>
+                                    <div class="invalid-feedback">Please select a brand</div>
                                 </div>
                                 
                                 <!-- Product Selection -->
@@ -220,13 +192,13 @@
                     <div class="alert alert-info">
                         <h6><i class="bi bi-info-circle"></i> How to Add Products:</h6>
                         <ol class="mb-0">
-                            <li><strong>Select Product:</strong> Choose the product directly from the dropdown</li>
-                            <li><strong>Filter (Optional):</strong> Use Category and Brand filters to narrow down product choices</li>
+                            <li><strong>Select Category:</strong> Choose the product category first</li>
+                            <li><strong>Select Brand:</strong> Choose the brand (filtered by category)</li>
+                            <li><strong>Select Product:</strong> Choose the specific product (filtered by category and brand)</li>
                             <li><strong>Enter Quantity:</strong> Enter the quantity you want to order</li>
                             <li><strong>Enter Unit Price:</strong> Enter the unit price (cost price)</li>
                             <li><strong>Add More:</strong> Click "Add Product" to add more items</li>
                         </ol>
-                        <p class="mb-0 mt-2"><small><strong>Note:</strong> Category and Brand selections are optional filters to help you find products faster.</small></p>
                     </div>
                     
                     <div class="d-flex justify-content-between">
@@ -244,19 +216,6 @@
 </div>
 
 <script>
-// Product data for filtering
-const productData = {
-    {% for product in products %}
-    {{ product.id }}: {
-        category: {{ product.category.id|default:"null" }},
-        brand: {{ product.brand.id|default:"null" }},
-        name: "{{ product.name|escapejs }}",
-        unit: "{{ product.unit_type }}",
-        price: {{ product.cost_price|default:"0" }}
-    }{% if not forloop.last %},{% endif %}
-    {% endfor %}
-};
-
 document.addEventListener('DOMContentLoaded', function() {
     // Set current date as default
     const today = new Date().toISOString().split('T')[0];
@@ -336,46 +295,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Clear filters functionality
-    document.addEventListener('change', function(e) {
-        if (e.target.classList.contains('category-select') || e.target.classList.contains('brand-select')) {
-            const row = e.target.closest('.product-row');
-            const categoryId = row.querySelector('.category-select').value;
-            const brandId = row.querySelector('.brand-select').value;
-            
-            // If both filters are cleared, show all products
-            if (!categoryId && !brandId) {
-                const productSelect = row.querySelector('select[name$="-product"]');
-                if (productSelect) {
-                    productSelect.querySelectorAll('option').forEach(option => {
-                        option.style.display = 'block';
-                    });
-                }
-            }
-        }
-    });
-    
     // Product selection change
     document.addEventListener('change', function(e) {
         if (e.target.name && e.target.name.includes('-product')) {
             const option = e.target.selectedOptions[0];
             const row = e.target.closest('.product-row');
             
-            if (option && option.value) {
-                const productId = option.value;
-                const product = productData[productId];
-                
-                if (product) {
-                    // Auto-fill unit price
-                    const priceInput = row.querySelector('input[name$="-unit_price"]');
-                    if (priceInput) {
-                        priceInput.value = product.price;
-                        calculateRowTotal(row);
-                    }
-                    
-                    // Show product info
-                    showProductInfo(row, product);
+            if (option && option.dataset.price) {
+                // Auto-fill unit price
+                const priceInput = row.querySelector('input[name$="-unit_price"]');
+                if (priceInput) {
+                    priceInput.value = option.dataset.price;
+                    calculateRowTotal(row);
                 }
+            }
+            
+            // Show product info
+            if (option && option.value) {
+                showProductInfo(row, option);
             } else {
                 hideProductInfo(row);
             }
@@ -390,23 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = e.target.closest('.product-row');
             calculateRowTotal(row);
             validateForm();
-        }
-    });
-    
-    // Status change confirmation
-    document.addEventListener('change', function(e) {
-        if (e.target.name === 'status') {
-            if (e.target.value === 'goods-received') {
-                if (!confirm('Are you sure you want to mark this order as "Goods Received"? This will:\n\n• Update inventory levels (increase stock)\n• Mark order as received\n\nClick OK to continue or Cancel to keep the current status.')) {
-                    e.target.value = '';
-                    return;
-                }
-            } else if (e.target.value === 'canceled') {
-                if (!confirm('Are you sure you want to cancel this order? This will:\n\n• Reverse inventory changes (decrease stock)\n• Mark order as cancelled\n\nClick OK to continue or Cancel to keep the current status.')) {
-                    e.target.value = '';
-                    return;
-                }
-            }
         }
     });
     
@@ -474,12 +394,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const brandSelect = row.querySelector('.brand-select');
         if (!brandSelect) return;
         
-        // Show all brands since brands don't have categories
-        // This is just for consistency with the filtering pattern
         const allBrandOptions = brandSelect.querySelectorAll('option');
         
         allBrandOptions.forEach(option => {
-            option.style.display = 'block';
+            if (option.value === '') {
+                option.style.display = 'block';
+            } else {
+                const brandCategoryId = option.dataset.category;
+                if (brandCategoryId === categoryId) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            }
         });
     }
     
@@ -493,26 +420,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (option.value === '') {
                 option.style.display = 'block';
             } else {
-                const productId = option.value;
-                const product = productData[productId];
-                
-                if (product) {
-                    const productCategoryId = product.category;
-                    const productBrandId = product.brand;
-                    
-                    let showProduct = true;
-                    
-                    // Filter by category if selected
-                    if (categoryId && productCategoryId != categoryId) {
-                        showProduct = false;
-                    }
-                    
-                    // Filter by brand if selected
-                    if (brandId && productBrandId != brandId) {
-                        showProduct = false;
-                    }
-                    
-                    option.style.display = showProduct ? 'block' : 'none';
+                const productCategoryId = option.dataset.category;
+                const productBrandId = option.dataset.brand;
+                if (productCategoryId === categoryId && productBrandId === brandId) {
+                    option.style.display = 'block';
                 } else {
                     option.style.display = 'none';
                 }
@@ -544,12 +455,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function showProductInfo(row, product) {
+    function showProductInfo(row, option) {
         const infoDiv = row.querySelector('.product-info');
         if (!infoDiv) return;
         
-        const unit = product.unit || 'units';
-        const price = product.price || '0';
+        const unit = option.dataset.unit || 'units';
+        const price = option.dataset.price || '0';
         const details = `Unit: ${unit} | Suggested Price: ৳${price}`;
         
         infoDiv.querySelector('.product-details').textContent = details;
@@ -574,8 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const price = parseFloat(priceInput.value) || 0;
         const total = quantity * price;
         
-        // Round to 2 decimal places
-        totalInput.value = Math.round(total * 100) / 100;
+        totalInput.value = total.toFixed(2);
         updateTotalAmount();
     }
     
@@ -585,8 +495,6 @@ document.addEventListener('DOMContentLoaded', function() {
             total += parseFloat(input.value) || 0;
         });
         
-        // Round to 2 decimal places
-        total = Math.round(total * 100) / 100;
         document.getElementById('id_total_amount').value = total.toFixed(2);
     }
     
@@ -599,6 +507,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let hasValidProduct = false;
         
         productRows.forEach((row, index) => {
+            const category = row.querySelector('.category-select').value;
+            const brand = row.querySelector('.brand-select').value;
             const product = row.querySelector('select[name$="-product"]').value;
             const quantity = row.querySelector('input[name$="-quantity"]').value;
             const price = row.querySelector('input[name$="-unit_price"]').value;
@@ -613,8 +523,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     errors.push(`Product ${index + 1}: Quantity and price must be greater than 0`);
                     isValid = false;
                 }
-            } else if (product || quantity || price) {
-                errors.push(`Product ${index + 1}: Please fill all required fields (product, quantity, price)`);
+            } else if (category || brand || product || quantity || price) {
+                errors.push(`Product ${index + 1}: Please fill all required fields`);
                 isValid = false;
             }
         });
@@ -644,3 +554,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
+
