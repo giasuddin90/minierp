@@ -6,7 +6,7 @@ from django.db.models import Sum, Count
 from customers.models import Customer
 from suppliers.models import Supplier
 from stock.models import Product, Stock, StockAlert
-from sales.models import SalesOrder, SalesInvoice
+from sales.models import SalesOrder
 from purchases.models import PurchaseOrder
 
 
@@ -21,8 +21,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context['total_suppliers'] = Supplier.objects.count()
         context['total_products'] = Product.objects.count()
         
-        # Calculate total sales
-        total_sales = SalesInvoice.objects.aggregate(
+        # Calculate total sales from orders
+        total_sales = SalesOrder.objects.filter(status='delivered').aggregate(
             total=Sum('total_amount')
         )['total'] or 0
         context['total_sales'] = total_sales
@@ -46,7 +46,7 @@ def dashboard_redirect(request):
         'total_customers': Customer.objects.count(),
         'total_suppliers': Supplier.objects.count(),
         'total_products': Product.objects.count(),
-        'total_sales': SalesInvoice.objects.aggregate(total=Sum('total_amount'))['total'] or 0,
+        'total_sales': SalesOrder.objects.filter(status='delivered').aggregate(total=Sum('total_amount'))['total'] or 0,
         'recent_orders': SalesOrder.objects.select_related('customer').order_by('-created_at')[:5],
         'low_stock_alerts': StockAlert.objects.filter(is_active=True).select_related('product')[:5],
     })

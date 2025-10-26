@@ -11,7 +11,7 @@ from .forms import (
     ProductForm, ProductCategoryForm, ProductBrandForm, StockForm, 
     StockAdjustmentForm, StockAlertForm, ProductSearchForm, StockReportForm
 )
-from sales.models import SalesOrderItem, SalesInvoiceItem
+from sales.models import SalesOrderItem
 from purchases.models import PurchaseOrderItem
 
 
@@ -362,11 +362,8 @@ class InventoryDashboardView(ListView):
                 sales_order__status='delivered'
             ).aggregate(total=Sum('quantity'))['total'] or 0
             
-            sold_from_invoices = SalesInvoiceItem.objects.filter(
-                product=product
-            ).aggregate(total=Sum('quantity'))['total'] or 0
-            
-            total_sold = sold_from_orders + sold_from_invoices
+            # In simplified model, only sales orders are tracked
+            total_sold = sold_from_orders
             
             # Calculate quantities purchased
             purchased = PurchaseOrderItem.objects.filter(

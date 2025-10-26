@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import json
 
 from .models import ReportTemplate, ReportSchedule, ReportLog
-from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesInvoiceItem
+from sales.models import SalesOrder
 from purchases.models import PurchaseOrder
 from stock.models import Product, Stock
 from customers.models import Customer, CustomerLedger
@@ -57,7 +57,7 @@ class ReportDashboardView(ListView):
 
 class FinancialReportView(ListView):
     """Financial reports including P&L, Balance Sheet, Cash Flow"""
-    model = SalesInvoice
+    model = SalesOrder
     template_name = 'reports/financial_report.html'
     context_object_name = 'reports'
     
@@ -92,11 +92,12 @@ class FinancialReportView(ListView):
     
     def get_revenue_data(self, start_date, end_date):
         """Get revenue data for the period"""
-        sales_invoices = SalesInvoice.objects.filter(
-            invoice_date__range=[start_date, end_date]
+        sales_orders = SalesOrder.objects.filter(
+            order_date__range=[start_date, end_date],
+            status='delivered'
         )
         
-        total_sales = sales_invoices.aggregate(
+        total_sales = sales_orders.aggregate(
             total=Sum('total_amount')
         )['total'] or Decimal('0')
         
@@ -127,10 +128,13 @@ class FinancialReportView(ListView):
     
     def get_cash_flow(self, start_date, end_date):
         """Get cash flow data"""
-        # Customer payments
-        customer_payments = SalesPayment.objects.filter(
-            payment_date__range=[start_date, end_date]
-        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        # Sales from delivered orders
+        sales_orders = SalesOrder.objects.filter(
+            order_date__range=[start_date, end_date],
+            status='delivered'
+        )
+        
+        customer_payments = sales_orders.aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
         
         # No supplier payments in simplified model
         supplier_payments = Decimal('0')
@@ -174,14 +178,28 @@ class InventoryReportView(ListView):
                     'value': product.get_total_stock_value(),
                 })
         
-        # Get top selling products
+        # Get top selling products from sales orders
         try:
-            top_selling = SalesInvoiceItem.objects.filter(
-                sales_invoice__invoice_date__gte=timezone.now() - timedelta(days=30)
-            ).values('product__name').annotate(
-                total_sold=Sum('quantity'),
-                total_value=Sum('total_price')
-            ).order_by('-total_sold')[:10]
+            top_selling = []
+            recent_orders = SalesOrder.objects.filter(
+                order_date__gte=timezone.now() - timedelta(days=30),
+                status='delivered'
+            )
+            for order in recent_orders:
+                for item in order.items.all():
+                    product_name = item.product.name
+                    existing = next((p for p in top_selling if p['product__name'] == product_name), None)
+                    if existing:
+                        existing['total_sold'] += float(item.quantity)
+                        existing['total_value'] += float(item.total_price)
+                    else:
+                        top_selling.append({
+                            'product__name': product_name,
+                            'total_sold': float(item.quantity),
+                            'total_value': float(item.total_price),
+                        })
+            top_selling.sort(key=lambda x: x['total_sold'], reverse=True)
+            top_selling = top_selling[:10]
         except:
             top_selling = []
         
@@ -196,8 +214,8 @@ class InventoryReportView(ListView):
 
 
 class SalesReportView(ListView):
-    """Sales reports including orders, invoices, and payments"""
-    model = SalesInvoice
+    """Sales reports including orders"""
+    model = SalesOrder
     template_name = 'reports/sales_report.html'
     context_object_name = 'sales_data'
     
@@ -213,34 +231,38 @@ class SalesReportView(ListView):
             order_date__range=[start_date, end_date]
         )
         
-        sales_invoices = SalesInvoice.objects.filter(
-            invoice_date__range=[start_date, end_date]
-        )
-        
-        sales_payments = SalesPayment.objects.filter(
-            payment_date__range=[start_date, end_date]
-        )
+        delivered_orders = sales_orders.filter(status='delivered')
         
         # Calculate metrics
         total_orders = sales_orders.count()
-        total_invoices = sales_invoices.count()
-        total_sales = sales_invoices.aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
-        total_payments = sales_payments.aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        total_invoices = delivered_orders.count()
+        total_sales = delivered_orders.aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+        total_payments = total_sales  # In simplified model, all delivered orders are considered paid
         
         # Get top customers
-        top_customers = sales_invoices.values('customer__name').annotate(
+        top_customers = delivered_orders.values('customer__name').annotate(
             total_sales=Sum('total_amount'),
             order_count=Count('id')
         ).order_by('-total_sales')[:10]
         
         # Get sales by product
         try:
-            sales_by_product = SalesInvoiceItem.objects.filter(
-                sales_invoice__invoice_date__range=[start_date, end_date]
-            ).values('product__name').annotate(
-                total_quantity=Sum('quantity'),
-                total_value=Sum('total_price')
-            ).order_by('-total_value')[:10]
+            sales_by_product = []
+            for order in delivered_orders:
+                for item in order.items.all():
+                    product_name = item.product.name
+                    existing = next((p for p in sales_by_product if p['product__name'] == product_name), None)
+                    if existing:
+                        existing['total_quantity'] += float(item.quantity)
+                        existing['total_value'] += float(item.total_price)
+                    else:
+                        sales_by_product.append({
+                            'product__name': product_name,
+                            'total_quantity': float(item.quantity),
+                            'total_value': float(item.total_price),
+                        })
+            sales_by_product.sort(key=lambda x: x['total_value'], reverse=True)
+            sales_by_product = sales_by_product[:10]
         except:
             sales_by_product = []
         
@@ -344,13 +366,13 @@ class CustomerReportView(ListView):
         # Calculate customer balances
         customer_balances = []
         for customer in customers:
-            total_sales = SalesInvoice.objects.filter(customer=customer).aggregate(
-                total=Sum('total_amount')
-            )['total'] or Decimal('0')
+            total_sales = SalesOrder.objects.filter(
+                customer=customer, 
+                status='delivered'
+            ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
             
-            total_payments = SalesPayment.objects.filter(
-                sales_invoice__customer=customer
-            ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+            # In simplified model, all delivered orders are considered paid
+            total_payments = total_sales
             
             balance = total_sales - total_payments
             
@@ -365,9 +387,11 @@ class CustomerReportView(ListView):
         customer_balances.sort(key=lambda x: x['balance'], reverse=True)
         
         # Get top customers by sales
-        top_customers = SalesInvoice.objects.values('customer__name').annotate(
+        top_customers = SalesOrder.objects.filter(
+            status='delivered'
+        ).values('customer__name').annotate(
             total_sales=Sum('total_amount'),
-            invoice_count=Count('id')
+            order_count=Count('id')
         ).order_by('-total_sales')[:10]
         
         context.update({
@@ -515,9 +539,10 @@ def get_financial_report_data(request):
     start_date = request.GET.get('start_date', (timezone.now() - timedelta(days=30)).date())
     end_date = request.GET.get('end_date', timezone.now().date())
     
-    # Get revenue data
-    total_sales = SalesInvoice.objects.filter(
-        invoice_date__range=[start_date, end_date]
+    # Get revenue data from delivered orders
+    total_sales = SalesOrder.objects.filter(
+        order_date__range=[start_date, end_date],
+        status='delivered'
     ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
     
     return {
@@ -559,8 +584,9 @@ def get_sales_report_data(request):
     start_date = request.GET.get('start_date', (timezone.now() - timedelta(days=30)).date())
     end_date = request.GET.get('end_date', timezone.now().date())
     
-    total_sales = SalesInvoice.objects.filter(
-        invoice_date__range=[start_date, end_date]
+    total_sales = SalesOrder.objects.filter(
+        order_date__range=[start_date, end_date],
+        status='delivered'
     ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
     
     total_orders = SalesOrder.objects.filter(
@@ -604,13 +630,13 @@ def get_customer_report_data(request):
     
     customer_data = []
     for customer in customers:
-        total_sales = SalesInvoice.objects.filter(customer=customer).aggregate(
-            total=Sum('total_amount')
-        )['total'] or Decimal('0')
+        total_sales = SalesOrder.objects.filter(
+            customer=customer,
+            status='delivered'
+        ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
         
-        total_payments = SalesPayment.objects.filter(
-            sales_invoice__customer=customer
-        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        # In simplified model, all delivered orders are considered paid
+        total_payments = total_sales
         
         customer_data.append({
             'name': customer.name,

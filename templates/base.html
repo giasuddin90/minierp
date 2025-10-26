@@ -164,21 +164,6 @@
                                 <i class="bi bi-plus-circle"></i> New Order
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'invoice_list' %}active{% endif %}" href="{% url 'sales:invoice_list' %}">
-                                <i class="bi bi-receipt"></i> Invoices
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'payment_list' %}active{% endif %}" href="{% url 'sales:payment_list' %}">
-                                <i class="bi bi-credit-card"></i> Payments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'sales' and request.resolver_match.url_name == 'return_list' %}active{% endif %}" href="{% url 'sales:return_list' %}">
-                                <i class="bi bi-arrow-return-left"></i> Returns
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </li>

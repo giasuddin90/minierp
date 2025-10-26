@@ -7,17 +7,16 @@ from stock.models import Product
 
 class SalesOrder(models.Model):
     ORDER_STATUS = [
-        ('draft', 'Draft'),
-        ('confirmed', 'Confirmed'),
+        ('order', 'Order'),
         ('delivered', 'Delivered'),
-        ('cancelled', 'Cancelled'),
+        ('cancel', 'Cancel'),
     ]
     
     order_number = models.CharField(max_length=50, unique=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_date = models.DateField()
     delivery_date = models.DateField()
-    status = models.CharField(max_length=20, choices=ORDER_STATUS, default='draft')
+    status = models.CharField(max_length=20, choices=ORDER_STATUS, default='order')
     total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     notes = models.TextField(blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -27,11 +26,11 @@ class SalesOrder(models.Model):
     def __str__(self):
         return f"SO-{self.order_number} - {self.customer.name}"
 
-    def complete_order(self, user=None):
-        """Complete the order and update inventory"""
+    def mark_delivered(self, user=None):
+        """Mark order as delivered and update inventory"""
         from stock.models import Stock
         
-        if self.status != 'delivered':
+        if self.status == 'order':
             self.status = 'delivered'
             self.save()
             
@@ -44,9 +43,31 @@ class SalesOrder(models.Model):
                     unit_cost=item.unit_price,
                     movement_type='outward',
                     reference=f"SO-{self.order_number}",
-                    description=f"Sales order completion - {self.customer.name}",
+                    description=f"Sales order delivered - {self.customer.name}",
                     user=user
                 )
+    
+    def cancel_order(self, user=None):
+        """Cancel the order"""
+        if self.status in ['order', 'delivered']:
+            was_delivered = self.status == 'delivered'
+            self.status = 'cancel'
+            self.save()
+            
+            # If order was delivered, restore inventory
+            if was_delivered:
+                from stock.models import Stock
+                for item in self.items.all():
+                    # Restore stock (inward movement)
+                    Stock.update_stock(
+                        product=item.product,
+                        quantity_change=item.quantity,
+                        unit_cost=item.unit_price,
+                        movement_type='inward',
+                        reference=f"SO-{self.order_number}",
+                        description=f"Sales order cancelled - {self.customer.name}",
+                        user=user
+                    )
 
     class Meta:
         verbose_name = "Sales Order"
@@ -68,111 +89,3 @@ class SalesOrderItem(models.Model):
         verbose_name_plural = "Sales Order Items"
 
 
-class SalesInvoice(models.Model):
-    PAYMENT_TYPES = [
-        ('cash', 'Cash'),
-        ('credit', 'Credit'),
-    ]
-    
-    invoice_number = models.CharField(max_length=50, unique=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    sales_order = models.ForeignKey(SalesOrder, on_delete=models.SET_NULL, null=True, blank=True)
-    invoice_date = models.DateField()
-    payment_type = models.CharField(max_length=20, choices=PAYMENT_TYPES)
-    subtotal = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    labor_charges = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    discount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    paid_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    due_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    notes = models.TextField(blank=True)
-    is_sms_sent = models.BooleanField(default=False)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"INV-{self.invoice_number} - {self.customer.name}"
-
-    class Meta:
-        verbose_name = "Sales Invoice"
-        verbose_name_plural = "Sales Invoices"
-
-
-class SalesInvoiceItem(models.Model):
-    sales_invoice = models.ForeignKey(SalesInvoice, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    unit_price = models.DecimalField(max_digits=15, decimal_places=2)
-    total_price = models.DecimalField(max_digits=15, decimal_places=2)
-
-    def __str__(self):
-        return f"{self.sales_invoice.invoice_number} - {self.product.name}"
-
-    class Meta:
-        verbose_name = "Sales Invoice Item"
-        verbose_name_plural = "Sales Invoice Items"
-
-
-class SalesReturn(models.Model):
-    RETURN_STATUS = [
-        ('draft', 'Draft'),
-        ('approved', 'Approved'),
-        ('cancelled', 'Cancelled'),
-    ]
-    
-    return_number = models.CharField(max_length=50, unique=True)
-    sales_invoice = models.ForeignKey(SalesInvoice, on_delete=models.CASCADE)
-    return_date = models.DateField()
-    status = models.CharField(max_length=20, choices=RETURN_STATUS, default='draft')
-    total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    reason = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"RET-{self.return_number} - {self.sales_invoice.customer.name}"
-
-    class Meta:
-        verbose_name = "Sales Return"
-        verbose_name_plural = "Sales Returns"
-
-
-class SalesReturnItem(models.Model):
-    sales_return = models.ForeignKey(SalesReturn, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    unit_price = models.DecimalField(max_digits=15, decimal_places=2)
-    total_price = models.DecimalField(max_digits=15, decimal_places=2)
-
-    def __str__(self):
-        return f"{self.sales_return.return_number} - {self.product.name}"
-
-    class Meta:
-        verbose_name = "Sales Return Item"
-        verbose_name_plural = "Sales Return Items"
-
-
-class SalesPayment(models.Model):
-    PAYMENT_METHODS = [
-        ('cash', 'Cash'),
-        ('bank_transfer', 'Bank Transfer'),
-        ('cheque', 'Cheque'),
-        ('other', 'Other'),
-    ]
-    
-    sales_invoice = models.ForeignKey(SalesInvoice, on_delete=models.CASCADE)
-    payment_date = models.DateField()
-    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
-    amount = models.DecimalField(max_digits=15, decimal_places=2)
-    reference = models.CharField(max_length=100, blank=True)
-    notes = models.TextField(blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.sales_invoice.invoice_number} - {self.amount}"
-
-    class Meta:
-        verbose_name = "Sales Payment"
-        verbose_name_plural = "Sales Payments"

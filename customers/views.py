@@ -6,7 +6,7 @@ from django.db.models import Q, Sum
 from decimal import Decimal
 from .models import Customer, CustomerLedger, CustomerCommitment
 from .forms import CustomerForm, CustomerLedgerForm, CustomerCommitmentForm, SetOpeningBalanceForm
-from sales.models import SalesOrder, SalesInvoice, SalesPayment, SalesReturn
+from sales.models import SalesOrder
 
 
 class CustomerListView(ListView):
@@ -85,48 +85,8 @@ class CustomerLedgerDetailView(DetailView):
                 'created_at': order.created_at,
             })
         
-        # Sales Invoices
-        sales_invoices = SalesInvoice.objects.filter(customer=customer).order_by('-invoice_date')
-        for invoice in sales_invoices:
-            transactions.append({
-                'date': invoice.invoice_date,
-                'type': 'Sales Invoice',
-                'reference': f"INV-{invoice.invoice_number}",
-                'description': f"Sales Invoice - {invoice.customer.name}",
-                'debit': invoice.total_amount,
-                'credit': Decimal('0.00'),
-                'status': 'invoiced',
-                'created_at': invoice.created_at,
-            })
-        
-        # Sales Payments
-        sales_payments = SalesPayment.objects.filter(sales_invoice__customer=customer).order_by('-payment_date')
-        for payment in sales_payments:
-            transactions.append({
-                'date': payment.payment_date,
-                'type': 'Payment',
-                'reference': payment.reference or f"PAY-{payment.id}",
-                'description': f"Payment - {payment.sales_invoice.invoice_number}",
-                'debit': Decimal('0.00'),
-                'credit': payment.amount,
-                'status': 'paid',
-                'created_at': payment.created_at,
-                'payment_method': payment.payment_method,
-            })
-        
-        # Sales Returns
-        sales_returns = SalesReturn.objects.filter(sales_invoice__customer=customer).order_by('-return_date')
-        for ret in sales_returns:
-            transactions.append({
-                'date': ret.return_date,
-                'type': 'Return',
-                'reference': f"RET-{ret.return_number}",
-                'description': f"Sales Return - {ret.sales_invoice.customer.name}",
-                'debit': Decimal('0.00'),
-                'credit': ret.total_amount,
-                'status': ret.status,
-                'created_at': ret.created_at,
-            })
+        # Note: In simplified model, only sales orders are tracked
+        # Sales invoices, payments, and returns are not used
         
         # Manual Ledger Entries
         ledger_entries = CustomerLedger.objects.filter(customer=customer).order_by('-transaction_date')
