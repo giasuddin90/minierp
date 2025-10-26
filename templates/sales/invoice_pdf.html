@@ -273,9 +273,14 @@
                 </div>
                 <div class="customer-info">
                     <h3>Bill To:</h3>
-                    <p><strong>{{ order.customer.name }}</strong></p>
-                    <p>{{ order.customer.address|default:"Address not provided" }}</p>
-                    <p>Phone: {{ order.customer.phone|default:"Not provided" }}</p>
+                    {% if order.customer %}
+                        <p><strong>{{ order.customer.name }}</strong></p>
+                        <p>{{ order.customer.address|default:"Address not provided" }}</p>
+                        <p>Phone: {{ order.customer.phone|default:"Not provided" }}</p>
+                    {% else %}
+                        <p><strong>{{ order.customer_name|default:"Anonymous Customer" }}</strong></p>
+                        <p>Instant Sale</p>
+                    {% endif %}
                 </div>
             </div>
             
@@ -289,6 +294,16 @@
                     <div class="detail-row">
                         <span class="detail-label">Date:</span>
                         <span class="detail-value">{{ order.order_date|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Type:</span>
+                        <span class="detail-value">
+                            {% if order.sales_type == 'instant' %}
+                                <span class="badge bg-info">Instant Sale</span>
+                            {% else %}
+                                <span class="badge bg-primary">Regular Sale</span>
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
                 <div class="detail-group">

@@ -25,16 +25,20 @@ class SalesOrderForm(forms.ModelForm):
     
     class Meta:
         model = SalesOrder
-        fields = ['customer', 'order_date', 'delivery_date', 'status', 'notes']
+        fields = ['sales_type', 'customer', 'customer_name', 'order_date', 'delivery_date', 'status', 'notes']
         widgets = {
+            'sales_type': forms.Select(attrs={'class': 'form-select'}),
             'order_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'delivery_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'customer': forms.Select(attrs={'class': 'form-select'}),
+            'customer_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter customer name for instant sales'}),
             'status': forms.Select(attrs={'class': 'form-select'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
         labels = {
+            'sales_type': 'Sales Type',
             'customer': 'Customer',
+            'customer_name': 'Customer Name',
             'order_date': 'Order Date',
             'delivery_date': 'Delivery Date',
             'status': 'Status',
@@ -50,9 +54,71 @@ class SalesOrderForm(forms.ModelForm):
             ('cancel', 'Cancel'),
         ]
         
+        # Add JavaScript for conditional field display
+        self.fields['sales_type'].widget.attrs.update({
+            'onchange': 'toggleCustomerFields()'
+        })
+        
         # Set default status
         if not self.instance.pk:
             self.fields['status'].initial = 'order'
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        sales_type = cleaned_data.get('sales_type')
+        customer = cleaned_data.get('customer')
+        customer_name = cleaned_data.get('customer_name')
+        delivery_date = cleaned_data.get('delivery_date')
+        
+        # For instant sales, customer is optional but customer_name is required
+        if sales_type == 'instant':
+            if not customer and not customer_name:
+                raise forms.ValidationError("For instant sales, either select a customer or enter a customer name.")
+            # Delivery date is not required for instant sales
+            if delivery_date:
+                cleaned_data['delivery_date'] = None
+        
+        # For regular sales, customer is required
+        elif sales_type == 'regular':
+            if not customer:
+                raise forms.ValidationError("Customer is required for regular sales.")
+        
+        return cleaned_data
+
+
+class InstantSalesForm(forms.ModelForm):
+    """Form specifically for instant sales"""
+    
+    class Meta:
+        model = SalesOrder
+        fields = ['customer_name', 'order_date', 'notes', 'sales_type']
+        widgets = {
+            'order_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'customer_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter customer name (optional)'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'sales_type': forms.HiddenInput(),
+        }
+        labels = {
+            'customer_name': 'Customer Name',
+            'order_date': 'Sale Date',
+            'notes': 'Notes',
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set default values for instant sales
+        if not self.instance.pk:
+            from django.utils import timezone
+            self.fields['order_date'].initial = timezone.now().date()
+            self.fields['sales_type'].initial = 'instant'
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.sales_type = 'instant'
+        instance.status = 'delivered'  # Instant sales are immediately delivered
+        if commit:
+            instance.save()
+        return instance
 
 
 class SalesOrderItemForm(forms.ModelForm):
@@ -158,10 +224,8 @@ SalesOrderItemFormSet = inlineformset_factory(
 # Custom formset class to handle creation without instance
 class SalesOrderItemFormSetCustom(SalesOrderItemFormSet):
     def __init__(self, *args, **kwargs):
-        # If no instance is provided, create a temporary one
+        # If no instance is provided, add one extra form for new orders
         if 'instance' not in kwargs or kwargs['instance'] is None:
-            kwargs['instance'] = SalesOrder()
-            # Add one extra form for new orders
             self.extra = 1
         else:
             # No extra forms for existing orders

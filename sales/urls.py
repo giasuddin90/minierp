@@ -18,6 +18,10 @@ urlpatterns = [
     path('orders/<int:pk>/edit/', views.SalesOrderUpdateView.as_view(), name='order_edit'),
     path('orders/<int:pk>/delete/', views.SalesOrderDeleteView.as_view(), name='order_delete'),
     
+    # Instant Sales
+    path('instant-sales/', views.InstantSalesCreateView.as_view(), name='instant_sales'),
+    path('instant-sales/<int:pk>/edit/', views.InstantSalesUpdateView.as_view(), name='instant_sales_edit'),
+    
     # Order Flow Actions
     path('orders/<int:order_id>/mark-delivered/', views.mark_order_delivered, name='mark_order_delivered'),
     path('orders/<int:order_id>/cancel/', views.cancel_sales_order, name='cancel_sales_order'),

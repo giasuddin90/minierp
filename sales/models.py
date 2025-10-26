@@ -12,10 +12,17 @@ class SalesOrder(models.Model):
         ('cancel', 'Cancel'),
     ]
     
+    SALES_TYPE = [
+        ('regular', 'Regular Sale'),
+        ('instant', 'Instant Sale'),
+    ]
+    
     order_number = models.CharField(max_length=50, unique=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    sales_type = models.CharField(max_length=20, choices=SALES_TYPE, default='regular')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
+    customer_name = models.CharField(max_length=100, blank=True, help_text="For instant sales when no customer is selected")
     order_date = models.DateField()
-    delivery_date = models.DateField()
+    delivery_date = models.DateField(null=True, blank=True, help_text="Not required for instant sales")
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='order')
     total_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     notes = models.TextField(blank=True)
@@ -24,7 +31,8 @@ class SalesOrder(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"SO-{self.order_number} - {self.customer.name}"
+        customer_name = self.customer.name if self.customer else self.customer_name or "Anonymous"
+        return f"SO-{self.order_number} - {customer_name}"
 
     def mark_delivered(self, user=None):
         """Mark order as delivered and update inventory"""
@@ -35,6 +43,7 @@ class SalesOrder(models.Model):
             self.save()
             
             # Update inventory for each item
+            customer_name = self.customer.name if self.customer else self.customer_name or "Anonymous"
             for item in self.items.all():
                 # Reduce stock (outward movement)
                 Stock.update_stock(
@@ -43,7 +52,7 @@ class SalesOrder(models.Model):
                     unit_cost=item.unit_price,
                     movement_type='outward',
                     reference=f"SO-{self.order_number}",
-                    description=f"Sales order delivered - {self.customer.name}",
+                    description=f"Sales order delivered - {customer_name}",
                     user=user
                 )
     
@@ -57,6 +66,7 @@ class SalesOrder(models.Model):
             # If order was delivered, restore inventory
             if was_delivered:
                 from stock.models import Stock
+                customer_name = self.customer.name if self.customer else self.customer_name or "Anonymous"
                 for item in self.items.all():
                     # Restore stock (inward movement)
                     Stock.update_stock(
@@ -65,7 +75,7 @@ class SalesOrder(models.Model):
                         unit_cost=item.unit_price,
                         movement_type='inward',
                         reference=f"SO-{self.order_number}",
-                        description=f"Sales order cancelled - {self.customer.name}",
+                        description=f"Sales order cancelled - {customer_name}",
                         user=user
                     )
 

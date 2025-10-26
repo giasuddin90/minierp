@@ -29,7 +29,16 @@
                             {% for order in reports %}
                             <tr>
                                 <td>{{ order.order_number }}</td>
-                                <td>{{ order.customer.name }}</td>
+                                <td>
+                                    {% if order.customer %}
+                                        {{ order.customer.name }}
+                                    {% else %}
+                                        {{ order.customer_name|default:"Anonymous" }}
+                                        {% if order.sales_type == 'instant' %}
+                                        <small class="text-muted text-info">(Instant Sale)</small>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
                                 <td>{{ order.order_date|date:"M d, Y" }}</td>
                                 <td>
                                     <span class="badge bg-{% if order.status == 'delivered' %}success{% elif order.status == 'confirmed' %}primary{% else %}warning{% endif %}">
