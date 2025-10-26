@@ -102,7 +102,7 @@ class SupplierLedgerDetailView(DetailView):
         transactions = []
         
         # Purchase Orders
-        purchase_orders = PurchaseOrder.objects.filter(supplier=supplier).order_by('-order_date')
+        purchase_orders = PurchaseOrder.objects.filter(supplier=supplier).exclude(status="canceled").order_by('-order_date')
         for po in purchase_orders:
             transactions.append({
                 'date': po.order_date,
