@@ -3,6 +3,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db import transaction
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.conf import settings
+import os
 from .models import (
     SalesOrder, SalesOrderItem
 )
@@ -212,3 +216,31 @@ def cancel_sales_order(request, order_id):
         messages.error(request, f"Error cancelling order: {str(e)}")
     
     return redirect('sales:order_detail', order_id)
+
+
+def sales_order_invoice(request, order_id):
+    """Generate PDF invoice for sales order"""
+    try:
+        order = get_object_or_404(SalesOrder, id=order_id)
+        
+        # Get template
+        template = get_template('sales/invoice_pdf.html')
+        
+        # Prepare context
+        context = {
+            'order': order,
+            'items': order.items.all(),
+            'company_name': 'Sun Electric',
+            'company_address': '123 Business Street, City, Country',
+            'company_phone': '+1 234 567 8900',
+        }
+        
+        # Render HTML
+        html = template.render(context)
+        
+        # For now, return HTML response (can be enhanced with PDF generation later)
+        return HttpResponse(html, content_type='text/html')
+        
+    except Exception as e:
+        messages.error(request, f"Error generating invoice: {str(e)}")
+        return redirect('sales:order_detail', order_id)

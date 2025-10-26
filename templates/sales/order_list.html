@@ -57,13 +57,16 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{% url 'sales:order_detail' order.pk %}" class="btn btn-outline-primary">
+                                        <a href="{% url 'sales:order_detail' order.pk %}" class="btn btn-outline-primary" title="View Details">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{% url 'sales:order_edit' order.pk %}" class="btn btn-outline-warning">
+                                        <a href="{% url 'sales:order_edit' order.pk %}" class="btn btn-outline-warning" title="Edit Order">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="{% url 'sales:order_delete' order.pk %}" class="btn btn-outline-danger">
+                                        <a href="{% url 'sales:order_invoice' order.pk %}" class="btn btn-outline-info" title="Download Invoice" target="_blank">
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                        <a href="{% url 'sales:order_delete' order.pk %}" class="btn btn-outline-danger" title="Delete Order">
                                             <i class="bi bi-trash"></i>
                                         </a>
                                     </div>

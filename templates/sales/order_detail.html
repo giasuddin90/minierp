@@ -144,6 +144,15 @@
                     <a href="{% url 'customers:customer_detail' object.customer.pk %}" class="btn btn-info">
                         <i class="bi bi-person"></i> View Customer
                     </a>
+                    
+                    <!-- Invoice Actions -->
+                    <hr class="my-2">
+                    <a href="{% url 'sales:order_invoice' object.pk %}" class="btn btn-primary" target="_blank">
+                        <i class="bi bi-download"></i> Download Invoice
+                    </a>
+                    <button onclick="printInvoice()" class="btn btn-outline-primary">
+                        <i class="bi bi-printer"></i> Print Invoice
+                    </button>
                 </div>
             </div>
         </div>
@@ -164,4 +173,17 @@
         </div>
     </div>
 </div>
+
+<script>
+function printInvoice() {
+    // Open invoice in new window for printing
+    const invoiceUrl = "{% url 'sales:order_invoice' object.pk %}";
+    const printWindow = window.open(invoiceUrl, '_blank');
+    
+    // Wait for the window to load, then trigger print
+    printWindow.onload = function() {
+        printWindow.print();
+    };
+}
+</script>
 {% endblock %}
