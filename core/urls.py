@@ -19,6 +19,7 @@ urlpatterns = [
     path('stock/', include('stock.urls')),
     path('sales/', include('sales.urls')),
     path('purchases/', include('purchases.urls')),
+    path('expenses/', include('expenses.urls')),
 ]
 
 # Serve static and media files during development

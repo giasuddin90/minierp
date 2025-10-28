@@ -198,6 +198,27 @@
                 </div>
             </li>
 
+            <!-- Expenses -->
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'expenses' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#expensesSubmenu" aria-expanded="false">
+                    <i class="bi bi-cash-stack"></i> Expenses
+                </a>
+                <div class="collapse" id="expensesSubmenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'expense_list' %}active{% endif %}" href="{% url 'expenses:expense_list' %}">
+                                <i class="bi bi-list-ul"></i> All Expenses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}" href="{% url 'expenses:category_list' %}">
+                                <i class="bi bi-tag"></i> Expense Category
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             <!-- Reports -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'reports' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#reportsSubmenu" aria-expanded="false">

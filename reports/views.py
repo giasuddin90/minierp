@@ -407,7 +407,7 @@ class AccountsReceivableReportView(ListView):
         for customer in customers:
             # Get total sales (delivered orders)
             total_sales = SalesOrder.objects.filter(
-                customer=customer,
+                customer=customer, 
                 status='delivered'
             ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
             
