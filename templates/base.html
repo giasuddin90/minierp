@@ -32,12 +32,24 @@
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h4><i class="bi bi-building"></i> EZYHISHAB</h4>
+            <div class="brand-logo">
+                <div class="logo-icon">
+                    <i class="bi bi-building"></i>
+                </div>
+                <div class="brand-text">
+                    <h4 class="brand-name">EZYHISHAB</h4>
+                    <small class="brand-subtitle">ERP System</small>
+                </div>
+            </div>
             {% if user.is_authenticated %}
-                <div class="welcome-user">
-                    <small class="text-muted">
-                        <i class="bi bi-person-circle"></i> Welcome, {{ user.username }}
-                    </small>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name">{{ user.username }}</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
                 </div>
             {% endif %}
         </div>

@@ -209,13 +209,52 @@
     }
 }
 
-/* Responsive Spacing */
+/* Responsive Sidebar Header */
 @media (max-width: 768px) {
-    .mb-mobile-2 { margin-bottom: var(--spacing-sm) !important; }
-    .mb-mobile-3 { margin-bottom: var(--spacing-md) !important; }
-    .mb-mobile-4 { margin-bottom: var(--spacing-lg) !important; }
+    .sidebar-header {
+        padding: var(--spacing-md);
+    }
     
-    .p-mobile-2 { padding: var(--spacing-sm) !important; }
-    .p-mobile-3 { padding: var(--spacing-md) !important; }
-    .p-mobile-4 { padding: var(--spacing-lg) !important; }
+    .brand-logo {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .logo-icon {
+        padding: var(--spacing-xs);
+        margin-right: var(--spacing-sm);
+    }
+    
+    .logo-icon i {
+        font-size: 1.2rem;
+    }
+    
+    .brand-name {
+        font-size: var(--text-base);
+    }
+    
+    .brand-subtitle {
+        font-size: var(--text-xs);
+    }
+    
+    .user-info {
+        padding: var(--spacing-xs);
+    }
+    
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        margin-right: var(--spacing-xs);
+    }
+    
+    .user-avatar i {
+        font-size: 1rem;
+    }
+    
+    .user-name {
+        font-size: var(--text-xs);
+    }
+    
+    .user-role {
+        font-size: 0.7rem;
+    }
 }
