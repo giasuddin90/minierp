@@ -66,22 +66,38 @@ class Product(models.Model):
         """Get total quantity across all warehouses"""
         try:
             return sum(stock.quantity for stock in self.stock_set.all())
-        except:
-            return 0
+        except Exception as e:
+            # Log the error for debugging
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Error calculating total quantity for product {self.id}: {e}")
+            return Decimal('0')
     
     def get_total_stock_value(self):
         """Get total stock value across all warehouses"""
         try:
-            total_value = 0
+            total_value = Decimal('0')
             for stock in self.stock_set.all():
                 total_value += stock.quantity * self.selling_price
             return total_value
-        except:
-            return 0
+        except Exception as e:
+            # Log the error for debugging
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Error calculating total stock value for product {self.id}: {e}")
+            return Decimal('0')
 
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
+        ordering = ['name']
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['category']),
+            models.Index(fields=['brand']),
+            models.Index(fields=['is_active']),
+            models.Index(fields=['selling_price']),
+        ]
 
 
 class Stock(models.Model):

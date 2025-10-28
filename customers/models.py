@@ -45,6 +45,13 @@ class Customer(models.Model):
     class Meta:
         verbose_name = "Customer"
         verbose_name_plural = "Customers"
+        ordering = ['name']
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['customer_type']),
+            models.Index(fields=['is_active']),
+            models.Index(fields=['current_balance']),
+        ]
 
 
 class CustomerLedger(models.Model):

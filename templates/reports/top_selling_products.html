@@ -94,22 +94,6 @@
     </div>
 </div>
 
-<!-- Top Products Chart -->
-<div class="row mb-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-bar-chart"></i>
-                    Top 10 Products by Value
-                </h5>
-            </div>
-            <div class="card-body">
-                <canvas id="productsChart" width="400" height="200"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Top Products Table -->
 <div class="row">
@@ -162,57 +146,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-// Top Products Chart
-const productsCtx = document.getElementById('productsChart').getContext('2d');
-new Chart(productsCtx, {
-    type: 'bar',
-    data: {
-        labels: [
-            {% for product in top_products|slice:":10" %}
-                '{{ product.product_name|truncatechars:20 }}'{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ],
-        datasets: [{
-            label: 'Sales Value (৳)',
-            data: [
-                {% for product in top_products|slice:":10" %}
-                    {{ product.total_value }}{% if not forloop.last %},{% endif %}
-                {% endfor %}
-            ],
-            backgroundColor: 'rgba(40, 167, 69, 0.8)',
-            borderColor: '#28a745',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        return 'Sales: ৳' + context.parsed.y.toLocaleString();
-                    }
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value) {
-                        return '৳' + value.toLocaleString();
-                    }
-                }
-            }
-        }
-    }
-});
-</script>
 {% endblock %}

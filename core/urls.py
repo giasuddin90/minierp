@@ -1,16 +1,14 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
+from django.views.generic import RedirectView
 from . import views
 from . import admin_views
 
-def redirect_to_dashboard(request):
-    return redirect('/dashboard/')
-
 urlpatterns = [
-    path('', redirect_to_dashboard, name='home'),
+    path('', RedirectView.as_view(url=reverse_lazy('dashboard'), permanent=False), name='home'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
     path('reports/', include('reports.urls')),

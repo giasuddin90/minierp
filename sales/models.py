@@ -82,6 +82,14 @@ class SalesOrder(models.Model):
     class Meta:
         verbose_name = "Sales Order"
         verbose_name_plural = "Sales Orders"
+        ordering = ['-order_date', '-created_at']
+        indexes = [
+            models.Index(fields=['order_date']),
+            models.Index(fields=['status']),
+            models.Index(fields=['customer']),
+            models.Index(fields=['sales_type']),
+            models.Index(fields=['created_at']),
+        ]
 
 
 class SalesOrderItem(models.Model):
@@ -97,5 +105,9 @@ class SalesOrderItem(models.Model):
     class Meta:
         verbose_name = "Sales Order Item"
         verbose_name_plural = "Sales Order Items"
+        indexes = [
+            models.Index(fields=['sales_order']),
+            models.Index(fields=['product']),
+        ]
 
 
