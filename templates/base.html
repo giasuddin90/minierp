@@ -134,6 +134,13 @@
                             </a>
                         </li>
                         
+                        <!-- Unit Types Section -->
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'unittype_list' %}active{% endif %}" href="{% url 'stock:unittype_list' %}">
+                                <i class="bi bi-rulers"></i> Unit Types
+                            </a>
+                        </li>
+                        
                         <!-- Stock Management Section -->
                         <li class="nav-item">
                             <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'stock_list' %}active{% endif %}" href="{% url 'stock:stock_list' %}">

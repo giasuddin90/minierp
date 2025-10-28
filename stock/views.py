@@ -6,9 +6,9 @@ from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from django.contrib import messages
 from datetime import datetime, timedelta
-from .models import ProductCategory, ProductBrand, Product, Stock, StockAlert
+from .models import ProductCategory, ProductBrand, UnitType, Product, Stock, StockAlert
 from .forms import (
-    ProductForm, ProductCategoryForm, ProductBrandForm, StockForm, 
+    ProductForm, ProductCategoryForm, ProductBrandForm, UnitTypeForm, StockForm, 
     StockAdjustmentForm, StockAlertForm, ProductSearchForm, StockReportForm
 )
 from sales.models import SalesOrderItem
@@ -429,3 +429,70 @@ class InventoryDashboardView(ListView):
         })
         
         return context
+
+
+# UnitType Management Views
+class UnitTypeListView(ListView):
+    model = UnitType
+    template_name = 'stock/unittype_list.html'
+    context_object_name = 'unit_types'
+    paginate_by = 20
+    
+    def get_queryset(self):
+        queryset = UnitType.objects.all()
+        
+        # Filter by status
+        status = self.request.GET.get('status')
+        if status == 'active':
+            queryset = queryset.filter(is_active=True)
+        elif status == 'inactive':
+            queryset = queryset.filter(is_active=False)
+        
+        # Search by name or code
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(name__icontains=search) | 
+                Q(code__icontains=search)
+            )
+        
+        return queryset.order_by('name')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_status'] = self.request.GET.get('status', '')
+        context['current_search'] = self.request.GET.get('search', '')
+        return context
+
+
+class UnitTypeCreateView(CreateView):
+    model = UnitType
+    form_class = UnitTypeForm
+    template_name = 'stock/unittype_form.html'
+    success_url = reverse_lazy('stock:unittype_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Unit Type "{form.instance.name}" created successfully.')
+        return super().form_valid(form)
+
+
+class UnitTypeUpdateView(UpdateView):
+    model = UnitType
+    form_class = UnitTypeForm
+    template_name = 'stock/unittype_form.html'
+    success_url = reverse_lazy('stock:unittype_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, f'Unit Type "{form.instance.name}" updated successfully.')
+        return super().form_valid(form)
+
+
+class UnitTypeDeleteView(DeleteView):
+    model = UnitType
+    template_name = 'stock/unittype_confirm_delete.html'
+    success_url = reverse_lazy('stock:unittype_list')
+    
+    def delete(self, request, *args, **kwargs):
+        unit_type = self.get_object()
+        messages.success(request, f'Unit Type "{unit_type.name}" deleted successfully.')
+        return super().delete(request, *args, **kwargs)

@@ -31,6 +31,12 @@ urlpatterns = [
     path('brands/<int:pk>/edit/', views.ProductBrandUpdateView.as_view(), name='brand_edit'),
     path('brands/<int:pk>/delete/', views.ProductBrandDeleteView.as_view(), name='brand_delete'),
     
+    # UnitType Management
+    path('unit-types/', views.UnitTypeListView.as_view(), name='unittype_list'),
+    path('unit-types/create/', views.UnitTypeCreateView.as_view(), name='unittype_create'),
+    path('unit-types/<int:pk>/edit/', views.UnitTypeUpdateView.as_view(), name='unittype_edit'),
+    path('unit-types/<int:pk>/delete/', views.UnitTypeDeleteView.as_view(), name='unittype_delete'),
+    
     # Stock Management
     path('stock/', views.StockListView.as_view(), name='stock_list'),
     path('stock/<int:pk>/', views.StockDetailView.as_view(), name='stock_detail'),
