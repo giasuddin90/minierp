@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory Report - Enhanced{% endblock %}
+
+{% block page_title %}Inventory Report{% endblock %}
+{% block page_description %}Comprehensive inventory analysis with stock levels and movement tracking{% endblock %}
+
+{% block page_actions %}
+<div class="btn-group">
+    <a href="{% url 'reports:download_inventory_csv' %}" class="btn btn-success">
+        <i class="bi bi-download"></i> Download CSV
+    </a>
+    <button class="btn btn-primary" onclick="window.print()">
+        <i class="bi bi-printer"></i> Print
+    </button>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card primary">
+            <div class="icon primary">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <h3 style="color: var(--primary-color);">{{ total_products }}</h3>
+            <p>Total Products</p>
+            <small class="text-primary">In catalog</small>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card info">
+            <div class="icon info">
+                <i class="bi bi-currency-dollar"></i>
+            </div>
+            <h3 style="color: var(--info-color);">৳{{ total_stock_value|floatformat:0 }}</h3>
+            <p>Total Stock Value</p>
+            <small class="text-info">Inventory value</small>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card warning">
+            <div class="icon warning">
+                <i class="bi bi-exclamation-triangle"></i>
+            </div>
+            <h3 style="color: var(--warning-color);">{{ low_stock_items|length }}</h3>
+            <p>Low Stock Items</p>
+            <small class="text-warning">Need attention</small>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stats-card danger">
+            <div class="icon danger">
+                <i class="bi bi-x-circle"></i>
+            </div>
+            <h3 style="color: var(--danger-color);">{{ out_of_stock_items|length }}</h3>
+            <p>Out of Stock</p>
+            <small class="text-danger">Critical items</small>
+        </div>
+    </div>
+</div>
+
+<!-- Stock Status Chart -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-pie-chart"></i>
+                    Stock Status Overview
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="stockStatusChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-bar-chart"></i>
+                    Top Moving Products
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="productMovementChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Low Stock Alerts -->
+{% if low_stock_items %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle text-warning"></i>
+                    Low Stock Alerts
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Stock Value</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in low_stock_items %}
+                            <tr>
+                                <td>{{ item.product.product_code }}</td>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.product.category.name|default:"N/A" }}</td>
+                                <td class="text-warning">{{ item.quantity }}</td>
+                                <td>৳{{ item.value|floatformat:0 }}</td>
+                                <td><span class="badge bg-warning">Low Stock</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Out of Stock Items -->
+{% if out_of_stock_items %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-x-circle text-danger"></i>
+                    Out of Stock Items
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Stock Value</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in out_of_stock_items %}
+                            <tr>
+                                <td>{{ item.product.product_code }}</td>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.product.category.name|default:"N/A" }}</td>
+                                <td class="text-danger">{{ item.quantity }}</td>
+                                <td>৳{{ item.value|floatformat:0 }}</td>
+                                <td><span class="badge bg-danger">Out of Stock</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Product Movement Table -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-arrow-repeat"></i>
+                    Product Movement Analysis
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity Sold</th>
+                                <th>Value Sold</th>
+                                <th>Movement Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in product_movement %}
+                            <tr>
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.quantity_sold|floatformat:0 }}</td>
+                                <td>৳{{ product.value_sold|floatformat:0 }}</td>
+                                <td>
+                                    {% if product.quantity_sold > 100 %}
+                                        <span class="badge bg-success">High</span>
+                                    {% elif product.quantity_sold > 50 %}
+                                        <span class="badge bg-warning">Medium</span>
+                                    {% else %}
+                                        <span class="badge bg-info">Low</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">No product movement data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Complete Inventory Table -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-list-ol"></i>
+                    Complete Inventory List
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Current Stock</th>
+                                <th>Stock Value</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in stock_levels %}
+                            <tr>
+                                <td>{{ item.product.product_code }}</td>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.product.category.name|default:"N/A" }}</td>
+                                <td>{{ item.product.brand.name|default:"N/A" }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>৳{{ item.value|floatformat:0 }}</td>
+                                <td>
+                                    {% if item.status == 'out' %}
+                                        <span class="badge bg-danger">Out of Stock</span>
+                                    {% elif item.status == 'low' %}
+                                        <span class="badge bg-warning">Low Stock</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Normal</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">No inventory data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Stock Status Chart
+const stockStatusCtx = document.getElementById('stockStatusChart').getContext('2d');
+new Chart(stockStatusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Normal Stock', 'Low Stock', 'Out of Stock'],
+        datasets: [{
+            data: [
+                {{ normal_stock_items|length }},
+                {{ low_stock_items|length }},
+                {{ out_of_stock_items|length }}
+            ],
+            backgroundColor: [
+                '#28a745',
+                '#ffc107',
+                '#dc3545'
+            ],
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Product Movement Chart
+const productMovementCtx = document.getElementById('productMovementChart').getContext('2d');
+new Chart(productMovementCtx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for product in product_movement|slice:":10" %}
+                '{{ product.product_name|truncatechars:15 }}'{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Quantity Sold',
+            data: [
+                {% for product in product_movement|slice:":10" %}
+                    {{ product.quantity_sold }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ],
+            backgroundColor: 'rgba(40, 167, 69, 0.8)',
+            borderColor: '#28a745',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

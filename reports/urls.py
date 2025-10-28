@@ -4,36 +4,17 @@ from . import views
 app_name = 'reports'
 
 urlpatterns = [
-    # Dashboard
-    path('', views.ReportDashboardView.as_view(), name='dashboard'),
+    # Enhanced Reports with Time Range Filtering
+    path('sales-enhanced/', views.SalesReportEnhancedView.as_view(), name='sales_report_enhanced'),
+    path('inventory-enhanced/', views.InventoryReportEnhancedView.as_view(), name='inventory_report_enhanced'),
+    path('top-products/', views.TopSellingProductsReportView.as_view(), name='top_selling_products'),
+    path('top-customers/', views.TopSellingCustomersReportView.as_view(), name='top_selling_customers'),
+    path('accounts-receivable/', views.AccountsReceivableReportView.as_view(), name='accounts_receivable'),
     
-    # Financial Reports
-    path('financial/', views.FinancialReportView.as_view(), name='financial_report'),
-    
-    # Inventory Reports
-    path('inventory/', views.InventoryReportView.as_view(), name='inventory_report'),
-    
-    # Sales Reports
-    path('sales/', views.SalesReportView.as_view(), name='sales_report'),
-    
-    # Purchase Reports
-    path('purchase/', views.PurchaseReportView.as_view(), name='purchase_report'),
-    
-    # Customer Reports
-    path('customer/', views.CustomerReportView.as_view(), name='customer_report'),
-    
-    # Supplier Reports
-    path('supplier/', views.SupplierReportView.as_view(), name='supplier_report'),
-    
-    # Report Templates
-    path('templates/', views.ReportTemplateListView.as_view(), name='template_list'),
-    path('templates/create/', views.ReportTemplateCreateView.as_view(), name='template_create'),
-    path('templates/<int:pk>/edit/', views.ReportTemplateUpdateView.as_view(), name='template_edit'),
-    path('templates/<int:pk>/delete/', views.ReportTemplateDeleteView.as_view(), name='template_delete'),
-    
-    # Report Logs
-    path('logs/', views.ReportLogListView.as_view(), name='log_list'),
-    
-    # Generate Reports
-    path('generate/<str:report_type>/', views.generate_report, name='generate_report'),
+    # CSV Download URLs
+    path('download/sales-csv/', views.download_sales_report_csv, name='download_sales_csv'),
+    path('download/inventory-csv/', views.download_inventory_report_csv, name='download_inventory_csv'),
+    path('download/top-products-csv/', views.download_top_products_csv, name='download_top_products_csv'),
+    path('download/top-customers-csv/', views.download_top_customers_csv, name='download_top_customers_csv'),
+    path('download/receivables-csv/', views.download_receivables_csv, name='download_receivables_csv'),
 ]

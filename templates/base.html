@@ -200,29 +200,34 @@
 
             <!-- Reports -->
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#reportsSubmenu" aria-expanded="false">
+                <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'reports' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#reportsSubmenu" aria-expanded="false">
                     <i class="bi bi-graph-up"></i> Reports
                 </a>
                 <div class="collapse" id="reportsSubmenu">
                     <ul class="nav flex-column ms-3">
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'inventory_report' %}active{% endif %}" href="{% url 'reports:inventory_report' %}">
-                                <i class="bi bi-box-seam"></i> Inventory Report
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'sales_report' %}active{% endif %}" href="{% url 'reports:sales_report' %}">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'sales_report_enhanced' %}active{% endif %}" href="{% url 'reports:sales_report_enhanced' %}">
                                 <i class="bi bi-cart-check"></i> Sales Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'customer_report' %}active{% endif %}" href="{% url 'reports:customer_report' %}">
-                                <i class="bi bi-people"></i> Customer Report
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'inventory_report_enhanced' %}active{% endif %}" href="{% url 'reports:inventory_report_enhanced' %}">
+                                <i class="bi bi-box-seam"></i> Inventory Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'supplier_report' %}active{% endif %}" href="{% url 'reports:supplier_report' %}">
-                                <i class="bi bi-truck"></i> Supplier Report
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'top_selling_products' %}active{% endif %}" href="{% url 'reports:top_selling_products' %}">
+                                <i class="bi bi-trophy"></i> Top Products
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'top_selling_customers' %}active{% endif %}" href="{% url 'reports:top_selling_customers' %}">
+                                <i class="bi bi-star"></i> Top Customers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link submenu-link {% if request.resolver_match.url_name == 'accounts_receivable' %}active{% endif %}" href="{% url 'reports:accounts_receivable' %}">
+                                <i class="bi bi-arrow-down-circle"></i> Accounts Receivable
                             </a>
                         </li>
                     </ul>
