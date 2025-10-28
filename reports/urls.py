@@ -10,6 +10,7 @@ urlpatterns = [
     path('top-products/', views.TopSellingProductsReportView.as_view(), name='top_selling_products'),
     path('top-customers/', views.TopSellingCustomersReportView.as_view(), name='top_selling_customers'),
     path('accounts-receivable/', views.AccountsReceivableReportView.as_view(), name='accounts_receivable'),
+    path('profit-loss/', views.ProfitLossReportView.as_view(), name='profit_loss'),
     
     # CSV Download URLs
     path('download/sales-csv/', views.download_sales_report_csv, name='download_sales_csv'),
@@ -17,4 +18,5 @@ urlpatterns = [
     path('download/top-products-csv/', views.download_top_products_csv, name='download_top_products_csv'),
     path('download/top-customers-csv/', views.download_top_customers_csv, name='download_top_customers_csv'),
     path('download/receivables-csv/', views.download_receivables_csv, name='download_receivables_csv'),
+    path('download/profit-loss-csv/', views.download_profit_loss_csv, name='download_profit_loss_csv'),
 ]

@@ -14,6 +14,7 @@ from purchases.models import PurchaseOrder
 from stock.models import Product
 from customers.models import Customer
 from suppliers.models import Supplier
+from expenses.models import Expense
 
 
 # ReportDashboardView removed - using enhanced reports instead
@@ -716,5 +717,203 @@ def download_receivables_csv(request):
             customer.current_balance,
             last_order_date
         ])
+    
+    return response
+
+
+# ==================== PROFIT & LOSS REPORT ====================
+
+class ProfitLossReportView(ListView):
+    """Profit & Loss Report with expense tracking, COGS, and sales revenue"""
+    template_name = 'reports/profit_loss_report.html'
+    context_object_name = 'profit_loss_data'
+    
+    def get_queryset(self):
+        """Return empty queryset since we don't need a list of objects"""
+        return []
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get date range from request
+        start_date_str = self.request.GET.get('start_date')
+        end_date_str = self.request.GET.get('end_date')
+        
+        # Default to current month if no dates provided
+        if start_date_str:
+            start_date = parse_date(start_date_str)
+        else:
+            start_date = timezone.now().date().replace(day=1)
+            
+        if end_date_str:
+            end_date = parse_date(end_date_str)
+        else:
+            end_date = timezone.now().date()
+        
+        # Sales Revenue
+        sales_revenue = SalesOrder.objects.filter(
+            status='delivered',
+            order_date__range=[start_date, end_date]
+        ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+        
+        # Cost of Goods Sold (COGS) - Purchase orders for goods received
+        cost_of_goods_sold = PurchaseOrder.objects.filter(
+            status='goods-received',
+            order_date__range=[start_date, end_date]
+        ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+        
+        # Operating Expenses
+        operating_expenses = Expense.objects.filter(
+            expense_date__range=[start_date, end_date]
+        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        
+        # Expenses by Category with percentages
+        expenses_by_category = []
+        raw_expenses = Expense.objects.filter(
+            expense_date__range=[start_date, end_date]
+        ).values('category__name').annotate(
+            total=Sum('amount')
+        ).order_by('-total')
+        
+        for expense in raw_expenses:
+            expense_dict = dict(expense)
+            expense_dict['percentage'] = (expense['total'] / sales_revenue * 100) if sales_revenue > 0 else 0
+            expenses_by_category.append(expense_dict)
+        
+        # Calculate Gross Profit
+        gross_profit = sales_revenue - cost_of_goods_sold
+        
+        # Calculate Net Profit
+        net_profit = gross_profit - operating_expenses
+        
+        # Calculate percentages
+        gross_profit_margin = (gross_profit / sales_revenue * 100) if sales_revenue > 0 else 0
+        net_profit_margin = (net_profit / sales_revenue * 100) if sales_revenue > 0 else 0
+        cogs_percentage = (cost_of_goods_sold / sales_revenue * 100) if sales_revenue > 0 else 0
+        operating_expenses_percentage = (operating_expenses / sales_revenue * 100) if sales_revenue > 0 else 0
+        
+        # Monthly comparison data
+        previous_month_start = (start_date - timedelta(days=1)).replace(day=1)
+        previous_month_end = start_date - timedelta(days=1)
+        
+        previous_sales = SalesOrder.objects.filter(
+            status='delivered',
+            order_date__range=[previous_month_start, previous_month_end]
+        ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+        
+        previous_cogs = PurchaseOrder.objects.filter(
+            status='goods-received',
+            order_date__range=[previous_month_start, previous_month_end]
+        ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+        
+        previous_expenses = Expense.objects.filter(
+            expense_date__range=[previous_month_start, previous_month_end]
+        ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+        
+        previous_gross_profit = previous_sales - previous_cogs
+        previous_net_profit = previous_gross_profit - previous_expenses
+        
+        # Growth calculations
+        sales_growth = ((sales_revenue - previous_sales) / previous_sales * 100) if previous_sales > 0 else 0
+        gross_profit_growth = ((gross_profit - previous_gross_profit) / previous_gross_profit * 100) if previous_gross_profit > 0 else 0
+        net_profit_growth = ((net_profit - previous_net_profit) / previous_net_profit * 100) if previous_net_profit > 0 else 0
+        
+        context.update({
+            'start_date': start_date,
+            'end_date': end_date,
+            'sales_revenue': sales_revenue,
+            'cost_of_goods_sold': cost_of_goods_sold,
+            'gross_profit': gross_profit,
+            'operating_expenses': operating_expenses,
+            'net_profit': net_profit,
+            'gross_profit_margin': gross_profit_margin,
+            'net_profit_margin': net_profit_margin,
+            'cogs_percentage': cogs_percentage,
+            'operating_expenses_percentage': operating_expenses_percentage,
+            'expenses_by_category': expenses_by_category,
+            'previous_sales': previous_sales,
+            'previous_cogs': previous_cogs,
+            'previous_expenses': previous_expenses,
+            'previous_gross_profit': previous_gross_profit,
+            'previous_net_profit': previous_net_profit,
+            'sales_growth': sales_growth,
+            'gross_profit_growth': gross_profit_growth,
+            'net_profit_growth': net_profit_growth,
+        })
+        
+        return context
+
+
+def download_profit_loss_csv(request):
+    """Download Profit & Loss report as CSV"""
+    start_date_str = request.GET.get('start_date')
+    end_date_str = request.GET.get('end_date')
+    
+    if start_date_str:
+        start_date = parse_date(start_date_str)
+    else:
+        start_date = timezone.now().date().replace(day=1)
+        
+    if end_date_str:
+        end_date = parse_date(end_date_str)
+    else:
+        end_date = timezone.now().date()
+    
+    # Calculate P&L data
+    sales_revenue = SalesOrder.objects.filter(
+        status='delivered',
+        order_date__range=[start_date, end_date]
+    ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+    
+    cost_of_goods_sold = PurchaseOrder.objects.filter(
+        status='goods-received',
+        order_date__range=[start_date, end_date]
+    ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')
+    
+    operating_expenses = Expense.objects.filter(
+        expense_date__range=[start_date, end_date]
+    ).aggregate(total=Sum('amount'))['total'] or Decimal('0')
+    
+    gross_profit = sales_revenue - cost_of_goods_sold
+    net_profit = gross_profit - operating_expenses
+    
+    # Expenses by category
+    expenses_by_category = Expense.objects.filter(
+        expense_date__range=[start_date, end_date]
+    ).values('category__name').annotate(
+        total=Sum('amount')
+    ).order_by('-total')
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="profit_loss_report_{start_date}_to_{end_date}.csv"'
+    
+    writer = csv.writer(response)
+    
+    # Header
+    writer.writerow(['PROFIT & LOSS STATEMENT'])
+    writer.writerow([f'Period: {start_date} to {end_date}'])
+    writer.writerow([])
+    
+    # Revenue section
+    writer.writerow(['REVENUE'])
+    writer.writerow(['Sales Revenue', sales_revenue])
+    writer.writerow([])
+    
+    # Cost of Goods Sold
+    writer.writerow(['COST OF GOODS SOLD'])
+    writer.writerow(['Cost of Goods Sold', cost_of_goods_sold])
+    writer.writerow(['Gross Profit', gross_profit])
+    writer.writerow([])
+    
+    # Operating Expenses
+    writer.writerow(['OPERATING EXPENSES'])
+    for expense in expenses_by_category:
+        category_name = expense['category__name'] if expense['category__name'] else 'Uncategorized'
+        writer.writerow([category_name, expense['total']])
+    writer.writerow(['Total Operating Expenses', operating_expenses])
+    writer.writerow([])
+    
+    # Net Profit
+    writer.writerow(['NET PROFIT', net_profit])
     
     return response
