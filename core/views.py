@@ -10,6 +10,7 @@ from suppliers.models import Supplier, SupplierLedger
 from stock.models import Product, Stock, StockAlert
 from sales.models import SalesOrder
 from purchases.models import PurchaseOrder
+from expenses.models import Expense
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -55,8 +56,11 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         ).aggregate(total=Sum('current_balance'))['total'] or 0
         context['total_payables'] = total_payables
         
-        # Cash flow calculation
-        context['net_cash_flow'] = total_receivables - total_payables
+        # Expenses calculation (current month)
+        monthly_expenses = Expense.objects.filter(
+            expense_date__gte=this_month_start
+        ).aggregate(total=Sum('amount'))['total'] or 0
+        context['total_expenses'] = monthly_expenses
         
         # Purchase metrics
         monthly_purchases = PurchaseOrder.objects.filter(
