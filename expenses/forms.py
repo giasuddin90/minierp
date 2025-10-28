@@ -43,20 +43,31 @@ class ExpenseForm(forms.ModelForm):
 
 class ExpenseFilterForm(forms.Form):
     """Form for filtering expenses"""
+    q = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Search title, description, vendor, receipt...'
+        })
+    )
+    date_preset = forms.ChoiceField(
+        required=False,
+        choices=[
+            ('', 'Custom Range'),
+            ('today', 'Today'),
+            ('yesterday', 'Yesterday'),
+            ('this_week', 'This Week'),
+            ('last_7', 'Last 7 Days'),
+            ('this_month', 'This Month'),
+            ('last_month', 'Last Month'),
+            ('this_year', 'This Year'),
+        ],
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
     category = forms.ModelChoiceField(
         queryset=ExpenseCategory.objects.filter(is_active=True),
         required=False,
         empty_label="All Categories",
-        widget=forms.Select(attrs={'class': 'form-select'})
-    )
-    status = forms.ChoiceField(
-        choices=[('', 'All Status')] + Expense.STATUS_CHOICES,
-        required=False,
-        widget=forms.Select(attrs={'class': 'form-select'})
-    )
-    payment_method = forms.ChoiceField(
-        choices=[('', 'All Payment Methods')] + Expense.PAYMENT_METHODS,
-        required=False,
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     start_date = forms.DateField(
@@ -67,11 +78,4 @@ class ExpenseFilterForm(forms.Form):
         required=False,
         widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'})
     )
-    min_amount = forms.DecimalField(
-        required=False,
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Min Amount'})
-    )
-    max_amount = forms.DecimalField(
-        required=False,
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Max Amount'})
-    )
+

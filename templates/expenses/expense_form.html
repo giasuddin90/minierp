@@ -25,226 +25,138 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-form"></i> Expense Information
-                </h5>
-            </div>
-            <div class="card-body">
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
-                    <!-- Basic Information -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Basic Information</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="{{ form.title.id_for_label }}" class="form-label">
-                                Title <span class="text-danger">*</span>
-                            </label>
-                            {{ form.title }}
-                            {% if form.title.errors %}
-                                <div class="text-danger">{{ form.title.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
-                            {{ form.category }}
-                            {% if form.category.errors %}
-                                <div class="text-danger">{{ form.category.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-12 mt-3">
-                            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
-                            {{ form.description }}
-                            {% if form.description.errors %}
-                                <div class="text-danger">{{ form.description.errors }}</div>
-                            {% endif %}
-                        </div>
+                    <!-- Essential Fields -->
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">
+                            Expense Title <span class="text-danger">*</span>
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                        {% endif %}
                     </div>
-                    
-                    <!-- Financial Information -->
+
                     <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Financial Information</h6>
-                        </div>
                         <div class="col-md-6">
-                            <label for="{{ form.amount.id_for_label }}" class="form-label">
+                            <label for="{{ form.amount.id_for_label }}" class="form-label fw-semibold">
                                 Amount <span class="text-danger">*</span>
                             </label>
-                            {{ form.amount }}
+                            <div class="input-group">
+                                <span class="input-group-text">৳</span>
+                                {{ form.amount }}
+                            </div>
                             {% if form.amount.errors %}
-                                <div class="text-danger">{{ form.amount.errors }}</div>
+                                <div class="text-danger small mt-1">{{ form.amount.errors }}</div>
                             {% endif %}
                         </div>
                         <div class="col-md-6">
-                            <label for="{{ form.payment_method.id_for_label }}" class="form-label">Payment Method</label>
-                            {{ form.payment_method }}
-                            {% if form.payment_method.errors %}
-                                <div class="text-danger">{{ form.payment_method.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <!-- Dates -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Dates</h6>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="{{ form.expense_date.id_for_label }}" class="form-label">
-                                Expense Date <span class="text-danger">*</span>
+                            <label for="{{ form.expense_date.id_for_label }}" class="form-label fw-semibold">
+                                Date <span class="text-danger">*</span>
                             </label>
                             {{ form.expense_date }}
                             {% if form.expense_date.errors %}
-                                <div class="text-danger">{{ form.expense_date.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-4">
-                            <label for="{{ form.due_date.id_for_label }}" class="form-label">Due Date</label>
-                            {{ form.due_date }}
-                            {% if form.due_date.errors %}
-                                <div class="text-danger">{{ form.due_date.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-4">
-                            <label for="{{ form.paid_date.id_for_label }}" class="form-label">Paid Date</label>
-                            {{ form.paid_date }}
-                            {% if form.paid_date.errors %}
-                                <div class="text-danger">{{ form.paid_date.errors }}</div>
+                                <div class="text-danger small mt-1">{{ form.expense_date.errors }}</div>
                             {% endif %}
                         </div>
                     </div>
-                    
-                    <!-- Status and Approval -->
+
                     <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Status and Approval</h6>
-                        </div>
                         <div class="col-md-6">
-                            <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
-                            {{ form.status }}
-                            {% if form.status.errors %}
-                                <div class="text-danger">{{ form.status.errors }}</div>
+                            <label for="{{ form.category.id_for_label }}" class="form-label fw-semibold">Category</label>
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                                <div class="text-danger small mt-1">{{ form.category.errors }}</div>
                             {% endif %}
                         </div>
                         <div class="col-md-6">
-                            <div class="form-check mt-4">
-                                {{ form.is_recurring }}
-                                <label for="{{ form.is_recurring.id_for_label }}" class="form-check-label">
-                                    Recurring Expense
-                                </label>
+                            <label for="{{ form.payment_method.id_for_label }}" class="form-label fw-semibold">Payment Method</label>
+                            {{ form.payment_method }}
+                            {% if form.payment_method.errors %}
+                                <div class="text-danger small mt-1">{{ form.payment_method.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Optional Fields (Collapsible) -->
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-link p-0 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#optionalFields" aria-expanded="false">
+                            <i class="bi bi-chevron-down me-1"></i>
+                            Additional Information
+                        </button>
+                        
+                        <div class="collapse mt-3" id="optionalFields">
+                            <div class="border rounded p-3 bg-light">
+                                <div class="mb-3">
+                                    <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                                    {{ form.description }}
+                                    {% if form.description.errors %}
+                                        <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="{{ form.vendor_name.id_for_label }}" class="form-label">Vendor</label>
+                                        {{ form.vendor_name }}
+                                        {% if form.vendor_name.errors %}
+                                            <div class="text-danger small mt-1">{{ form.vendor_name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="{{ form.receipt_number.id_for_label }}" class="form-label">Receipt Number</label>
+                                        {{ form.receipt_number }}
+                                        {% if form.receipt_number.errors %}
+                                            <div class="text-danger small mt-1">{{ form.receipt_number.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
+                                        {{ form.status }}
+                                        {% if form.status.errors %}
+                                            <div class="text-danger small mt-1">{{ form.status.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="{{ form.paid_date.id_for_label }}" class="form-label">Paid Date</label>
+                                        {{ form.paid_date }}
+                                        {% if form.paid_date.errors %}
+                                            <div class="text-danger small mt-1">{{ form.paid_date.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="mb-0">
+                                    <label for="{{ form.notes.id_for_label }}" class="form-label">Notes</label>
+                                    {{ form.notes }}
+                                    {% if form.notes.errors %}
+                                        <div class="text-danger small mt-1">{{ form.notes.errors }}</div>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 mt-3">
-                            <label for="{{ form.recurring_frequency.id_for_label }}" class="form-label">Recurring Frequency</label>
-                            {{ form.recurring_frequency }}
-                            {% if form.recurring_frequency.errors %}
-                                <div class="text-danger">{{ form.recurring_frequency.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <!-- Vendor Information -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Vendor Information</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="{{ form.vendor_name.id_for_label }}" class="form-label">Vendor Name</label>
-                            {{ form.vendor_name }}
-                            {% if form.vendor_name.errors %}
-                                <div class="text-danger">{{ form.vendor_name.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="{{ form.vendor_contact.id_for_label }}" class="form-label">Vendor Contact</label>
-                            {{ form.vendor_contact }}
-                            {% if form.vendor_contact.errors %}
-                                <div class="text-danger">{{ form.vendor_contact.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <!-- Documentation -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Documentation</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="{{ form.receipt_number.id_for_label }}" class="form-label">Receipt Number</label>
-                            {{ form.receipt_number }}
-                            {% if form.receipt_number.errors %}
-                                <div class="text-danger">{{ form.receipt_number.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <!-- Additional Notes -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <h6 class="text-primary border-bottom pb-2 mb-3">Additional Information</h6>
-                        </div>
-                        <div class="col-12">
-                            <label for="{{ form.notes.id_for_label }}" class="form-label">Notes</label>
-                            {{ form.notes }}
-                            {% if form.notes.errors %}
-                                <div class="text-danger">{{ form.notes.errors }}</div>
-                            {% endif %}
                         </div>
                     </div>
                     
                     <!-- Form Actions -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex justify-content-between">
-                                <a href="{% url 'expenses:expense_list' %}" class="btn btn-outline-secondary">
-                                    <i class="bi bi-arrow-left"></i> Cancel
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-check-circle"></i>
-                                    {% if object %}Update Expense{% else %}Create Expense{% endif %}
-                                </button>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <a href="{% url 'expenses:expense_list' %}" class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>
+                            {% if object %}Update Expense{% else %}Create Expense{% endif %}
+                        </button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="bi bi-info-circle"></i> Help & Tips
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="alert alert-info">
-                    <h6><i class="bi bi-lightbulb"></i> Tips for Better Expense Tracking:</h6>
-                    <ul class="mb-0">
-                        <li>Always attach receipts for better record keeping</li>
-                        <li>Use specific categories for better reporting</li>
-                        <li>Set due dates for bills and invoices</li>
-                        <li>Mark recurring expenses for automatic tracking</li>
-                        <li>Add vendor information for future reference</li>
-                    </ul>
-                </div>
-                
-                <div class="alert alert-warning">
-                    <h6><i class="bi bi-exclamation-triangle"></i> Important Notes:</h6>
-                    <ul class="mb-0">
-                        <li>Expense date is when the expense occurred</li>
-                        <li>Due date is when payment is due</li>
-                        <li>Paid date is when payment was made</li>
-                        <li>Status helps track approval workflow</li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
@@ -253,28 +165,32 @@
 
 {% block extra_js %}
 <script>
-// Set default expense date to today
 document.addEventListener('DOMContentLoaded', function() {
+    // Set default expense date to today
     const expenseDateField = document.getElementById('id_expense_date');
     if (expenseDateField && !expenseDateField.value) {
         const today = new Date().toISOString().split('T')[0];
         expenseDateField.value = today;
     }
     
-    // Show/hide recurring frequency field based on is_recurring checkbox
-    const isRecurringCheckbox = document.getElementById('id_is_recurring');
-    const recurringFrequencyField = document.getElementById('id_recurring_frequency').closest('.col-md-6');
+    // Auto-expand optional fields if any have values
+    const optionalFields = document.getElementById('optionalFields');
+    const optionalInputs = optionalFields.querySelectorAll('input, textarea, select');
+    let hasValues = false;
     
-    function toggleRecurringFrequency() {
-        if (isRecurringCheckbox.checked) {
-            recurringFrequencyField.style.display = 'block';
-        } else {
-            recurringFrequencyField.style.display = 'none';
+    optionalInputs.forEach(input => {
+        if (input.value && input.value.trim() !== '') {
+            hasValues = true;
         }
-    }
+    });
     
-    isRecurringCheckbox.addEventListener('change', toggleRecurringFrequency);
-    toggleRecurringFrequency(); // Initial call
+    if (hasValues) {
+        optionalFields.classList.add('show');
+        const toggleButton = document.querySelector('[data-bs-target="#optionalFields"]');
+        toggleButton.setAttribute('aria-expanded', 'true');
+        toggleButton.querySelector('i').classList.remove('bi-chevron-down');
+        toggleButton.querySelector('i').classList.add('bi-chevron-up');
+    }
 });
 </script>
 {% endblock %}

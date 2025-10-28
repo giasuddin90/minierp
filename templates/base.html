@@ -32,7 +32,14 @@
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h4><i class="bi bi-building"></i> BuildERP</h4>
+            <h4><i class="bi bi-building"></i> EZYHISHAB</h4>
+            {% if user.is_authenticated %}
+                <div class="welcome-user">
+                    <small class="text-muted">
+                        <i class="bi bi-person-circle"></i> Welcome, {{ user.username }}
+                    </small>
+                </div>
+            {% endif %}
         </div>
         <ul class="nav flex-column">
             <!-- Dashboard -->
@@ -253,6 +260,11 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
             </li>
         </ul>
     </nav>

@@ -94,3 +94,25 @@ a:hover {
 .align-items-start { align-items: flex-start !important; }
 .align-items-center { align-items: center !important; }
 .align-items-end { align-items: flex-end !important; }
+
+/* Welcome User Section */
+.welcome-user {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--primary-color);
+}
+
+.welcome-user small {
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.welcome-user i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}

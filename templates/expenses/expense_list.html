@@ -18,53 +18,47 @@
 {% endblock %}
 
 {% block content %}
-<!-- Filter Form -->
+<!-- Filter & Search -->
 <div class="card mb-4">
-    <div class="card-header">
-        <h5 class="mb-0">
-            <i class="bi bi-funnel"></i> Filter Expenses
-        </h5>
-    </div>
     <div class="card-body">
-        <form method="get" class="row g-3">
-            <div class="col-md-3">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-3 col-lg-2">
+                <label for="id_date_preset" class="form-label">Date</label>
+                {{ filter_form.date_preset }}
+            </div>
+            <div class="col-md-3 col-lg-2">
+                <label for="id_start_date" class="form-label">Start</label>
+                {{ filter_form.start_date }}
+            </div>
+            <div class="col-md-3 col-lg-2">
+                <label for="id_end_date" class="form-label">End</label>
+                {{ filter_form.end_date }}
+            </div>
+            <div class="col-md-3 col-lg-2">
                 <label for="id_category" class="form-label">Category</label>
                 {{ filter_form.category }}
             </div>
-            <div class="col-md-3">
-                <label for="id_status" class="form-label">Status</label>
+            <div class="col-md-3 col-lg-2">
                 {{ filter_form.status }}
             </div>
-            <div class="col-md-3">
-                <label for="id_payment_method" class="form-label">Payment Method</label>
+            <div class="col-md-3 col-lg-2">
                 {{ filter_form.payment_method }}
             </div>
-            <div class="col-md-3">
-                <label for="id_start_date" class="form-label">Start Date</label>
-                {{ filter_form.start_date }}
-            </div>
-            <div class="col-md-3">
-                <label for="id_end_date" class="form-label">End Date</label>
-                {{ filter_form.end_date }}
-            </div>
-            <div class="col-md-3">
-                <label for="id_min_amount" class="form-label">Min Amount</label>
+            <div class="col-md-3 col-lg-2">
                 {{ filter_form.min_amount }}
             </div>
-            <div class="col-md-3">
-                <label for="id_max_amount" class="form-label">Max Amount</label>
+            <div class="col-md-3 col-lg-2">
                 {{ filter_form.max_amount }}
             </div>
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-search"></i> Apply Filters
-                </button>
-                <a href="{% url 'expenses:expense_list' %}" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-clockwise"></i> Clear Filters
-                </a>
-                <a href="{% url 'expenses:download_expenses_csv' %}" class="btn btn-outline-success">
-                    <i class="bi bi-download"></i> Export CSV
-                </a>
+            <div class="col-lg-12">
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Apply
+                    </button>
+                    <a href="{% url 'expenses:expense_list' %}" class="btn btn-outline-secondary">
+                        Clear
+                    </a>
+                </div>
             </div>
         </form>
     </div>

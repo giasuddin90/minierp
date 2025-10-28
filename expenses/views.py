@@ -134,8 +134,10 @@ class ExpenseListView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         queryset = Expense.objects.all().order_by('-expense_date', '-created_at')
-        
+
         # Apply filters
+        q = self.request.GET.get('q')
+        date_preset = self.request.GET.get('date_preset')
         category = self.request.GET.get('category')
         status = self.request.GET.get('status')
         payment_method = self.request.GET.get('payment_method')
@@ -143,7 +145,40 @@ class ExpenseListView(LoginRequiredMixin, ListView):
         end_date = self.request.GET.get('end_date')
         min_amount = self.request.GET.get('min_amount')
         max_amount = self.request.GET.get('max_amount')
-        
+
+        # Full-text like search across key fields
+        if q:
+            queryset = queryset.filter(
+                Q(title__icontains=q)
+                | Q(description__icontains=q)
+                | Q(vendor_name__icontains=q)
+                | Q(receipt_number__icontains=q)
+            )
+
+        # Date presets
+        if date_preset:
+            today = timezone.localdate()
+            if date_preset == 'today':
+                queryset = queryset.filter(expense_date=today)
+            elif date_preset == 'yesterday':
+                queryset = queryset.filter(expense_date=today - timedelta(days=1))
+            elif date_preset == 'this_week':
+                start_of_week = today - timedelta(days=today.weekday())
+                queryset = queryset.filter(expense_date__gte=start_of_week, expense_date__lte=today)
+            elif date_preset == 'last_7':
+                queryset = queryset.filter(expense_date__gte=today - timedelta(days=6), expense_date__lte=today)
+            elif date_preset == 'this_month':
+                start_of_month = today.replace(day=1)
+                queryset = queryset.filter(expense_date__gte=start_of_month, expense_date__lte=today)
+            elif date_preset == 'last_month':
+                first_of_this_month = today.replace(day=1)
+                last_month_end = first_of_this_month - timedelta(days=1)
+                last_month_start = last_month_end.replace(day=1)
+                queryset = queryset.filter(expense_date__gte=last_month_start, expense_date__lte=last_month_end)
+            elif date_preset == 'this_year':
+                start_of_year = today.replace(month=1, day=1)
+                queryset = queryset.filter(expense_date__gte=start_of_year, expense_date__lte=today)
+
         if category:
             queryset = queryset.filter(category_id=category)
         if status:
@@ -158,7 +193,7 @@ class ExpenseListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(amount__gte=min_amount)
         if max_amount:
             queryset = queryset.filter(amount__lte=max_amount)
-        
+
         return queryset
     
     def get_context_data(self, **kwargs):
