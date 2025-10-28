@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import Product, ProductCategory, ProductBrand, Stock, StockAlert
+from .models import Product, ProductCategory, ProductBrand, UnitType, Stock, StockAlert
 
 
 class ProductCategoryForm(forms.ModelForm):
@@ -63,6 +63,56 @@ class ProductBrandForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].required = True
+
+
+class UnitTypeForm(forms.ModelForm):
+    """Form for creating and editing unit types"""
+    
+    class Meta:
+        model = UnitType
+        fields = ['code', 'name', 'description', 'is_active']
+        widgets = {
+            'code': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter unit code (e.g., kg, pcs)'
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter unit name (e.g., Kilogram, Pieces)'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Enter unit description'
+            }),
+            'is_active': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            })
+        }
+        labels = {
+            'code': 'Unit Code',
+            'name': 'Unit Name',
+            'description': 'Description',
+            'is_active': 'Active'
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['code'].required = True
+        self.fields['name'].required = True
+    
+    def clean_code(self):
+        """Validate unit code"""
+        code = self.cleaned_data.get('code')
+        if code:
+            code = code.lower().strip()
+            # Check if code already exists (excluding current instance)
+            queryset = UnitType.objects.filter(code=code)
+            if self.instance.pk:
+                queryset = queryset.exclude(pk=self.instance.pk)
+            if queryset.exists():
+                raise forms.ValidationError("A unit type with this code already exists.")
+        return code
 
 
 class ProductForm(forms.ModelForm):
@@ -132,13 +182,15 @@ class ProductForm(forms.ModelForm):
         # Make name field required
         self.fields['name'].required = True
         
-        # Filter active categories and brands
+        # Filter active categories, brands, and unit types
         self.fields['category'].queryset = ProductCategory.objects.filter(is_active=True).order_by('name')
         self.fields['brand'].queryset = ProductBrand.objects.filter(is_active=True).order_by('name')
+        self.fields['unit_type'].queryset = UnitType.objects.filter(is_active=True).order_by('name')
         
         # Add empty option for category and brand
         self.fields['category'].empty_label = "Select Category (Optional)"
         self.fields['brand'].empty_label = "Select Brand (Optional)"
+        self.fields['unit_type'].empty_label = "Select Unit Type"
     
     def clean_selling_price(self):
         """Validate selling price"""
@@ -393,9 +445,10 @@ class ProductSearchForm(forms.Form):
         label='Status'
     )
     
-    unit_type = forms.ChoiceField(
-        choices=[('', 'All Units')] + Product.UNIT_TYPES,
+    unit_type = forms.ModelChoiceField(
+        queryset=UnitType.objects.filter(is_active=True).order_by('name'),
         required=False,
+        empty_label="All Units",
         widget=forms.Select(attrs={
             'class': 'form-select'
         }),

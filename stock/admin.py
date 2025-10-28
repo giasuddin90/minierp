@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProductCategory, ProductBrand, Product, Stock, StockAlert
+from .models import ProductCategory, ProductBrand, UnitType, Product, Stock, StockAlert
 
 
 @admin.register(ProductCategory)
@@ -18,6 +18,16 @@ class ProductBrandAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'updated_at']
 
 
+@admin.register(UnitType)
+class UnitTypeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'code', 'is_active', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['name', 'code', 'description']
+    readonly_fields = ['created_at', 'updated_at']
+    ordering = ['name']
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).order_by('name')
 
 
 @admin.register(Product)
@@ -34,8 +44,6 @@ class StockAdmin(admin.ModelAdmin):
     list_filter = ['last_updated']
     search_fields = ['product__name']
     readonly_fields = ['last_updated']
-
-
 
 
 @admin.register(StockAlert)

@@ -36,21 +36,33 @@ class ProductBrand(models.Model):
         ordering = ['name']
 
 
+class UnitType(models.Model):
+    """Model to store unit types for products"""
+    code = models.CharField(max_length=20, unique=True, help_text="Short code for the unit (e.g., 'kg', 'pcs')")
+    name = models.CharField(max_length=100, help_text="Full name of the unit (e.g., 'Kilogram', 'Pieces')")
+    description = models.TextField(blank=True, help_text="Optional description of the unit")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.code})"
+
+    class Meta:
+        verbose_name = "Unit Type"
+        verbose_name_plural = "Unit Types"
+        ordering = ['name']
+        indexes = [
+            models.Index(fields=['code']),
+            models.Index(fields=['is_active']),
+        ]
+
+
 class Product(models.Model):
-    UNIT_TYPES = [
-        ('bag', 'Bag'),
-        ('bundle', 'Bundle'),
-        ('pcs', 'Pieces'),
-        ('kg', 'Kilogram'),
-        ('sqft', 'Square Feet'),
-        ('liter', 'Liter'),
-        ('other', 'Other'),
-    ]
-    
     name = models.CharField(max_length=200)
     category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
     brand = models.ForeignKey(ProductBrand, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
-    unit_type = models.CharField(max_length=20, choices=UNIT_TYPES)
+    unit_type = models.ForeignKey(UnitType, on_delete=models.PROTECT, related_name='products', help_text="Unit of measurement for this product")
     description = models.TextField(blank=True)
     cost_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     selling_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
