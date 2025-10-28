@@ -379,6 +379,54 @@
     color: var(--danger-color);
 }
 
+.stats-card .icon.info {
+    background: #dbeafe;
+    color: var(--info-color);
+}
+
+.stats-card .icon.secondary {
+    background: #f1f5f9;
+    color: var(--secondary-color);
+}
+
+.stats-card .icon.dark {
+    background: #e2e8f0;
+    color: var(--dark-color);
+}
+
+.stats-card.info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--info-color);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.stats-card.secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--secondary-color);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.stats-card.dark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--dark-color);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
 .stats-card h3 {
     font-size: var(--text-3xl);
     font-weight: var(--font-semibold);
@@ -391,4 +439,81 @@
     margin: 0 0 var(--spacing-md) 0;
     font-weight: var(--font-medium);
     font-size: var(--text-sm);
+}
+
+.stats-card small {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    display: block;
+    margin-top: var(--spacing-xs);
+}
+
+/* Enhanced Dashboard Styles */
+.dashboard-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: var(--transition-normal);
+}
+
+.dashboard-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.dashboard-card-header {
+    background: var(--bg-secondary);
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.dashboard-card-header h5 {
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-base);
+}
+
+.dashboard-card-body {
+    padding: var(--spacing-lg);
+}
+
+/* Chart Container */
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Financial Health Indicators */
+.financial-health-positive {
+    color: var(--success-color) !important;
+}
+
+.financial-health-negative {
+    color: var(--danger-color) !important;
+}
+
+.financial-health-neutral {
+    color: var(--warning-color) !important;
+}
+
+/* Responsive adjustments for dashboard */
+@media (max-width: 768px) {
+    .stats-card {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .stats-card h3 {
+        font-size: var(--text-2xl);
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
 }
