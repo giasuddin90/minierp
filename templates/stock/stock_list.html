@@ -68,6 +68,22 @@
     </div>
 </div>
 
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card-module info">
+            <div class="card-module-header">
+                <div>
+                    <h6 class="card-module-title">Total Stock Value</h6>
+                    <h3 class="card-module-value">৳{{ total_stock_value|floatformat:2|default:"0.00" }}</h3>
+                </div>
+                <div class="card-module-icon">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -78,52 +94,63 @@
                 </h5>
             </div>
             <div class="card-body">
-                {% if stocks %}
+                {% if stock_data %}
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Product</th>
+                                <th>Category</th>
+                                <th>Brand</th>
                                 <th>Quantity</th>
                                 <th>Unit Cost</th>
                                 <th>Total Value</th>
-                                <th>Last Updated</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for stock in stocks %}
+                            {% for item in stock_data %}
                             <tr>
                                 <td>
-                                    <strong>{{ stock.product.name }}</strong>
-                                    <br><small class="text-muted">{{ stock.product.brand|default:"" }}</small>
+                                    <strong>{{ item.product.name }}</strong>
+                                    <br><small class="text-muted">{{ item.product.description|truncatewords:10|default:"No description" }}</small>
+                                </td>
+                                <td>{{ item.product.category|default:"-" }}</td>
+                                <td>{{ item.product.brand|default:"-" }}</td>
+                                <td>
+                                    <strong>{{ item.quantity }}</strong>
+                                    <br><small class="text-muted">{{ item.product.unit_type.name|default:item.product.unit_type.code }}</small>
+                                    <br><small class="text-muted">Min: {{ item.product.min_stock_level }}</small>
+                                </td>
+                                <td>৳{{ item.product.cost_price|floatformat:2 }}</td>
+                                <td>
+                                    {% with value=item.product.get_total_stock_value %}
+                                        ৳{{ value|floatformat:2|default:"0.00" }}
+                                    {% endwith %}
                                 </td>
                                 <td>
-                                    {% if stock.quantity <= 0 %}
+                                    {% if item.status == 'out_of_stock' %}
                                         <span class="badge bg-danger">
                                             <i class="bi bi-x-circle"></i> Out of Stock
                                         </span>
-                                    {% elif stock.quantity <= stock.product.min_stock_level %}
+                                    {% elif item.status == 'low_stock' %}
                                         <span class="badge bg-warning">
-                                            <i class="bi bi-exclamation-triangle"></i> {{ stock.quantity }} {{ stock.product.unit_name }} (Low)
+                                            <i class="bi bi-exclamation-triangle"></i> Low Stock
                                         </span>
                                     {% else %}
                                         <span class="badge bg-success">
-                                            <i class="bi bi-check-circle"></i> {{ stock.quantity }} {{ stock.product.unit_name }}
+                                            <i class="bi bi-check-circle"></i> In Stock
                                         </span>
                                     {% endif %}
-                                    <br><small class="text-muted">Min: {{ stock.product.min_stock_level }} {{ stock.product.unit_name }}</small>
                                 </td>
-                                <td>৳{{ stock.unit_cost|floatformat:2 }}</td>
-                                <td>৳{{ stock.total_value|floatformat:2 }}</td>
-                                <td>{{ stock.last_updated|date:"M d, Y H:i" }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{% url 'stock:stock_detail' stock.pk %}" class="btn btn-outline-primary">
+                                        <a href="{% url 'stock:stock_detail' item.product.pk %}" class="btn btn-outline-primary" title="View Details">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{% url 'stock:stock_edit' stock.pk %}" class="btn btn-outline-warning">
-                                            <i class="bi bi-pencil"></i>
+                                        <a href="{% url 'stock:product_detail' item.product.pk %}" class="btn btn-outline-info" title="Product Details">
+                                            <i class="bi bi-box-seam"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -135,8 +162,8 @@
                 {% else %}
                 <div class="text-center py-5">
                     <i class="bi bi-boxes fs-1 text-muted"></i>
-                    <h5 class="text-muted mt-3">No stock found</h5>
-                    <p class="text-muted">Stock will appear here after products are added to warehouses.</p>
+                    <h5 class="text-muted mt-3">No products found</h5>
+                    <p class="text-muted">Products will appear here once they are created.</p>
                     <a href="{% url 'stock:product_list' %}" class="btn btn-primary">
                         <i class="bi bi-box-seam"></i> Manage Products
                     </a>

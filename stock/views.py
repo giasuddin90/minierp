@@ -6,10 +6,11 @@ from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from django.contrib import messages
 from datetime import datetime, timedelta
-from .models import ProductCategory, ProductBrand, UnitType, Product, Stock, StockAlert
+from decimal import Decimal
+from .models import ProductCategory, ProductBrand, UnitType, Product, get_low_stock_products
 from .forms import (
-    ProductForm, ProductCategoryForm, ProductBrandForm, UnitTypeForm, StockForm, 
-    StockAdjustmentForm, StockAlertForm, ProductSearchForm, StockReportForm
+    ProductForm, ProductCategoryForm, ProductBrandForm, UnitTypeForm, 
+    ProductSearchForm, StockReportForm
 )
 from sales.models import SalesOrderItem
 from purchases.models import PurchaseOrderItem
@@ -109,44 +110,75 @@ class ProductDeleteView(DeleteView):
 
 
 class StockListView(ListView):
-    model = Stock
+    """List view for products with real-time inventory"""
+    model = Product
     template_name = 'stock/stock_list.html'
-    context_object_name = 'stocks'
+    context_object_name = 'products'
+    
+    def get_queryset(self):
+        return Product.objects.filter(is_active=True).select_related('category', 'brand')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        stocks = self.get_queryset()
+        products = self.get_queryset()
         
-        # Calculate summary statistics
-        total_products = stocks.count()
-        in_stock = stocks.filter(quantity__gt=0).count()
-        low_stock = stocks.filter(quantity__gt=0, quantity__lte=models.F('product__min_stock_level')).count()
-        out_of_stock = stocks.filter(quantity__lte=0).count()
+        # Calculate summary statistics using real-time inventory
+        stock_data = []
+        total_products = 0
+        in_stock = 0
+        low_stock = 0
+        out_of_stock = 0
+        total_stock_value = Decimal('0')
+        
+        for product in products:
+            qty = product.get_realtime_quantity()
+            total_products += 1
+            
+            # Calculate total stock value
+            total_stock_value += product.get_total_stock_value()
+            
+            if qty <= 0:
+                out_of_stock += 1
+                status = 'out_of_stock'
+            elif qty <= product.min_stock_level:
+                low_stock += 1
+                status = 'low_stock'
+            else:
+                in_stock += 1
+                status = 'in_stock'
+            
+            stock_data.append({
+                'product': product,
+                'quantity': qty,
+                'status': status
+            })
         
         context.update({
+            'stock_data': stock_data,
             'total_products': total_products,
             'in_stock': in_stock,
             'low_stock': low_stock,
             'out_of_stock': out_of_stock,
+            'total_stock_value': total_stock_value,
         })
         
         return context
 
 
 class StockDetailView(DetailView):
-    model = Stock
+    """Show product details with real-time inventory"""
+    model = Product
     template_name = 'stock/stock_detail.html'
-
-
-class StockUpdateView(UpdateView):
-    model = Stock
-    form_class = StockForm
-    template_name = 'stock/stock_form.html'
-    success_url = reverse_lazy('stock:stock_list')
     
-    def form_valid(self, form):
-        messages.success(self.request, f'Stock updated successfully for {form.instance.product.name}.')
-        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        context['current_qty'] = product.get_realtime_quantity()
+        context['total_value'] = product.get_total_stock_value()
+        return context
+
+
+# StockUpdateView removed - inventory is now real-time only
 
 
 
@@ -269,62 +301,96 @@ class ProductBrandDeleteView(DeleteView):
     success_url = reverse_lazy('stock:brand_list')
 
 
-# Stock Adjustment View
-def stock_adjustment(request, pk):
-    """Handle stock adjustments"""
-    product = get_object_or_404(Product, pk=pk)
-    
-    if request.method == 'POST':
-        form = StockAdjustmentForm(request.POST)
-        if form.is_valid():
-            adjustment_type = form.cleaned_data['adjustment_type']
-            quantity = form.cleaned_data['quantity']
-            unit_cost = form.cleaned_data['unit_cost']
-            reference = form.cleaned_data['reference']
-            description = form.cleaned_data['description']
-            
-            # Update stock using the model method
-            stock = Stock.update_stock(
-                product=product,
-                quantity_change=quantity,
-                unit_cost=unit_cost,
-                movement_type=adjustment_type,
-                reference=reference,
-                description=description,
-                user=request.user
-            )
-            
-            messages.success(
-                request, 
-                f'Stock {adjustment_type} completed for {product.name}. '
-                f'New quantity: {stock.quantity}'
-            )
-            return redirect('stock:product_detail', pk=product.pk)
-    else:
-        form = StockAdjustmentForm()
-    
-    return render(request, 'stock/stock_adjustment.html', {
-        'product': product,
-        'form': form
-    })
+# Stock adjustment removed - inventory is calculated in real-time from transactions only
+# To adjust inventory, create purchase orders (to increase) or cancel sales (to decrease)
 
 
 class StockAlertListView(ListView):
-    model = StockAlert
+    """List view for low stock alerts - calculated dynamically"""
     template_name = 'stock/alert_list.html'
     context_object_name = 'alerts'
+    
+    def get_queryset(self):
+        return get_low_stock_products()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['alert_count'] = len(context['alerts'])
+        return context
 
 
 class StockReportView(ListView):
-    model = Stock
+    """Stock report using real-time inventory"""
+    model = Product
     template_name = 'stock/stock_report.html'
-    context_object_name = 'reports'
+    context_object_name = 'products'
+    
+    def get_queryset(self):
+        queryset = Product.objects.filter(is_active=True).select_related('category', 'brand')
+        
+        # Apply filters from form if provided
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category_id=category)
+        
+        brand = self.request.GET.get('brand')
+        if brand:
+            queryset = queryset.filter(brand_id=brand)
+        
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+        
+        report_data = []
+        for product in products:
+            qty = product.get_realtime_quantity()
+            value = product.get_total_stock_value()
+            status = 'out_of_stock' if qty <= 0 else 'low_stock' if qty <= product.min_stock_level else 'in_stock'
+            
+            report_data.append({
+                'product': product,
+                'quantity': qty,
+                'value': value,
+                'status': status
+            })
+        
+        context['report_data'] = report_data
+        return context
 
 
 class StockValuationReportView(ListView):
-    model = Stock
+    """Stock valuation report using real-time inventory"""
+    model = Product
     template_name = 'stock/stock_valuation_report.html'
-    context_object_name = 'reports'
+    context_object_name = 'products'
+    
+    def get_queryset(self):
+        return Product.objects.filter(is_active=True).select_related('category', 'brand')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+        
+        total_value = 0
+        valuation_data = []
+        for product in products:
+            qty = product.get_realtime_quantity()
+            value = product.get_total_stock_value()
+            total_value += value
+            
+            if qty > 0:
+                valuation_data.append({
+                    'product': product,
+                    'quantity': qty,
+                    'unit_cost': product.cost_price,
+                    'total_value': value
+                })
+        
+        context['valuation_data'] = valuation_data
+        context['total_value'] = total_value
+        return context
 
 
 class InventoryDashboardView(ListView):
@@ -334,7 +400,7 @@ class InventoryDashboardView(ListView):
     context_object_name = 'products'
     
     def get_queryset(self):
-        return Product.objects.filter(is_active=True).prefetch_related('stock_set')
+        return Product.objects.filter(is_active=True).select_related('category', 'brand', 'unit_type')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -351,26 +417,23 @@ class InventoryDashboardView(ListView):
         total_stock_value = 0
         
         for product in products:
-            # Get stock information for this product
-            stocks = Stock.objects.filter(product=product)
-            total_quantity = stocks.aggregate(total=Sum('quantity'))['total'] or 0
-            total_value = sum(stock.total_value for stock in stocks)
+            # Get real-time inventory quantity
+            total_quantity = product.get_realtime_quantity()
+            total_value = product.get_total_stock_value()
             
-            # Calculate quantities sold (from sales orders and invoices)
-            sold_from_orders = SalesOrderItem.objects.filter(
+            # Calculate quantities sold (only delivered orders)
+            total_sold = SalesOrderItem.objects.filter(
                 product=product,
                 sales_order__status='delivered'
             ).aggregate(total=Sum('quantity'))['total'] or 0
             
-            # In simplified model, only sales orders are tracked
-            total_sold = sold_from_orders
-            
-            # Calculate quantities purchased
+            # Calculate quantities purchased (received orders only)
             purchased = PurchaseOrderItem.objects.filter(
-                product=product
+                product=product,
+                purchase_order__status='goods-received'
             ).aggregate(total=Sum('quantity'))['total'] or 0
             
-            # Determine stock status
+            # Determine stock status using real-time quantity
             if total_quantity <= 0:
                 stock_status = 'out_of_stock'
                 out_of_stock_products += 1
@@ -392,16 +455,13 @@ class InventoryDashboardView(ListView):
                 'total_purchased': purchased,
                 'stock_status': stock_status,
                 'min_stock_level': product.min_stock_level,
-                'stocks': stocks,
             })
         
         # Get recent stock movements - removed since StockMovement model is removed
         recent_movements = []
         
-        # Get low stock alerts
-        low_stock_alerts = StockAlert.objects.filter(
-            is_active=True
-        ).select_related('product')
+        # Get low stock alerts (calculated dynamically)
+        low_stock_alerts = get_low_stock_products()
         
         # Get top selling products (last 30 days)
         thirty_days_ago = timezone.now() - timedelta(days=30)

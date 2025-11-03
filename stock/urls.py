@@ -17,7 +17,7 @@ urlpatterns = [
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('products/<int:pk>/edit/', views.ProductUpdateView.as_view(), name='product_edit'),
     path('products/<int:pk>/delete/', views.ProductDeleteView.as_view(), name='product_delete'),
-    path('products/<int:pk>/adjust-stock/', views.stock_adjustment, name='stock_adjustment'),
+    # Stock adjustment removed - inventory is now real-time only
     
     # Category Management
     path('categories/', views.ProductCategoryListView.as_view(), name='category_list'),
@@ -37,10 +37,10 @@ urlpatterns = [
     path('unit-types/<int:pk>/edit/', views.UnitTypeUpdateView.as_view(), name='unittype_edit'),
     path('unit-types/<int:pk>/delete/', views.UnitTypeDeleteView.as_view(), name='unittype_delete'),
     
-    # Stock Management
+    # Stock Management (now shows real-time inventory)
     path('stock/', views.StockListView.as_view(), name='stock_list'),
     path('stock/<int:pk>/', views.StockDetailView.as_view(), name='stock_detail'),
-    path('stock/<int:pk>/edit/', views.StockUpdateView.as_view(), name='stock_edit'),
+    # StockUpdateView removed - inventory is now real-time only
     
     # Stock Alerts
     path('alerts/', views.StockAlertListView.as_view(), name='alert_list'),

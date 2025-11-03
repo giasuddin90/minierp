@@ -10,7 +10,7 @@ from .forms import (
     PurchaseOrderForm, PurchaseOrderItemFormSet, PurchaseOrderSearchForm, PurchaseOrderItemForm
 )
 from suppliers.models import Supplier
-from stock.models import Product, ProductCategory, ProductBrand, Stock
+from stock.models import Product, ProductCategory, ProductBrand
 from django.contrib.auth.models import User
 import uuid
 

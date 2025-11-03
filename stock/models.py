@@ -3,6 +3,20 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from decimal import Decimal
 
+def get_low_stock_products():
+    """Helper function to get products with low stock based on min_stock_level"""
+    products = Product.objects.filter(is_active=True)
+    low_stock = []
+    for product in products:
+        qty = product.get_realtime_quantity()
+        if qty <= product.min_stock_level and product.min_stock_level > 0:
+            low_stock.append({
+                'product': product,
+                'current_quantity': qty,
+                'min_quantity': product.min_stock_level
+            })
+    return low_stock
+
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -74,26 +88,59 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name} ({self.brand})"
     
-    def get_total_quantity(self):
-        """Get total quantity across all warehouses"""
+    def get_realtime_quantity(self):
+        """
+        Calculate inventory quantity in real-time from transactions.
+        Simple formula: Total Purchase Received - Total Sales Delivered
+        """
         try:
-            return sum(stock.quantity for stock in self.stock_set.all())
+            from purchases.models import PurchaseOrderItem
+            from sales.models import SalesOrderItem
+            
+            # Sum quantities from purchase orders that are received
+            total_purchase_received = PurchaseOrderItem.objects.filter(
+                product=self,
+                purchase_order__status='goods-received'
+            ).aggregate(total=models.Sum('quantity'))['total'] or Decimal('0')
+            
+            # Sum quantities from sales orders that are delivered
+            total_sales_delivered = SalesOrderItem.objects.filter(
+                product=self,
+                sales_order__status='delivered'
+            ).aggregate(total=models.Sum('quantity'))['total'] or Decimal('0')
+            
+            # Simple calculation: purchase received - sales delivered
+            stock = total_purchase_received - total_sales_delivered
+            return max(Decimal('0'), stock)  # Ensure non-negative
+            
         except Exception as e:
-            # Log the error for debugging
             import logging
             logger = logging.getLogger(__name__)
-            logger.error(f"Error calculating total quantity for product {self.id}: {e}")
+            logger.error(f"Error calculating realtime quantity for product {self.id}: {e}")
             return Decimal('0')
     
+    def get_total_quantity(self):
+        """Alias for get_realtime_quantity for backward compatibility"""
+        return self.get_realtime_quantity()
+    
     def get_total_stock_value(self):
-        """Get total stock value across all warehouses"""
+        """Calculate total stock value using real-time quantity"""
         try:
-            total_value = Decimal('0')
-            for stock in self.stock_set.all():
-                total_value += stock.quantity * self.selling_price
-            return total_value
+            quantity = self.get_realtime_quantity()
+            # Use average unit cost from recent purchases if available
+            from purchases.models import PurchaseOrderItem
+            recent_purchases = PurchaseOrderItem.objects.filter(
+                product=self,
+                purchase_order__status='goods-received'
+            ).order_by('-purchase_order__order_date')[:1]
+            
+            if recent_purchases.exists():
+                unit_cost = recent_purchases.first().unit_price
+            else:
+                unit_cost = self.cost_price
+            
+            return quantity * unit_cost
         except Exception as e:
-            # Log the error for debugging
             import logging
             logger = logging.getLogger(__name__)
             logger.error(f"Error calculating total stock value for product {self.id}: {e}")
@@ -112,75 +159,8 @@ class Product(models.Model):
         ]
 
 
-class Stock(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    unit_cost = models.DecimalField(max_digits=15, decimal_places=2, default=0)
-    last_updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.product.name} - {self.quantity}"
-
-    @property
-    def total_value(self):
-        return self.quantity * self.unit_cost
-
-    @classmethod
-    def update_stock(cls, product, quantity_change, unit_cost=None, movement_type='adjustment', reference='', description='', user=None):
-        """Update stock quantity"""
-        from django.db import transaction
-        
-        with transaction.atomic():
-            # Get or create stock record
-            stock, created = cls.objects.get_or_create(
-                product=product,
-                defaults={'quantity': 0, 'unit_cost': unit_cost or 0}
-            )
-            
-            # Update quantity
-            if movement_type == 'inward':
-                stock.quantity += quantity_change
-            elif movement_type == 'outward':
-                stock.quantity -= quantity_change
-            else:  # adjustment
-                stock.quantity = quantity_change
-            
-            # Update unit cost if provided
-            if unit_cost is not None:
-                stock.unit_cost = unit_cost
-            
-            stock.save()
-            
-            # Check for low stock alert
-            if stock.quantity <= product.min_stock_level:
-                StockAlert.objects.get_or_create(
-                    product=product,
-                    defaults={
-                        'current_quantity': stock.quantity,
-                        'min_quantity': product.min_stock_level,
-                        'is_active': True
-                    }
-                )
-            
-            return stock
-
-    class Meta:
-        verbose_name = "Stock"
-        verbose_name_plural = "Stocks"
+# Stock model removed - inventory is now calculated in real-time from transactions only
+# No pre-calculated stock values or manual adjustments
 
 
-
-
-class StockAlert(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    current_quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    min_quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Low Stock Alert - {self.product.name}"
-
-    class Meta:
-        verbose_name = "Stock Alert"
-        verbose_name_plural = "Stock Alerts"
+# StockAlert model removed - alerts are now calculated dynamically based on min_stock_level

@@ -45,34 +45,15 @@ class PurchaseOrder(models.Model):
         super().save(*args, **kwargs)
 
     def update_inventory_on_status_change(self, old_status, new_status, user=None):
-        """Update inventory based on status change"""
-        from stock.models import Stock
-        
-        # If changing to goods-received, increase inventory
-        if old_status != 'goods-received' and new_status == 'goods-received':
-            for item in self.items.all():
-                Stock.update_stock(
-                    product=item.product,
-                    quantity_change=item.quantity,
-                    unit_cost=item.unit_price,
-                    movement_type='inward',
-                    reference=f"PO-{self.order_number}",
-                    description=f"Purchase order received - {self.supplier.name}",
-                    user=user
-                )
-        
-        # If changing from goods-received to cancelled, decrease inventory
-        elif old_status == 'goods-received' and new_status == 'canceled':
-            for item in self.items.all():
-                Stock.update_stock(
-                    product=item.product,
-                    quantity_change=-item.quantity,  # Negative to decrease
-                    unit_cost=item.unit_price,
-                    movement_type='outward',
-                    reference=f"PO-{self.order_number}",
-                    description=f"Purchase order cancelled - {self.supplier.name}",
-                    user=user
-                )
+        """
+        Inventory is now calculated in real-time from transaction status.
+        No need to update pre-calculated stock - inventory increases automatically
+        when status changes to 'goods-received' and decreases when cancelled.
+        """
+        # Real-time inventory calculation is handled by Product.get_realtime_quantity()
+        # which sums purchase orders with status='goods-received' and subtracts sales.
+        # No action needed here - inventory updates automatically based on status.
+        pass
     
     def receive_goods(self, user=None):
         """Receive goods and update inventory (legacy method for compatibility)"""

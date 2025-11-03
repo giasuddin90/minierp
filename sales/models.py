@@ -35,49 +35,29 @@ class SalesOrder(models.Model):
         return f"SO-{self.order_number} - {customer_name}"
 
     def mark_delivered(self, user=None):
-        """Mark order as delivered and update inventory"""
-        from stock.models import Stock
-        
+        """
+        Mark order as delivered.
+        Inventory is calculated in real-time - no need to update pre-calculated stock.
+        Inventory decreases automatically when status changes to 'delivered'.
+        """
         if self.status == 'order':
             self.status = 'delivered'
             self.save()
             
-            # Update inventory for each item
-            customer_name = self.customer.name if self.customer else self.customer_name or "Anonymous"
-            for item in self.items.all():
-                # Reduce stock (outward movement)
-                Stock.update_stock(
-                    product=item.product,
-                    quantity_change=item.quantity,
-                    unit_cost=item.unit_price,
-                    movement_type='outward',
-                    reference=f"SO-{self.order_number}",
-                    description=f"Sales order delivered - {customer_name}",
-                    user=user
-                )
+            # Low stock alerts are now calculated dynamically based on min_stock_level
+            # No need to create/store alerts - they're computed in real-time
     
     def cancel_order(self, user=None):
-        """Cancel the order"""
+        """
+        Cancel the order.
+        Inventory is calculated in real-time - cancelling a delivered order
+        automatically restores inventory because it's no longer counted in the calculation.
+        """
         if self.status in ['order', 'delivered']:
-            was_delivered = self.status == 'delivered'
             self.status = 'cancel'
             self.save()
             
-            # If order was delivered, restore inventory
-            if was_delivered:
-                from stock.models import Stock
-                customer_name = self.customer.name if self.customer else self.customer_name or "Anonymous"
-                for item in self.items.all():
-                    # Restore stock (inward movement)
-                    Stock.update_stock(
-                        product=item.product,
-                        quantity_change=item.quantity,
-                        unit_cost=item.unit_price,
-                        movement_type='inward',
-                        reference=f"SO-{self.order_number}",
-                        description=f"Sales order cancelled - {customer_name}",
-                        user=user
-                    )
+            # No need to manually update stock - real-time calculation handles it automatically
 
     class Meta:
         verbose_name = "Sales Order"

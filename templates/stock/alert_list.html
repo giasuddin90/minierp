@@ -18,7 +18,11 @@
                 <h5 class="mb-0">
                     <i class="bi bi-exclamation-triangle"></i>
                     Low Stock Alerts
+                    {% if alert_count %}
+                    <span class="badge bg-danger ms-2">{{ alert_count }}</span>
+                    {% endif %}
                 </h5>
+                <small class="text-muted">Alerts are calculated dynamically based on minimum stock levels</small>
             </div>
             <div class="card-body">
                 {% if alerts %}
@@ -27,10 +31,10 @@
                         <thead>
                             <tr>
                                 <th>Product</th>
-                                <th>Warehouse</th>
+                                <th>Category</th>
                                 <th>Current Quantity</th>
                                 <th>Minimum Level</th>
-                                <th>Status</th>
+                                <th>Unit</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -41,22 +45,26 @@
                                     <strong>{{ alert.product.name }}</strong>
                                     <br><small class="text-muted">{{ alert.product.brand|default:"No Brand" }}</small>
                                 </td>
-                                <td>{{ alert.warehouse.name }}</td>
+                                <td>{{ alert.product.category|default:"-" }}</td>
                                 <td>
-                                    <span class="badge bg-danger">{{ alert.current_quantity }} {{ alert.product.unit_name }}</span>
+                                    <span class="badge bg-danger">
+                                        <i class="bi bi-exclamation-triangle"></i> 
+                                        {{ alert.current_quantity }} 
+                                        {{ alert.product.unit_type.name|default:alert.product.unit_type.code }}
+                                    </span>
                                 </td>
-                                <td>{{ alert.min_quantity }} {{ alert.product.unit_name }}</td>
                                 <td>
-                                    {% if alert.is_active %}
-                                        <span class="badge bg-warning">Active Alert</span>
-                                    {% else %}
-                                        <span class="badge bg-secondary">Resolved</span>
-                                    {% endif %}
+                                    <strong>{{ alert.min_quantity }}</strong>
+                                    <br><small class="text-muted">Threshold</small>
                                 </td>
+                                <td>{{ alert.product.unit_type.name|default:alert.product.unit_type.code }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{% url 'stock:product_detail' alert.product.pk %}" class="btn btn-outline-primary">
+                                        <a href="{% url 'stock:product_detail' alert.product.pk %}" class="btn btn-outline-primary" title="View Product">
                                             <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{% url 'stock:stock_detail' alert.product.pk %}" class="btn btn-outline-info" title="View Stock">
+                                            <i class="bi bi-box-seam"></i>
                                         </a>
                                     </div>
                                 </td>

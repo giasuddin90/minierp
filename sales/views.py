@@ -302,19 +302,12 @@ class InstantSalesCreateView(CreateView):
                     self.object.save()
                     print(f"DEBUG: Total amount set to: {total_amount}")
                     
-                    # Update inventory immediately for instant sales
-                    from stock.models import Stock
-                    customer_name = self.object.customer_name or "Anonymous"
-                    for item in self.object.items.all():
-                        Stock.update_stock(
-                            product=item.product,
-                            quantity_change=item.quantity,
-                            unit_cost=item.unit_price,
-                            movement_type='outward',
-                            reference=f"IS-{self.object.order_number}",
-                            description=f"Instant sale - {customer_name}",
-                            user=self.request.user
-                        )
+                    # Inventory is calculated in real-time from sales orders
+                    # Instant sales (sales_type='instant') are automatically included
+                    # in the real-time inventory calculation, so no manual update needed
+                    
+                    # Low stock alerts are now calculated dynamically based on min_stock_level
+                    # No need to create/store alerts - they're computed in real-time
                     
                     items_count = self.object.items.count()
                     print(f"DEBUG: Final items count: {items_count}")

@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from customers.models import Customer, CustomerLedger
 from suppliers.models import Supplier, SupplierLedger
-from stock.models import Product, Stock, StockAlert
+from stock.models import Product, get_low_stock_products
 from sales.models import SalesOrder
 from purchases.models import PurchaseOrder
 from expenses.models import Expense
@@ -79,10 +79,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context['recent_orders'] = SalesOrder.objects.select_related('customer').order_by('-created_at')[:5]
         context['recent_purchases'] = PurchaseOrder.objects.select_related('supplier').order_by('-created_at')[:5]
         
-        # Low stock alerts
-        context['low_stock_alerts'] = StockAlert.objects.filter(
-            is_active=True
-        ).select_related('product')[:5]
+        # Low stock alerts (calculated dynamically)
+        context['low_stock_alerts'] = get_low_stock_products()[:5]
         
         # Top customers by balance
         context['top_customers'] = Customer.objects.filter(
@@ -163,5 +161,5 @@ def dashboard_redirect(request):
         'total_products': Product.objects.count(),
         'total_sales': SalesOrder.objects.filter(status='delivered').aggregate(total=Sum('total_amount'))['total'] or 0,
         'recent_orders': SalesOrder.objects.select_related('customer').order_by('-created_at')[:5],
-        'low_stock_alerts': StockAlert.objects.filter(is_active=True).select_related('product')[:5],
+        'low_stock_alerts': get_low_stock_products()[:5],
     })
