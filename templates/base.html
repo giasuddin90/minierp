@@ -159,16 +159,6 @@
                                 <i class="bi bi-boxes"></i> Stock Levels
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'alert_list' %}active{% endif %}" href="{% url 'stock:alert_list' %}">
-                                <i class="bi bi-exclamation-triangle"></i> Stock Alerts
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link submenu-link {% if request.resolver_match.app_name == 'stock' and request.resolver_match.url_name == 'inventory_dashboard' %}active{% endif %}" href="{% url 'stock:inventory_dashboard' %}">
-                                <i class="bi bi-speedometer2"></i> Inventory Dashboard
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </li>

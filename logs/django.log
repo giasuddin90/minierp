@@ -16098,3 +16098,229 @@ Watching for file changes with StatReloader
 "GET /reports/accounts-receivable/ HTTP/1.1" 200 24268
 "GET /reports/top-customers/ HTTP/1.1" 200 22952
 "GET /reports/sales-enhanced/ HTTP/1.1" 200 26024
+"GET /dashboard/ HTTP/1.1" 200 32262
+"GET /customers/ HTTP/1.1" 200 25242
+"GET /stock/products/ HTTP/1.1" 200 53777
+"GET /suppliers/ HTTP/1.1" 200 38578
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /sales/orders/ HTTP/1.1" 200 23288
+"GET /sales/orders/create/ HTTP/1.1" 200 62217
+"GET /sales/instant-sales/ HTTP/1.1" 200 52165
+"GET /sales/orders/create/ HTTP/1.1" 200 62217
+"GET /sales/instant-sales/ HTTP/1.1" 200 52165
+"GET /sales/orders/ HTTP/1.1" 200 23288
+"GET /sales/instant-sales/19/edit/ HTTP/1.1" 200 61926
+"GET /dashboard/ HTTP/1.1" 200 32262
+"GET /customers/ HTTP/1.1" 200 25242
+"GET /customers/create/ HTTP/1.1" 200 22331
+"GET /customers/ledger/ HTTP/1.1" 200 21398
+"GET /customers/commitment/ HTTP/1.1" 200 19892
+"GET /suppliers/ HTTP/1.1" 200 38578
+"GET /sales/orders/ HTTP/1.1" 200 23288
+"GET /purchases/orders/ HTTP/1.1" 200 53414
+"GET /expenses/ HTTP/1.1" 200 25205
+"GET /dashboard/ HTTP/1.1" 200 32262
+"GET /reports/sales-enhanced/ HTTP/1.1" 200 26024
+"GET /reports/top-products/ HTTP/1.1" 200 23073
+"GET /reports/top-customers/ HTTP/1.1" 200 22952
+"GET /reports/accounts-receivable/ HTTP/1.1" 200 24268
+"GET /reports/sales-enhanced/ HTTP/1.1" 200 26024
+"GET /dashboard/ HTTP/1.1" 200 32262
+"GET /customers/ HTTP/1.1" 200 25242
+"GET /stock/products/ HTTP/1.1" 200 53777
+"GET /stock/alerts/ HTTP/1.1" 200 30624
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /stock/alerts/
+"GET /stock/alerts/ HTTP/1.1" 404 10129
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 31696
+Internal Server Error: /stock/stock/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'alert_list' not found. 'alert_list' is not a valid view function or pattern name.
+"GET /stock/stock/ HTTP/1.1" 500 213173
+Internal Server Error: /stock/stock/
+Traceback (most recent call last):
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/giasudin/PycharmProjects/djangoerp/miniErp/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'alert_list' not found. 'alert_list' is not a valid view function or pattern name.
+"GET /stock/stock/ HTTP/1.1" 500 213173
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/giasudin/PycharmProjects/djangoerp/miniErp/stock/models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /stock/stock/ HTTP/1.1" 200 46664
+"GET /stock/unit-types/ HTTP/1.1" 200 40486
+"GET /stock/brands/ HTTP/1.1" 200 45585
+"GET /stock/categories/ HTTP/1.1" 200 45783
+"GET /stock/products/ HTTP/1.1" 200 53211
+"GET /customers/ HTTP/1.1" 200 24676
+"GET /dashboard/ HTTP/1.1" 200 31696
+"GET /stock/products/ HTTP/1.1" 200 53211
+"GET /stock/stock/ HTTP/1.1" 200 46664
+"GET /dashboard/ HTTP/1.1" 200 31696
+"GET /customers/ HTTP/1.1" 200 24676
+"GET /customers/create/ HTTP/1.1" 200 21765
+"GET /customers/ledger/ HTTP/1.1" 200 20832
+"GET /customers/commitment/ HTTP/1.1" 200 19326
+"GET /suppliers/create/ HTTP/1.1" 200 21249
+"GET /suppliers/ HTTP/1.1" 200 38012
+"GET /suppliers/create/ HTTP/1.1" 200 21249
+"GET /suppliers/ledger/ HTTP/1.1" 200 18995
+"GET /stock/products/ HTTP/1.1" 200 53211
+"GET /stock/categories/ HTTP/1.1" 200 45783
+"GET /stock/brands/ HTTP/1.1" 200 45585
+"GET /stock/unit-types/ HTTP/1.1" 200 40486
+"GET /stock/stock/ HTTP/1.1" 200 46664
+"GET /sales/orders/ HTTP/1.1" 200 22722
+"GET /sales/orders/create/ HTTP/1.1" 200 61651
+"GET /sales/instant-sales/ HTTP/1.1" 200 51599
+"GET /purchases/orders/ HTTP/1.1" 200 52848
+"GET /purchases/orders/create/ HTTP/1.1" 200 56316
+"GET /expenses/ HTTP/1.1" 200 24639
+"GET /expenses/categories/ HTTP/1.1" 200 19869
+"GET /reports/sales-enhanced/ HTTP/1.1" 200 25458
+"GET /reports/top-products/ HTTP/1.1" 200 22507
+"GET /reports/top-customers/ HTTP/1.1" 200 22386
+"GET /reports/accounts-receivable/ HTTP/1.1" 200 23702
+"GET /reports/profit-loss/ HTTP/1.1" 200 27634
+"GET /logout/ HTTP/1.1" 302 0
+"GET /admin/login/ HTTP/1.1" 200 4971
+"GET /admin/login/ HTTP/1.1" 200 4564
+"POST /admin/login/ HTTP/1.1" 200 4564
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/dashboard/ HTTP/1.1" 200 4564
+"POST /admin/login/?next=/dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 31696
+"GET /static/css/components.css HTTP/1.1" 304 0
+"GET /static/css/base.css HTTP/1.1" 304 0
+"GET /static/css/layout.css HTTP/1.1" 200 6834
+"GET /static/css/responsive.css HTTP/1.1" 200 5632
+"GET /dashboard/ HTTP/1.1" 200 31696
+"GET /reports/sales-enhanced/ HTTP/1.1" 200 25458
+"GET /reports/download/sales-csv/?start_date=Oct.%205,%202025&end_date=Nov.%204,%202025 HTTP/1.1" 200 106
+"GET / HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 31696
+"GET /static/css/layout.css HTTP/1.1" 304 0
+"GET /static/css/responsive.css HTTP/1.1" 304 0
+"GET /customers/ HTTP/1.1" 200 24676
+"GET /customers/create/ HTTP/1.1" 200 21765
+"GET /customers/ledger/ HTTP/1.1" 200 20832
+"GET /customers/commitment/ HTTP/1.1" 200 19326
+"GET /stock/products/ HTTP/1.1" 200 53211
+"GET /stock/products/16/delete/ HTTP/1.1" 200 18919
+"POST /stock/products/16/delete/ HTTP/1.1" 302 0
+"GET /stock/products/ HTTP/1.1" 200 50999

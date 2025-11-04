@@ -24,6 +24,9 @@ This is a minimal Django ERP (Enterprise Resource Planning) system focused on co
 - ❌ **Accounting**: No trial balance, expenses, or income tracking
 - ❌ **Commissions**: No customer or supplier commission tracking
 - ❌ **Warehouses**: Single location inventory management only
+- ❌ **Pre-calculated Stock**: No Stock model - inventory calculated in real-time
+- ❌ **Stock Adjustments**: No manual stock adjustments - use purchase/sales orders
+- ❌ **Persisted Stock Alerts**: Alerts calculated dynamically, not stored in database
 
 ## Database Models
 
@@ -38,9 +41,25 @@ This is a minimal Django ERP (Enterprise Resource Planning) system focused on co
 
 ### Stock
 - `Product`: Product information and pricing
-- `Stock`: Current stock levels (single location)
-- `StockMovement`: Stock movement history
-- `StockAlert`: Low stock notifications
+  - Methods: `get_realtime_quantity()` - calculates current stock from transactions
+  - Methods: `get_total_stock_value()` - calculates total inventory value
+- `ProductCategory`: Product categories
+- `ProductBrand`: Product brands
+- `UnitType`: Unit of measurement types
+- **Inventory System**: Real-time calculation (no pre-calculated stock values)
+  - **Formula**: Stock = Total Purchase Received - Total Sales Delivered
+  - Inventory increases when purchase orders status = `goods-received`
+  - Inventory decreases when sales orders status = `delivered`
+  - Instant sales are automatically included (status = `delivered` when created)
+- **Stock Alerts**: Calculated dynamically based on `min_stock_level`
+  - Helper function: `get_low_stock_products()` in `stock/models.py`
+  - Alerts appear when: `current_quantity ≤ min_stock_level` AND `min_stock_level > 0`
+  - No database storage - computed in real-time
+  - Available on dashboard and `/stock/alerts/` page
+- **Removed Models**: 
+  - `Stock` - removed, inventory calculated in real-time
+  - `StockAlert` - removed, alerts calculated dynamically
+  - `StockAdjustment` - removed, use purchase/sales orders for adjustments
 
 ### Sales
 - `SalesOrder`: Sales order header
@@ -75,6 +94,8 @@ This is a minimal Django ERP (Enterprise Resource Planning) system focused on co
 - Always create migrations for model changes
 - Use `python manage.py makemigrations` before `python manage.py migrate`
 - Test migrations on development database first
+- **Important**: Never create models that pre-calculate inventory values
+- **Important**: Always use real-time calculation from transactions (purchase/sales orders)
 
 ### Templates
 - Use Bootstrap 5.3.2 for consistent styling
@@ -87,6 +108,9 @@ This is a minimal Django ERP (Enterprise Resource Planning) system focused on co
 - Use function-based views for complex business logic
 - Always handle form validation properly
 - Use Django's built-in authentication and permissions
+- **Inventory Views**: Use `Product.get_realtime_quantity()` for current stock
+- **Stock Alerts**: Use `get_low_stock_products()` helper function
+- Never query `Stock` model - it doesn't exist
 
 ### URLs
 - Follow RESTful URL patterns
@@ -133,13 +157,15 @@ python manage.py createsuperuser
 
 ## Key Features
 - ✅ Customer and Supplier management
-- ✅ Product and inventory tracking
+- ✅ Product and inventory tracking (real-time calculation)
 - ✅ Sales order and invoice management
 - ✅ Purchase order and invoice management
 - ✅ Payment tracking
 - ✅ Business reporting
 - ✅ Responsive Bootstrap UI
 - ✅ PDF invoice generation
+- ✅ Real-time inventory calculation (no pre-calculated values)
+- ✅ Dynamic low stock alerts based on min_stock_level
 
 ## Security Notes
 - Always validate user input
@@ -153,6 +179,10 @@ python manage.py createsuperuser
 - Implement pagination for large datasets
 - Use database indexes for frequently queried fields
 - Consider caching for frequently accessed data
+- **Inventory Calculation**: Real-time calculations use aggregate queries
+  - `Product.get_realtime_quantity()`: Sums purchase items (goods-received) minus sales items (delivered)
+  - Use `select_related()` for foreign keys when calculating inventory
+  - No N+1 queries - use bulk aggregation
 
 ## Testing
 - Write unit tests for models and views

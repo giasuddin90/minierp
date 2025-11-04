@@ -43,12 +43,10 @@ urlpatterns = [
     # StockUpdateView removed - inventory is now real-time only
     
     # Stock Alerts
-    path('alerts/', views.StockAlertListView.as_view(), name='alert_list'),
-    
+
     # Reports
     path('reports/stock/', views.StockReportView.as_view(), name='stock_report'),
     path('reports/valuation/', views.StockValuationReportView.as_view(), name='stock_valuation_report'),
     
     # Inventory Dashboard
-    path('dashboard/', views.InventoryDashboardView.as_view(), name='inventory_dashboard'),
 ]

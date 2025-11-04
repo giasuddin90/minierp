@@ -305,20 +305,6 @@ class ProductBrandDeleteView(DeleteView):
 # To adjust inventory, create purchase orders (to increase) or cancel sales (to decrease)
 
 
-class StockAlertListView(ListView):
-    """List view for low stock alerts - calculated dynamically"""
-    template_name = 'stock/alert_list.html'
-    context_object_name = 'alerts'
-    
-    def get_queryset(self):
-        return get_low_stock_products()
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['alert_count'] = len(context['alerts'])
-        return context
-
-
 class StockReportView(ListView):
     """Stock report using real-time inventory"""
     model = Product
@@ -392,103 +378,6 @@ class StockValuationReportView(ListView):
         context['total_value'] = total_value
         return context
 
-
-class InventoryDashboardView(ListView):
-    """Comprehensive inventory dashboard showing real inventory scenarios"""
-    model = Product
-    template_name = 'stock/inventory_dashboard.html'
-    context_object_name = 'products'
-    
-    def get_queryset(self):
-        return Product.objects.filter(is_active=True).select_related('category', 'brand', 'unit_type')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        # Get all products with their stock information
-        products = self.get_queryset()
-        
-        # Calculate inventory statistics
-        inventory_data = []
-        total_products = 0
-        in_stock_products = 0
-        low_stock_products = 0
-        out_of_stock_products = 0
-        total_stock_value = 0
-        
-        for product in products:
-            # Get real-time inventory quantity
-            total_quantity = product.get_realtime_quantity()
-            total_value = product.get_total_stock_value()
-            
-            # Calculate quantities sold (only delivered orders)
-            total_sold = SalesOrderItem.objects.filter(
-                product=product,
-                sales_order__status='delivered'
-            ).aggregate(total=Sum('quantity'))['total'] or 0
-            
-            # Calculate quantities purchased (received orders only)
-            purchased = PurchaseOrderItem.objects.filter(
-                product=product,
-                purchase_order__status='goods-received'
-            ).aggregate(total=Sum('quantity'))['total'] or 0
-            
-            # Determine stock status using real-time quantity
-            if total_quantity <= 0:
-                stock_status = 'out_of_stock'
-                out_of_stock_products += 1
-            elif total_quantity <= product.min_stock_level:
-                stock_status = 'low_stock'
-                low_stock_products += 1
-            else:
-                stock_status = 'in_stock'
-                in_stock_products += 1
-            
-            total_products += 1
-            total_stock_value += total_value
-            
-            inventory_data.append({
-                'product': product,
-                'total_quantity': total_quantity,
-                'total_value': total_value,
-                'total_sold': total_sold,
-                'total_purchased': purchased,
-                'stock_status': stock_status,
-                'min_stock_level': product.min_stock_level,
-            })
-        
-        # Get recent stock movements - removed since StockMovement model is removed
-        recent_movements = []
-        
-        # Get low stock alerts (calculated dynamically)
-        low_stock_alerts = get_low_stock_products()
-        
-        # Get top selling products (last 30 days)
-        thirty_days_ago = timezone.now() - timedelta(days=30)
-        top_selling = SalesOrderItem.objects.filter(
-            sales_order__order_date__gte=thirty_days_ago,
-            sales_order__status='delivered'
-        ).values('product__name').annotate(
-            total_sold=Sum('quantity')
-        ).order_by('-total_sold')[:5]
-        
-        # Warehouse summary removed since warehouses are not used
-        warehouse_summary = []
-        
-        context.update({
-            'inventory_data': inventory_data,
-            'total_products': total_products,
-            'in_stock_products': in_stock_products,
-            'low_stock_products': low_stock_products,
-            'out_of_stock_products': out_of_stock_products,
-            'total_stock_value': total_stock_value,
-            'recent_movements': recent_movements,
-            'low_stock_alerts': low_stock_alerts,
-            'top_selling': top_selling,
-            'warehouse_summary': warehouse_summary,
-        })
-        
-        return context
 
 
 # UnitType Management Views
