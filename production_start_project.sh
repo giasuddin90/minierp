@@ -12,7 +12,7 @@ echo Starting Gunicorn and active virtualenv
 source .venv/bin/activate
 #source /home/ubuntu/PycharmProjects/djangoGunicorn/bin/activate
 
-gunicorn -c server_deploy.py
+gunicorn -c erp_deploy.py
 sleep 1s
 ps ax|grep gunicorn
 

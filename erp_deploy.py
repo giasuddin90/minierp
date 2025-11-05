@@ -5,7 +5,7 @@ wsgi_app = "core.wsgi:application"
 # The granularity of Error log outputs
 loglevel = "debug"
 # The number of worker processes for handling requests
-# workers = 3
+workers = 3
 # The socket to bind
 bind = "0.0.0.0:9090"
 # Restart workers when code changes (development only!)
@@ -17,4 +17,4 @@ capture_output = True
 # PID file so you can easily fetch process ID
 pidfile = "mini_erp.pid"
 # Daemonize the Gunicorn process (detach & enter background)
-daemon = False
+daemon = True
