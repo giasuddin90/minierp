@@ -60,6 +60,10 @@ class CustomerLedgerListView(ListView):
     template_name = 'customers/ledger_list.html'
     context_object_name = 'items'
     paginate_by = 20
+    
+    def get_queryset(self):
+        """Return ordered queryset to avoid pagination warning"""
+        return CustomerLedger.objects.select_related('customer', 'created_by').order_by('-transaction_date', '-id')
 
 
 class CustomerLedgerDetailView(DetailView):

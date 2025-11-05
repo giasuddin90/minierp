@@ -87,6 +87,7 @@ class CustomerLedger(models.Model):
     class Meta:
         verbose_name = "Customer Ledger"
         verbose_name_plural = "Customer Ledgers"
+        ordering = ['-transaction_date', '-id']
 
 
 
